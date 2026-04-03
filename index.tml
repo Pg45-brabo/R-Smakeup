@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R&S Makeup | Realce sua Beleza · Matozinhos, MG</title>
+<meta name="description" content="R&S Makeup · Maquiagem original com entrega rápida em Matozinhos e região. Peça pelo WhatsApp!">
+<link rel="icon" href="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="store.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-left">
+    <a href="#" id="link-wpp-top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> WhatsApp</a>
+    <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-top" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @rs_makeshop</a>
+  </div>
+  <div class="top-bar-right">🚚 Entrega rápida · Matozinhos/MG</div>
+</div>
+
+<!-- PROMO BAR -->
+<div class="promo-bar" id="promo-bar">
+  <span id="promo-text"> PROMOÇÃO DA SEMANA · Até 40% OFF · Termina em:</span>
+  <div class="countdown">
+    <div class="cd-unit"><span id="cd-h">00</span><span class="cd-lbl">h</span></div>
+    <span style="font-weight:700">:</span>
+    <div class="cd-unit"><span id="cd-m">00</span><span class="cd-lbl">min</span></div>
+    <span style="font-weight:700">:</span>
+    <div class="cd-unit"><span id="cd-s">00</span><span class="cd-lbl">seg</span></div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar-main" id="navbar">
+  <div class="nav-logo">
+    <a href="index.html"><img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" alt="R&S Makeup"></a>
+  </div>
+  <div class="nav-search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" placeholder="Buscar produto..." id="search-input" oninput="searchProducts(this.value)">
+  </div>
+  <div class="nav-icons">
+    <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-nav" target="_blank">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="#" id="link-wpp-nav" class="nav-wpp-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:2px;transform:translateY(2px)"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</div>
+
+<!-- CATEGORY NAV -->
+<nav class="cat-navbar">
+  <div class="cat-navbar-inner">
+    <button class="cat-nav-item active" onclick="filterCat('todos',this)"><span class="cat-icon"></span> Todos</button>
+    <button class="cat-nav-item" onclick="filterCat('rosto',this)"><span class="cat-icon"></span> Rosto</button>
+    <button class="cat-nav-item" onclick="filterCat('olhos',this)"><span class="cat-icon"></span> Olhos</button>
+    <button class="cat-nav-item" onclick="filterCat('labios',this)"><span class="cat-icon"></span> Lábios</button>
+    <button class="cat-nav-item" onclick="filterCat('skincare',this)"><span class="cat-icon"></span> Skincare</button>
+    <button class="cat-nav-item" onclick="filterCat('kits',this)"><span class="cat-icon"></span> Kits & Combos</button>
+    <button class="cat-nav-item" style="color:#c0392b;font-weight:700" onclick="filterHighlight()"><span class="cat-icon"></span> Destaques</button>
+  </div>
+</nav>
+
+<!-- HERO SLIDER -->
+<section class="hero-slider" id="heroSlider">
+
+  <!-- ─── Progress bar ─── -->
+  <div class="slider-progress"><div class="slider-progress-bar" id="sliderProgress"></div></div>
+
+  <!-- ─── Slides ─── -->
+  <div class="slides-track" id="slidesTrack">
+
+    <!-- Slide 1 -->
+    <div class="slide active" data-slide="0">
+      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=85')"></div>
+      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.78) 0%,rgba(43,43,43,.18) 100%)"></div>
+      <div class="slide-content">
+        <p class="hero-label">R&S Makeup · Matozinhos, MG</p>
+        <h1>Sua Beleza,<br><em>Nossa Paixão.</em></h1>
+        <p>Do batom ao iluminador — produtos originais que realçam o que há de mais bonito em você.</p>
+        <div class="hero-btns">
+          <a href="#produtos" class="btn btn-gold"> Ver Produtos</a>
+          <a href="#" id="link-wpp-hero" class="btn btn-outline-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Comprar no WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" data-slide="1">
+      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1600&q=85')"></div>
+      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.78) 0%,rgba(43,43,43,.18) 100%)"></div>
+      <div class="slide-content">
+        <p class="hero-label"> Novidades da Semana</p>
+        <h1>Cores que<br><em>Encantam.</em></h1>
+        <p>Blushes, glosses e batom nas cores mais quentes da temporada. Peça e receba em Matozinhos!</p>
+        <div class="hero-btns">
+          <a href="#produtos" class="btn btn-gold"> Ver Lábios & Blush</a>
+          <a href="#" class="btn btn-outline-white slider-wpp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" data-slide="2">
+      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1600&q=85')"></div>
+      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.8) 0%,rgba(43,43,43,.2) 100%)"></div>
+      <div class="slide-content">
+        <p class="hero-label"> Skincare & Cuidados</p>
+        <h1>Pele Perfeita,<br><em>Toda Semana.</em></h1>
+        <p>Hidratante, bruma, demaquilante e muito mais. Cuide da sua pele com quem entende!</p>
+        <div class="hero-btns">
+          <a href="#produtos" class="btn btn-gold"> Ver Skincare</a>
+          <a href="#" class="btn btn-outline-white slider-wpp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides-track -->
+
+  <!-- ─── Arrows ─── -->
+  <button class="slider-arrow prev" id="sliderPrev" aria-label="Slide anterior">‹</button>
+  <button class="slider-arrow next" id="sliderNext" aria-label="Próximo slide">›</button>
+
+  <!-- ─── Dots ─── -->
+  <div class="slider-dots" id="sliderDots">
+    <button class="sdot active" data-idx="0" aria-label="Slide 1"></button>
+    <button class="sdot" data-idx="1" aria-label="Slide 2"></button>
+    <button class="sdot" data-idx="2" aria-label="Slide 3"></button>
+  </div>
+
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="trust-item"><div class="trust-icon">🚚</div><div class="trust-text"><strong>Entrega Rápida</strong><span>Matozinhos e região</span></div></div>
+  <div class="trust-item"><div class="trust-icon">💎</div><div class="trust-text"><strong>Produtos Originais</strong><span>100% autênticos</span></div></div>
+  <div class="trust-item"><div class="trust-icon">💳</div><div class="trust-text"><strong>Pix & Cartão</strong><span>Parcele em até 6x</span></div></div>
+  <div class="trust-item"><div class="trust-icon">✨</div><div class="trust-text"><strong>+500 Clientes</strong><span>Satisfeitas</span></div></div>
+</div>
+
+<!-- BANNERS SECTION (carregado do Supabase) -->
+<div class="banners-section" id="banners-section" style="display:none"></div>
+
+<!-- PRODUCTS -->
+<section class="section products" id="produtos">
+  <div class="section-header fade-up">
+    <span class="section-tag" id="produtos-tag"> Todos os Produtos</span>
+    <h2 id="produtos-title">Encontre o seu favorito</h2>
+    <p>Clique para pedir direto pelo WhatsApp</p>
+  </div>
+  <div class="product-grid" id="product-grid">
+    <!-- Skeletons while loading -->
+    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
+    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
+    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
+  </div>
+  <div id="no-results" style="display:none;text-align:center;padding:3rem;color:var(--text-muted);font-size:.9rem;">
+     Nenhum produto encontrado. Tente outro termo.
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<section class="promo-banner-section fade-up">
+  <span class="section-tag">Oferta Especial</span>
+  <h2>Até <em>40% OFF</em></h2>
+  <p>Em produtos selecionados · Só até domingo!</p>
+  <a href="#" id="link-wpp-promo" class="btn btn-gold"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Ver Ofertas no WhatsApp</a>
+</section>
+
+
+
+<!-- SOBRE NÓS -->
+<section class="section about-section" id="sobre">
+  <div class="about-container fade-up">
+
+    <div class="about-text">
+      <span class="section-tag">Muito Prazer</span>
+      <h2>Por trás da <em>R&S Makeup</em> </h2>
+      <p>A R&S Makeup nasceu de um sonho muito especial: ajudar cada mulher a abraçar sua própria beleza e se sentir confiante todos os dias.</p>
+      <p>Sou uma jovem sonhadora, e construí essa loja com muito esforço e carinho. Acredito que a maquiagem vai muito além das cores; é sobre autoestima, amor-próprio e empoderamento.</p>
+      <p>Por isso, faço curadoria apenas de produtos que eu mesma usaria, entregando qualidade, autenticidade e aquele atendimento próximo que você merece na nossa cidade de Matozinhos e região. Seja muito bem-vinda ao nosso universo rosa!</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- CTA -->
+<section class="cta-section fade-up">
+  <h2>Pronta para se produzir? </h2>
+  <p>Fale com a gente e monte seu pedido pelo WhatsApp!</p>
+  <a href="#" id="link-wpp-cta" class="btn-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Abrir WhatsApp Agora</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  
+  <div class="footer-grid">
+    <div class="footer-logo">
+      <img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" alt="R&S Makeup" loading="lazy">
+      <p>Realce sua beleza com quem entende. Produtos originais com entrega em Matozinhos e região.</p>
+    </div>
+
+    <!-- FAQ NO MEIO DO RODAPÉ -->
+    <div class="footer-faq-col">
+      <h3 style="font-family:'Playfair Display', serif; font-size:1.1rem; color:var(--bg-sec); margin-bottom:0.2rem;">Dúvidas Frequentes</h3>
+      <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom: 1.2rem;">Ficou com alguma dúvida? Veja abaixo</p>
+      
+      <div class="footer-faq-items">
+        <div class="faq-item">
+          <button class="faq-q">Os produtos são originais? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Sim! Trabalhamos com produtos de qualidade e fornecedores confiáveis para garantir segurança, qualidade e um ótimo resultado.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Entregam para todo o Brasil? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Sim! Enviamos para todo o Brasil. Também realizamos entregas locais em Matozinhos.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Como faço o pedido? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>É simples! Escolha seus produtos e clique em "Comprar no WhatsApp".</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Demora a entrega? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Envios nacionais seguem o prazo padrão. Entregas em Matozinhos costumam ser rápidas.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Formas de pagamento? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Aceitamos PIX, cartão de crédito/débito e, em alguns casos, pagamento na entrega.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Links Úteis</h4>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="#produtos">Produtos</a></li>
+        <li><a href="#" id="link-wpp-footer">Fale Conosco</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Siga a gente</h4>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-footer" class="social-icon" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://www.tiktok.com/@rs_makeshop?_r=1&_t=ZS-95AFYdf9fSp" id="link-tiktok-footer" class="social-icon" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+        <a href="#" id="link-wpp-footer2" class="social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 R&S Makeup · Matozinhos, MG · Todos os direitos reservados</div>
+</footer>
+
+<!-- FLOAT WPP -->
+<div class="wpp-float" id="wppFloat">
+  <a href="#" id="link-wpp-float" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg><span class="wpp-tip">Fale conosco!</span>
+  </a>
+</div>
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ════════════════════════════════════════════
+//  R&S MAKEUP · STORE SCRIPT
+// ════════════════════════════════════════════
+
+const CAT_LABELS = { rosto:'Rosto', olhos:'Olhos', labios:'Lábios', acessorios:'Acessórios', skincare:'Skincare', kits:'Kits & Combos' };
+const CAT_TAGS   = { todos:' Todos os Produtos', rosto:' Rosto', olhos:' Olhos', labios:' Lábios', skincare:' Skincare', acessorios:'Acessórios', kits:' Kits & Combos', destaques:' Destaques' };
+
+let allProducts = [];
+let currentCat  = 'todos';
+let highlightMode = false;
+let searchTerm  = '';
+let storeConfig = {
+  wpp:   localStorage.getItem('rs_wpp')   || '5531999999999',
+  insta: localStorage.getItem('rs_insta') || 'rs_makeshop',
+  tiktok:localStorage.getItem('rs_tiktok')|| 'https://www.tiktok.com/@rs_makeshop',
+  promo: localStorage.getItem('rs_promo') || '',
+};
+
+// ── WPP LINKS ──
+function buildWppLinks() {
+  const num = storeConfig.wpp;
+  const base = `https://wa.me/${num}`;
+  const pedido = `${base}?text=${encodeURIComponent('Olá! Quero fazer um pedido!')}`;
+  const qids = ['link-wpp-top','link-wpp-nav','link-wpp-hero','link-wpp-promo','link-wpp-cta','link-wpp-float','link-wpp-footer','link-wpp-footer2'];
+  qids.forEach(id => { const el = document.getElementById(id); if(el) el.href = pedido; });
+  // Instagram: links já estão fixados no HTML; atualiza apenas se vier do Supabase config
+  if(storeConfig.insta && storeConfig.insta !== 'rs_makeshop') {
+    const instaUrl = `https://www.instagram.com/${storeConfig.insta}`;
+    ['link-insta-top','link-insta-nav','link-insta-footer'].forEach(id => { const el=document.getElementById(id); if(el){ el.href=instaUrl; if(id==='link-insta-top') el.textContent = `<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @${storeConfig.insta}`; } });
+  }
+  const tikEl = document.getElementById('link-tiktok-footer');
+  if(tikEl && storeConfig.tiktok) tikEl.href = storeConfig.tiktok;
+  if(storeConfig.promo) document.getElementById('promo-text').textContent = storeConfig.promo;
+}
+
+// ── LOAD CONFIG FROM SUPABASE ──
+async function loadConfig() {
+  const sb = getSupabase();
+  if(!sb) { buildWppLinks(); return; }
+  try {
+    const { data } = await sb.from('config').select('*').limit(1).maybeSingle();
+    if(data) {
+      storeConfig = { ...storeConfig, ...data };
+      if(data.timer_ativo) initTimer(data);
+      else document.getElementById('promo-bar').style.display = 'none';
+      
+      if(data.wpp) localStorage.setItem('rs_wpp', data.wpp);
+      if(data.insta) localStorage.setItem('rs_insta', data.insta);
+      if(data.tiktok) {
+        localStorage.setItem('rs_tiktok', data.tiktok);
+        document.getElementById('link-tiktok-footer').href = data.tiktok;
+      }
+    }
+  } catch(e) {}
+  buildWppLinks();
+}
+
+let timerInterval;
+function initTimer(cfg) {
+  const bar = document.getElementById('promo-bar');
+  const txt = document.getElementById('promo-text');
+  if(!cfg.timer_ativo || !cfg.timer_data_final) { bar.style.display='none'; return; }
+  
+  bar.style.display = 'flex';
+  if(cfg.timer_texto) txt.textContent = cfg.timer_texto;
+  
+  const end = new Date(cfg.timer_data_final).getTime();
+  
+  const update = () => {
+    const now = new Date().getTime();
+    const diff = end - now;
+    
+    if(diff <= 0) {
+      clearInterval(timerInterval);
+      bar.style.display = 'none';
+      return;
+    }
+    
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  };
+  
+  update();
+  timerInterval = setInterval(update, 1000);
+}
+
+// ── LOAD BANNERS ──
+async function loadBanners() {
+  const sb = getSupabase();
+  if(!sb) return;
+  try {
+    const { data: banners } = await sb.from('banners').select('*').eq('ativo', true);
+    if(!banners || !banners.length) return;
+    const section = document.getElementById('banners-section');
+    section.style.display = 'block';
+    section.innerHTML = banners.map(b => `
+      <div class="banner-slide" style="margin-bottom:.8rem">
+        ${b.imagem_url ? `<img src="${b.imagem_url}" alt="${b.titulo}" loading="lazy">` : ''}
+        <div class="banner-content">
+          <h2><em>${b.titulo}</em></h2>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {}
+}
+
+// ── LOAD PRODUCTS ──
+async function loadProducts() {
+  const sb = getSupabase();
+  if(sb) {
+    try {
+      const { data, error } = await sb.from('produtos').select('*').eq('ativo', true).order('created_at', { ascending: false });
+      if(!error && data) { allProducts = data; renderProducts(); return; }
+    } catch(e) {}
+  }
+  // Fallback: produtos de demonstração
+  allProducts = getDemoProducts();
+  renderProducts();
+}
+
+function getDemoProducts() {
+  return [
+    { id:1,  nome:'Gloss',               categoria:'labios',   badge:'Novo',  destaque:true  },
+    { id:2,  nome:'Contorno',            categoria:'rosto',    badge:'',      destaque:false },
+    { id:3,  nome:'Contorno Líquido',    categoria:'rosto',    badge:'',      destaque:false },
+    { id:4,  nome:'Blush',               categoria:'rosto',    badge:'Top',   destaque:true  },
+    { id:5,  nome:'Blush Líquido',       categoria:'rosto',    badge:'Novo',  destaque:true  },
+    { id:6,  nome:'Base',                categoria:'rosto',    badge:'Top',   destaque:true  },
+    { id:7,  nome:'Corretivo',           categoria:'rosto',    badge:'',      destaque:false },
+    { id:8,  nome:'Pó Compacto',         categoria:'rosto',    badge:'',      destaque:false },
+    { id:9,  nome:'Pó Translúcido',      categoria:'rosto',    badge:'',      destaque:false },
+    { id:10, nome:'Rímel',               categoria:'olhos',    badge:'',      destaque:false },
+    { id:11, nome:'Bruma',               categoria:'skincare', badge:'',      destaque:false },
+    { id:12, nome:'Demaquilante',        categoria:'skincare', badge:'',      destaque:false },
+    { id:13, nome:'Esponjinha',          categoria:'rosto',    badge:'',      destaque:false },
+    { id:14, nome:'Pincel',              categoria:'rosto',    badge:'',      destaque:false },
+    { id:15, nome:'Sabonete Facial',     categoria:'skincare', badge:'',      destaque:false },
+    { id:16, nome:'Hidratante',          categoria:'skincare', badge:'',      destaque:false },
+    { id:17, nome:'Blindagem',           categoria:'skincare', badge:'Novo',  destaque:false },
+    { id:18, nome:'Batom',               categoria:'labios',   badge:'',      destaque:false },
+    { id:19, nome:'Gel Sobrancelha',     categoria:'olhos',    badge:'',      destaque:false },
+    { id:20, nome:'Paleta',              categoria:'olhos',    badge:'Top',   destaque:false },
+    { id:21, nome:'Iluminador RubyRose', categoria:'rosto',    badge:'',      destaque:false },
+  ].map(p => ({ ...p, descricao: 'Produto premium R&S Makeup.', preco: null, imagem_url: '', avaliacao: 5, ativo: true }));
+}
+
+// ── RENDER PRODUCTS ──
+function renderProducts() {
+  const grid = document.getElementById('product-grid');
+  const noRes = document.getElementById('no-results');
+  let list = allProducts.filter(p => p.ativo !== false);
+  if(highlightMode) list = list.filter(p => p.destaque);
+  else if(currentCat !== 'todos') list = list.filter(p => p.categoria === currentCat);
+  if(searchTerm) list = list.filter(p => p.nome.toLowerCase().includes(searchTerm.toLowerCase()));
+  if(!list.length) { grid.innerHTML=''; noRes.style.display='block'; return; }
+  noRes.style.display='none';
+
+  grid.innerHTML = list.map(p => {
+    const wpp = `https://wa.me/${storeConfig.wpp}?text=${encodeURIComponent('Olá! Quero comprar o produto: '+p.nome)}`;
+    const priceHtml = p.preco
+      ? `${p.preco_antigo?`<span class="price-old">R$ ${parseFloat(p.preco_antigo).toFixed(2).replace('.',',')}</span>`:''}
+         <span class="price-new">R$ ${parseFloat(p.preco).toFixed(2).replace('.',',')}</span>`
+      : `<span class="price-tbd">Em breve</span>`;
+    const stars = ''.repeat(Math.min(5, Math.max(1, p.avaliacao||5)));
+    const badgeHtml = p.badge ? `<span class="product-badge ${p.badge==='sale'?'sale':''}">${p.badge==='sale'?'Promoção':p.badge}</span>` : (p.destaque ? `<span class="product-badge">Top</span>` : '');
+    return `
+    <div class="product-card fade-up" onclick="location.href='produto.html?id=${p.id}'" style="cursor:pointer" data-id="${p.id}">
+      <div class="product-img">
+        ${(p.imagens && p.imagens[0]) ? `<img src="${p.imagens[0]}" alt="${p.nome}" loading="lazy">` : `<div class="no-img-wrap"><span class="ni-icon"></span><span class="ni-label">Foto em breve</span></div>`}
+        ${badgeHtml}
+        <button class="wish-btn" onclick="event.stopPropagation();this.textContent=this.textContent==='🤍'?'❤️':'🤍'">🤍</button>
+      </div>
+      <div class="product-body">
+        <div class="product-cat-lbl">${CAT_LABELS[p.categoria]||p.categoria||''}</div>
+        <h3>${p.nome}</h3>
+        <div class="stars">${stars}</div>
+        <div class="product-price">${priceHtml}</div>
+        <a class="btn-wpp" href="${wpp}" target="_blank" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
+      </div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('#product-grid .fade-up').forEach(el => fadeObs.observe(el));
+}
+
+function filterCat(cat, btn) {
+  currentCat = cat; highlightMode = false;
+  document.querySelectorAll('.cat-nav-item').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById('produtos-tag').textContent = CAT_TAGS[cat]||' Produtos';
+  document.getElementById('produtos-title').textContent = cat==='todos'?'Encontre o seu favorito':(CAT_LABELS[cat]||cat);
+  renderProducts();
+  document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function filterHighlight() {
+  highlightMode = true;
+  document.querySelectorAll('.cat-nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('produtos-tag').textContent = ' Destaques';
+  document.getElementById('produtos-title').textContent  = 'Produtos em Destaque';
+  renderProducts();
+  document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function searchProducts(val) { searchTerm = val; renderProducts(); if(val.length > 2) document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'}); }
+
+// O timer agora é iniciado dentro de loadConfig() dinamicamente
+
+// ── SCROLL ──
+const navbar   = document.getElementById('navbar');
+const wppFloat = document.getElementById('wppFloat');
+const scrollBtn= document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  navbar.classList.toggle('scrolled', y>60);
+  wppFloat.classList.toggle('visible', y>400);
+  scrollBtn.classList.toggle('visible', y>400);
+});
+
+// ── FADE OBSERVER ──
+const fadeObs = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*55); });
+},{threshold:.07});
+document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+// ── HERO SLIDER ──
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.sdot');
+const progBar = document.getElementById('sliderProgress');
+const sliderMain = document.getElementById('heroSlider');
+let currentSlide = 0;
+let slideInterval;
+let progressVal = 0;
+let progressInterval;
+const slideDuration = 4000;
+
+function updateSlider(idx) {
+  currentSlide = idx;
+  slides.forEach((s, i) => {
+    s.classList.toggle('active', i === currentSlide);
+    dots[i].classList.toggle('active', i === currentSlide);
+  });
+  resetProgress();
+}
+function nextSlide() { updateSlider((currentSlide + 1) % slides.length); }
+function prevSlide() { updateSlider((currentSlide - 1 + slides.length) % slides.length); }
+
+function resetProgress() {
+  progressVal = 0;
+  if(progBar) progBar.style.width = '0%';
+  progBar.style.transition = 'none';
+}
+function stepProgress() {
+  progressVal += 100 / (slideDuration / 50);
+  if(progBar) {
+    progBar.style.transition = 'width 50ms linear';
+    progBar.style.width = Math.min(progressVal, 100) + '%';
+  }
+}
+
+function startSlider() {
+  stopSlider();
+  slideInterval = setInterval(nextSlide, slideDuration);
+  progressInterval = setInterval(stepProgress, 50);
+}
+function stopSlider() {
+  clearInterval(slideInterval);
+  clearInterval(progressInterval);
+}
+
+document.getElementById('sliderNext').addEventListener('click', () => { nextSlide(); startSlider(); });
+document.getElementById('sliderPrev').addEventListener('click', () => { prevSlide(); startSlider(); });
+dots.forEach((dot, i) => {
+  dot.addEventListener('click', () => { updateSlider(i); startSlider(); });
+});
+
+sliderMain.addEventListener('mouseenter', stopSlider);
+sliderMain.addEventListener('mouseleave', startSlider);
+startSlider();
+
+// ── INIT ──
+(async () => {
+  await loadConfig();
+
+// ── FAQ ──
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const parent = btn.parentElement;
+    parent.classList.toggle('active');
+    const icon = btn.querySelector('.faq-icon');
+    icon.textContent = parent.classList.contains('active') ? '-' : '+';
+  });
+});
+
+  await loadBanners();
+  await loadProducts();
+})();
+</script>
+</body>
+</html>
