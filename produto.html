@@ -1,227 +1,576 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Produto | R&S Makeup</title>
-<meta name="description" content="Detalhes do produto · R&S Makeup">
-<link rel="icon" href="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<style>
-/* ══════════════════════════════════════════
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produto | R&S Makeup</title>
+  <meta name="description" content="Detalhes do produto · R&S Makeup">
+  <link rel="icon" href="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <style>
+    /* ══════════════════════════════════════════
    R&S MAKEUP · PRODUCT PAGE PREMIUM
 ══════════════════════════════════════════ */
-:root{
-  --gold:#D4A373; --gold-l:#E9C09E; --brown:#2B2B2B; --beige:#F8F5F2; --white:#fff;
-  --text-muted:#6B6B6B; --ease:cubic-bezier(.165,.84,.44,1);
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Montserrat',sans-serif;background:#fff;color:var(--brown);line-height:1.6}
+    :root {
+      --gold: #D4A373;
+      --gold-l: #E9C09E;
+      --brown: #2B2B2B;
+      --beige: #F8F5F2;
+      --white: #fff;
+      --text-muted: #6B6B6B;
+      --ease: cubic-bezier(.165, .84, .44, 1);
+    }
 
-/* ── NAVBAR ── */
-.nav{padding:1.4rem 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:100;box-shadow:0 2px 15px rgba(0,0,0,.03)}
-.nav-logo img{height:42px}
-.btn-back{font-size:.7rem;font-weight:700;text-transform:uppercase;color:var(--brown);text-decoration:none;display:flex;align-items:center;gap:.5rem;border:1.5px solid #eee;padding:.6rem 1.2rem;border-radius:50px;transition:all .3s}
-.btn-back:hover{border-color:var(--gold);color:var(--gold)}
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
 
-/* ── CONTAINER ── */
-.container{max-width:1100px;margin:2.5rem auto;padding:0 5%}
-.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-bottom:5rem}
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #fff;
+      color: var(--brown);
+      line-height: 1.6
+    }
 
-/* ── GALLERY ── */
-.gallery-wrap{display:flex;flex-direction:column;gap:1.5rem}
-.main-img-box{position:relative;aspect-ratio:1;border-radius:24px;overflow:hidden;background:#f9f9f9;border:1px solid #f0f0f0}
-.main-img-box img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
-.thumbs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem}
-.thumb{aspect-ratio:1;border-radius:12px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all .3s;background:#f9f9f9}
-.thumb img{width:100%;height:100%;object-fit:cover;opacity:.6}
-.thumb:hover img{opacity:1}
-.thumb.active{border-color:var(--gold)}
-.thumb.active img{opacity:1}
+    /* ── NAVBAR ── */
+    .nav {
+      padding: 1.4rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, .03)
+    }
 
-/* ── INFO ── */
-.p-info{display:flex;flex-direction:column;gap:1.5rem}
-.p-cat{font-size:.7rem;font-weight:800;text-transform:uppercase;color:var(--gold);letter-spacing:1.5px}
-.p-name{font-family:'Playfair Display',serif;font-size:2.4rem;line-height:1.1;color:var(--brown)}
-.p-stars{font-size:1.1rem;color:var(--gold);display:flex;align-items:center;gap:.4rem}
-.p-stars span{font-size:.8rem;color:var(--text-muted);font-weight:500}
-.p-price-box{display:flex;align-items:baseline;gap:1rem}
-.p-price{font-size:1.8rem;font-weight:700;color:var(--brown)}
-.p-price-old{font-size:1.1rem;color:var(--text-muted);text-decoration:line-through;opacity:.6}
-.p-desc{color:var(--text-muted);font-size:.95rem;line-height:1.8;white-space:pre-line}
-.btn-wpp{display:flex;align-items:center;justify-content:center;gap:.8rem;background:#25D366;color:#fff;text-decoration:none;padding:1.2rem;border-radius:16px;font-weight:700;font-size:1.1rem;transition:all .3s;box-shadow:0 8px 24px rgba(37,211,102,.25)}
-.btn-wpp:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(37,211,102,.35)}
+    .nav-logo img {
+      height: 42px
+    }
 
-/* ── REVIEWS ── */
-.reviews-section{border-top:1px solid #f0f0f0;padding-top:4rem}
-.sec-title{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:2rem}
-.reviews-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
-.review-item{padding:1.8rem;background:var(--beige);border-radius:24px;border:1px solid rgba(212,163,115,.1);margin-bottom:1.5rem;position:relative}
-.rev-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem}
-.rev-name{font-weight:700;font-size:.95rem}
-.rev-stars{color:var(--gold);font-size:.8rem}
-.rev-text{font-size:.9rem;color:var(--text-muted);line-height:1.6}
+    .btn-back {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--brown);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1.5px solid #eee;
+      padding: .6rem 1.2rem;
+      border-radius: 50px;
+      transition: all .3s
+    }
 
-/* ── REVIEW FORM ── */
-.rev-form-card{background:#fff;border:1px solid #f0f0f0;padding:2rem;border-radius:24px;position:sticky;top:6rem}
-.form-field{margin-bottom:1.2rem}
-.form-field label{display:block;font-size:.7rem;font-weight:800;text-transform:uppercase;color:var(--text-muted);margin-bottom:.5rem;letter-spacing:1px}
-.form-field input, .form-field textarea, .form-field select{width:100%;padding:.9rem 1.2rem;border:1.5px solid #f0f0f0;border-radius:12px;font-family:inherit;font-size:.9rem;transition:all .3s}
-.form-field input:focus, .form-field select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 4px rgba(212,163,115,.1)}
-.btn-submit{width:100%;background:var(--brown);color:#fff;padding:1rem;border:none;border-radius:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all .3s}
-.btn-submit:hover{background:var(--gold);transform:translateY(-2px)}
+    .btn-back:hover {
+      border-color: var(--gold);
+      color: var(--gold)
+    }
 
-/* ── MOBILE ── */
-@media(max-width:850px){
-  .p-grid{grid-template-columns:1fr;gap:2rem}
-  .reviews-grid{grid-template-columns:1fr}
-  .p-name{font-size:1.8rem}
-  .main-img-box{border-radius:16px}
-  .rev-form-card{position:static;margin-top:2rem}
-}
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 5%
+    }
 
-/* ── VARIATIONS ── */
-.var-group{margin-bottom:1.5rem}
-.var-label{font-size:.7rem;font-weight:800;text-transform:uppercase;color:var(--text-muted);margin-bottom:.8rem;letter-spacing:1px;display:block}
-.var-chips{display:flex;flex-wrap:wrap;gap:.8rem}
-.chip{padding:.6rem 1.2rem;border-radius:50px;border:1.5px solid #eee;font-size: .85rem;font-weight:600;cursor:pointer;transition:all .3s;background:#fff;user-select:none}
-.chip:hover{border-color:var(--gold)}
-.chip.active{background:var(--brown);color:#fff;border-color:var(--brown);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .p-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem
+    }
 
-@keyframes spin{0%{transform:rotate(0deg)}100% {transform:rotate(360deg)}}
-</style>
+    /* ── GALLERY ── */
+    .gallery-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem
+    }
+
+    .main-img-box {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #f9f9f9;
+      border: 1px solid #f0f0f0
+    }
+
+    .main-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s var(--ease)
+    }
+
+    .thumbs-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .8rem
+    }
+
+    .thumb {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all .3s;
+      background: #f9f9f9
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .6
+    }
+
+    .thumb:hover img {
+      opacity: 1
+    }
+
+    .thumb.active {
+      border-color: var(--gold)
+    }
+
+    .thumb.active img {
+      opacity: 1
+    }
+
+    /* ── INFO ── */
+    .p-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem
+    }
+
+    .p-cat {
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--gold);
+      letter-spacing: 1.5px
+    }
+
+    .p-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      line-height: 1.1;
+      color: var(--brown)
+    }
+
+    .p-stars {
+      font-size: 1.1rem;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: .4rem
+    }
+
+    .p-stars span {
+      font-size: .8rem;
+      color: var(--text-muted);
+      font-weight: 500
+    }
+
+    .p-price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem
+    }
+
+    .p-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--brown)
+    }
+
+    .p-price-old {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      opacity: .6
+    }
+
+    .p-desc {
+      color: var(--text-muted);
+      font-size: .95rem;
+      line-height: 1.8;
+      white-space: pre-line
+    }
+
+    .btn-wpp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      padding: 1.2rem;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all .3s;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, .25)
+    }
+
+    .btn-wpp:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, .35)
+    }
+
+    /* ── REVIEWS ── */
+    .reviews-section {
+      border-top: 1px solid #f0f0f0;
+      padding-top: 4rem
+    }
+
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 2rem
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem
+    }
+
+    .review-item {
+      padding: 1.8rem;
+      background: var(--beige);
+      border-radius: 24px;
+      border: 1px solid rgba(212, 163, 115, .1);
+      margin-bottom: 1.5rem;
+      position: relative
+    }
+
+    .rev-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .8rem
+    }
+
+    .rev-name {
+      font-weight: 700;
+      font-size: .95rem
+    }
+
+    .rev-stars {
+      color: var(--gold);
+      font-size: .8rem
+    }
+
+    .rev-text {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.6
+    }
+
+    /* ── REVIEW FORM ── */
+    .rev-form-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      padding: 2rem;
+      border-radius: 24px;
+      position: sticky;
+      top: 6rem
+    }
+
+    .form-field {
+      margin-bottom: 1.2rem
+    }
+
+    .form-field label {
+      display: block;
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: .5rem;
+      letter-spacing: 1px
+    }
+
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      padding: .9rem 1.2rem;
+      border: 1.5px solid #f0f0f0;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: .9rem;
+      transition: all .3s
+    }
+
+    .form-field input:focus,
+    .form-field select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(212, 163, 115, .1)
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--brown);
+      color: #fff;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all .3s
+    }
+
+    .btn-submit:hover {
+      background: var(--gold);
+      transform: translateY(-2px)
+    }
+
+    /* ── MOBILE ── */
+    @media(max-width:850px) {
+      .p-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem
+      }
+
+      .reviews-grid {
+        grid-template-columns: 1fr
+      }
+
+      .p-name {
+        font-size: 1.8rem
+      }
+
+      .main-img-box {
+        border-radius: 16px
+      }
+
+      .rev-form-card {
+        position: static;
+        margin-top: 2rem
+      }
+    }
+
+    /* ── VARIATIONS ── */
+    .var-group {
+      margin-bottom: 1.5rem
+    }
+
+    .var-label {
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: .8rem;
+      letter-spacing: 1px;
+      display: block
+    }
+
+    .var-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem
+    }
+
+    .chip {
+      padding: .6rem 1.2rem;
+      border-radius: 50px;
+      border: 1.5px solid #eee;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      background: #fff;
+      user-select: none
+    }
+
+    .chip:hover {
+      border-color: var(--gold)
+    }
+
+    .chip.active {
+      background: var(--brown);
+      color: #fff;
+      border-color: var(--brown);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .15)
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg)
+      }
+
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<nav class="nav">
-  <div class="nav-logo"><a href="index.html"><img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" alt="R&S Makeup"></a></div>
-  <a href="index.html" class="btn-back">← Voltar à Loja</a>
-</nav>
+  <nav class="nav">
+    <div class="nav-logo"><a href="index.html"><img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png"
+          alt="R&S Makeup"></a></div>
+    <a href="index.html" class="btn-back">← Voltar à Loja</a>
+  </nav>
 
-<div id="loader" class="loader-wrap"><div class="loader"></div><p style="font-size:.8rem;color:var(--text-muted)">Preparando sua beleza...</p></div>
-
-<div id="error-view" style="display:none" class="loader-wrap">
-  <div style="font-size:3rem">😔</div>
-  <h2 style="font-family:'Playfair Display',serif">Oops! Produto não encontrado.</h2>
-  <p style="color:var(--text-muted);margin-bottom:2rem">Esse produto pode ter sido removido ou o link está incorreto.</p>
-  <a href="index.html" class="btn-back">Ver outros produtos</a>
-</div>
-
-<main id="p-content" class="container" style="display:none">
-  <div class="p-grid">
-    <!-- GALERIA -->
-    <div class="gallery-wrap">
-      <div class="main-img-box" id="mainImgBox"><img id="mainImg" src=""></div>
-      <div class="thumbs-grid" id="thumbGrid"></div>
-    </div>
-
-    <!-- INFO -->
-    <div class="p-info">
-      <div class="p-cat" id="pCat">CATEGORIA</div>
-      <h1 class="p-name" id="pNome">Nome do Produto</h1>
-      <div class="p-stars" id="pStars">⭐⭐⭐⭐⭐ <span id="revCount">(0 avaliações)</span></div>
-      <div class="p-price-box">
-        <span class="p-price" id="pPrice">R$ 0,00</span>
-        <span class="p-price-old" id="pPriceOld">R$ 0,00</span>
-      </div>
-
-      <div id="pVariations" style="margin: 1.5rem 0"></div>
-
-      <p class="p-desc" id="pDesc">Descrição do produto...</p>
-      
-      <a href="#" id="wppBtn" target="_blank" class="btn-wpp">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
-        Comprar no WhatsApp
-      </a>
-    </div>
+  <div id="loader" class="loader-wrap">
+    <div class="loader"></div>
+    <p style="font-size:.8rem;color:var(--text-muted)">Preparando sua beleza...</p>
   </div>
 
-  <!-- AVALIACOES -->
-  <section class="reviews-section">
-    <h2 class="sec-title">O que dizem as nossas clientes</h2>
-    <div class="reviews-grid">
-      <div id="review-list"></div>
-      
-      <!-- FORM -->
-      <div class="rev-form-card">
-        <h3 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem">Escreva sua avaliação</h3>
-        <div class="form-field"><label>Seu Nome</label><input type="text" id="addName" placeholder="Como você quer ser chamada?"></div>
-        <div class="form-grid" style="display:grid;grid-template-columns:1fr;gap:0">
-          <div class="form-field"><label>Sua Nota</label><select id="addNota"><option value="5">⭐⭐⭐⭐⭐ (Excelente)</option><option value="4">⭐⭐⭐⭐ (Ótimo)</option><option value="3">⭐⭐⭐ (Gostei)</option><option value="2">⭐⭐ (Regular)</option><option value="1">⭐ (Poderia melhorar)</option></select></div>
+  <div id="error-view" style="display:none" class="loader-wrap">
+    <div style="font-size:3rem">😔</div>
+    <h2 style="font-family:'Playfair Display',serif">Oops! Produto não encontrado.</h2>
+    <p style="color:var(--text-muted);margin-bottom:2rem">Esse produto pode ter sido removido ou o link está incorreto.
+    </p>
+    <a href="index.html" class="btn-back">Ver outros produtos</a>
+  </div>
+
+  <main id="p-content" class="container" style="display:none">
+    <div class="p-grid">
+      <!-- GALERIA -->
+      <div class="gallery-wrap">
+        <div class="main-img-box" id="mainImgBox"><img id="mainImg" src=""></div>
+        <div class="thumbs-grid" id="thumbGrid"></div>
+      </div>
+
+      <!-- INFO -->
+      <div class="p-info">
+        <div class="p-cat" id="pCat">CATEGORIA</div>
+        <h1 class="p-name" id="pNome">Nome do Produto</h1>
+        <div class="p-stars" id="pStars">⭐⭐⭐⭐⭐ <span id="revCount">(0 avaliações)</span></div>
+        <div class="p-price-box">
+          <span class="p-price" id="pPrice">R$ 0,00</span>
+          <span class="p-price-old" id="pPriceOld">R$ 0,00</span>
         </div>
-        <div class="form-field"><label>Seu Comentário</label><textarea id="addCom" rows="4" placeholder="Conte um pouco sobre sua experiência com o produto..."></textarea></div>
-        <button class="btn-submit" onclick="submitReview()">Enviar Avaliação</button>
+
+        <div id="pVariations" style="margin: 1.5rem 0"></div>
+
+        <p class="p-desc" id="pDesc">Descrição do produto...</p>
+
+        <a href="#" id="wppBtn" target="_blank" class="btn-wpp">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+          </svg>
+          Comprar no WhatsApp
+        </a>
       </div>
     </div>
-  </section>
-</main>
 
-<script>
-const CAT_LABELS = { rosto:'Rosto', olhos:'Olhos', labios:'Lábios', skincare:'Skincare', kits:'Kits & Combos' };
-let product  = null;
-let selectedVars = {};     // { "Cor": "Rosa", "Tamanho": "M" }
-let storeWpp = '5531999999999';
+    <!-- AVALIACOES -->
+    <section class="reviews-section">
+      <h2 class="sec-title">O que dizem as nossas clientes</h2>
+      <div class="reviews-grid">
+        <div id="review-list"></div>
 
-async function loadPage() {
-  const params = new URLSearchParams(location.search);
-  const id = params.get('id');
-  if(!id) { showErr(); return; }
+        <!-- FORM -->
+        <div class="rev-form-card">
+          <h3 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem">Escreva sua avaliação</h3>
+          <div class="form-field"><label>Seu Nome</label><input type="text" id="addName"
+              placeholder="Como você quer ser chamada?"></div>
+          <div class="form-grid" style="display:grid;grid-template-columns:1fr;gap:0">
+            <div class="form-field"><label>Sua Nota</label><select id="addNota">
+                <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
+                <option value="4">⭐⭐⭐⭐ (Ótimo)</option>
+                <option value="3">⭐⭐⭐ (Gostei)</option>
+                <option value="2">⭐⭐ (Regular)</option>
+                <option value="1">⭐ (Poderia melhorar)</option>
+              </select></div>
+          </div>
+          <div class="form-field"><label>Seu Comentário</label><textarea id="addCom" rows="4"
+              placeholder="Conte um pouco sobre sua experiência com o produto..."></textarea></div>
+          <button class="btn-submit" onclick="submitReview()">Enviar Avaliação</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  const sb = getSupabase();
-  const { data: p, error } = await sb.from('produtos').select('*').eq('id', id).maybeSingle();
+  <script>
+    const CAT_LABELS = { rosto: 'Rosto', olhos: 'Olhos', labios: 'Lábios', skincare: 'Skincare', kits: 'Kits & Combos' };
+    let product = null;
+    let selectedVars = {};     // { "Cor": "Rosa", "Tamanho": "M" }
+    let storeWpp = '5531999999999';
 
-  if(error || !p) { showErr(); return; }
-  product = p;
+    async function loadPage() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      if (!id) { showErr(); return; }
 
-  // Header Title
-  document.title = `${p.nome} · R&S Makeup`;
+      const sb = getSupabase();
+      const { data: p, error } = await sb.from('produtos').select('*').eq('id', id).maybeSingle();
 
-  // Info
-  document.getElementById('pCat').textContent = CAT_LABELS[p.categoria] || p.categoria;
-  document.getElementById('pNome').textContent = p.nome;
-  document.getElementById('pPrice').textContent = formatBRL(p.preco);
-  if(p.preco_antigo) {
-    document.getElementById('pPriceOld').textContent = formatBRL(p.preco_antigo);
-    document.getElementById('pPriceOld').style.display = 'inline';
-  } else {
-    document.getElementById('pPriceOld').style.display = 'none';
-  }
-  document.getElementById('pDesc').textContent = p.descricao || 'Sem descrição disponível.';
+      if (error || !p) { showErr(); return; }
+      product = p;
 
-  // Wpp Link
-  const { data: cfg } = await sb.from('config').select('wpp').limit(1).maybeSingle();
-  storeWpp = cfg?.wpp || '5531999999999';
-  
-  // Variations
-  renderVariations(p.variacoes);
+      // Header Title
+      document.title = `${p.nome} · R&S Makeup`;
 
-  // Gallery
-  renderGallery(p.imagens);
+      // Info
+      document.getElementById('pCat').textContent = CAT_LABELS[p.categoria] || p.categoria;
+      document.getElementById('pNome').textContent = p.nome;
+      document.getElementById('pPrice').textContent = formatBRL(p.preco);
+      if (p.preco_antigo) {
+        document.getElementById('pPriceOld').textContent = formatBRL(p.preco_antigo);
+        document.getElementById('pPriceOld').style.display = 'inline';
+      } else {
+        document.getElementById('pPriceOld').style.display = 'none';
+      }
+      document.getElementById('pDesc').textContent = p.descricao || 'Sem descrição disponível.';
 
-  // Reviews
-  renderReviews(p.avaliacoes || []);
+      // Wpp Link
+      const { data: cfg } = await sb.from('config').select('wpp').limit(1).maybeSingle();
+      storeWpp = cfg?.wpp || '5531999999999';
 
-  // Show
-  document.getElementById('loader').style.display = 'none';
-  document.getElementById('p-content').style.display = 'block';
-}
+      // Variations
+      renderVariations(p.variacoes);
 
-function renderVariations(vars) {
-  const container = document.getElementById('pVariations');
-  selectedVars = {};  // reset on every render
+      // Gallery
+      renderGallery(p.imagens);
 
-  if (!Array.isArray(vars) || !vars.length) {
-    container.innerHTML = '';
-    updateWppBtn();
-    return;
-  }
+      // Reviews
+      renderReviews(p.avaliacoes || []);
 
-  // Render ALL attribute groups
-  container.innerHTML = vars.map(attr => `
+      // Show
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('p-content').style.display = 'block';
+    }
+
+    function renderVariations(vars) {
+      const container = document.getElementById('pVariations');
+      selectedVars = {};  // reset on every render
+
+      if (!Array.isArray(vars) || !vars.length) {
+        container.innerHTML = '';
+        updateWppBtn();
+        return;
+      }
+
+      // Render ALL attribute groups
+      container.innerHTML = vars.map(attr => `
     <div class="var-group">
       <span class="var-label">${attr.nome}</span>
       <div class="var-chips" data-attr="${attr.nome}">
@@ -232,105 +581,90 @@ function renderVariations(vars) {
     </div>
   `).join('');
 
-  // Auto-select if an attribute has only one option
-  vars.forEach(attr => {
-    if (attr.opcoes.length === 1) {
-      selectedVars[attr.nome] = attr.opcoes[0];
-      const chip = container.querySelector(`.var-chips[data-attr="${attr.nome}"] .chip`);
-      if (chip) chip.classList.add('active');
+      // Auto-select if an attribute has only one option
+      vars.forEach(attr => {
+        if (attr.opcoes.length === 1) {
+          selectedVars[attr.nome] = attr.opcoes[0];
+          const chip = container.querySelector(`.var-chips[data-attr="${attr.nome}"] .chip`);
+          if (chip) chip.classList.add('active');
+        }
+      });
+
+      updateWppBtn();
     }
-  });
 
-  updateWppBtn();
-}
+    function selectVar(attrName, val, el) {
+      // Toggle: clicking the already-selected chip deselects it
+      if (selectedVars[attrName] === val) {
+        delete selectedVars[attrName];
+        el.classList.remove('active');
+      } else {
+        selectedVars[attrName] = val;
+        // Deselect siblings within this group only
+        const group = document.querySelector(`.var-chips[data-attr="${attrName}"]`);
+        group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+      }
 
-function selectVar(attrName, val, el) {
-  // Toggle: clicking the already-selected chip deselects it
-  if (selectedVars[attrName] === val) {
-    delete selectedVars[attrName];
-    el.classList.remove('active');
-  } else {
-    selectedVars[attrName] = val;
-    // Deselect siblings within this group only
-    const group = document.querySelector(`.var-chips[data-attr="${attrName}"]`);
-    group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-  }
+      updateWppBtn();
+    }
 
-  updateWppBtn();
-}
+    function updateWppBtn() {
+      if (!product) return;
 
-function updateWppBtn() {
-  if (!product) return;
+      const btn  = document.getElementById('wppBtn');
+      const vars = Array.isArray(product.variacoes) ? product.variacoes : [];
 
-  const btn     = document.getElementById('wppBtn');
-  const vars    = Array.isArray(product.variacoes) ? product.variacoes : [];
-  const hasVars = vars.length > 0;
+      // Build message from whatever was selected — no blocking
+      const parts = vars
+        .filter(v => selectedVars[v.nome])
+        .map(v => `${v.nome}: ${selectedVars[v.nome]}`);
+      const suffix = parts.length ? ' - ' + parts.join(' - ') : '';
 
-  // Button is ready when every attribute group has a selection
-  const allSelected = !hasVars || vars.every(v => selectedVars[v.nome]);
+      const msg = encodeURIComponent(`Olá! Gostaria do produto ${product.nome}${suffix}`);
+      btn.href          = `https://wa.me/${storeWpp}?text=${msg}`;
+      btn.style.opacity = '1';
+      btn.style.cursor  = 'pointer';
+      btn.onclick       = null;
+    }
 
-  // Build suffix: "Cor: Rosa - Tamanho: M"
-  const parts = vars
-    .filter(v => selectedVars[v.nome])
-    .map(v => `${v.nome}: ${selectedVars[v.nome]}`);
-  const suffix = parts.length ? ' - ' + parts.join(' - ') : '';
+    function renderGallery(imgs) {
+      const images = Array.isArray(imgs) && imgs.length ? imgs : ['https://via.placeholder.com/600?text=Sem+Foto'];
+      const mainImg = document.getElementById('mainImg');
+      const thumbGrid = document.getElementById('thumbGrid');
 
-  const msg = encodeURIComponent(`Olá! Gostaria do produto ${product.nome}${suffix}`);
-  btn.href = `https://wa.me/${storeWpp}?text=${msg}`;
+      mainImg.src = images[0];
 
-  if (!allSelected) {
-    btn.style.opacity = '0.55';
-    btn.style.cursor  = 'not-allowed';
-    btn.onclick = e => {
-      e.preventDefault();
-      const missing = vars.filter(v => !selectedVars[v.nome]).map(v => v.nome).join(', ');
-      alert(`Escolha uma opção de: ${missing} ✨`);
-    };
-  } else {
-    btn.style.opacity = '1';
-    btn.style.cursor  = 'pointer';
-    btn.onclick       = null;
-  }
-}
-
-function renderGallery(imgs) {
-  const images = Array.isArray(imgs) && imgs.length ? imgs : ['https://via.placeholder.com/600?text=Sem+Foto'];
-  const mainImg = document.getElementById('mainImg');
-  const thumbGrid = document.getElementById('thumbGrid');
-  
-  mainImg.src = images[0];
-  
-  if(images.length > 1) {
-    thumbGrid.innerHTML = images.map((url, i) => `
-      <div class="thumb ${i===0?'active':''}" onclick="setGallery(${i}, this, '${url}')">
+      if (images.length > 1) {
+        thumbGrid.innerHTML = images.map((url, i) => `
+      <div class="thumb ${i === 0 ? 'active' : ''}" onclick="setGallery(${i}, this, '${url}')">
         <img src="${url}">
       </div>
     `).join('');
-  }
-}
+      }
+    }
 
-function setGallery(idx, el, url) {
-  document.getElementById('mainImg').src = url;
-  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-}
+    function setGallery(idx, el, url) {
+      document.getElementById('mainImg').src = url;
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
 
-function renderReviews(revs) {
-  const list = document.getElementById('review-list');
-  const count = document.getElementById('revCount');
-  count.textContent = `(${revs.length} avaliações)`;
+    function renderReviews(revs) {
+      const list = document.getElementById('review-list');
+      const count = document.getElementById('revCount');
+      count.textContent = `(${revs.length} avaliações)`;
 
-  if(!revs.length) {
-    list.innerHTML = '<div style="padding:2rem;text-align:center;background:#f9f9f9;border-radius:24px;color:var(--text-muted)">Ainda não há avaliações para este produto. Seja a primeira a avaliar! ✨</div>';
-    return;
-  }
+      if (!revs.length) {
+        list.innerHTML = '<div style="padding:2rem;text-align:center;background:#f9f9f9;border-radius:24px;color:var(--text-muted)">Ainda não há avaliações para este produto. Seja a primeira a avaliar! ✨</div>';
+        return;
+      }
 
-  // Média de estrelas simplificada
-  const avg = revs.reduce((sum, r) => sum + r.nota, 0) / revs.length;
-  document.getElementById('pStars').innerHTML = '⭐'.repeat(Math.round(avg)) + ` <span>(${revs.length} avaliações)</span>`;
+      // Média de estrelas simplificada
+      const avg = revs.reduce((sum, r) => sum + r.nota, 0) / revs.length;
+      document.getElementById('pStars').innerHTML = '⭐'.repeat(Math.round(avg)) + ` <span>(${revs.length} avaliações)</span>`;
 
-  list.innerHTML = revs.map(r => `
+      list.innerHTML = revs.map(r => `
     <div class="review-item">
       <div class="rev-meta">
         <span class="rev-name">${r.nome}</span>
@@ -339,41 +673,42 @@ function renderReviews(revs) {
       <p class="rev-text">${r.comentario}</p>
     </div>
   `).join('');
-}
+    }
 
-async function submitReview() {
-  const nome = document.getElementById('addName').value.trim();
-  const nota = parseInt(document.getElementById('addNota').value);
-  const com = document.getElementById('addCom').value.trim();
-  
-  if(!nome || !com) { alert('Por favor, preencha nome e comentário.'); return; }
+    async function submitReview() {
+      const nome = document.getElementById('addName').value.trim();
+      const nota = parseInt(document.getElementById('addNota').value);
+      const com = document.getElementById('addCom').value.trim();
 
-  const btn = event.target;
-  btn.disabled = true; btn.textContent = 'Enviando...';
+      if (!nome || !com) { alert('Por favor, preencha nome e comentário.'); return; }
 
-  const newReview = { nome, nota, comentario:com, data: new Date().toISOString() };
-  const revs = Array.isArray(product.avaliacoes) ? [...product.avaliacoes, newReview] : [newReview];
+      const btn = event.target;
+      btn.disabled = true; btn.textContent = 'Enviando...';
 
-  const sb = getSupabase();
-  const { error } = await sb.from('produtos').update({ avaliacoes: revs }).eq('id', product.id);
+      const newReview = { nome, nota, comentario: com, data: new Date().toISOString() };
+      const revs = Array.isArray(product.avaliacoes) ? [...product.avaliacoes, newReview] : [newReview];
 
-  if(!error) {
-    alert('Obrigada! Sua avaliação foi enviada. ✨');
-    location.reload();
-  } else {
-    alert('Erro ao enviar: ' + error.message);
-    btn.disabled = false; btn.textContent = 'Enviar Avaliação';
-  }
-}
+      const sb = getSupabase();
+      const { error } = await sb.from('produtos').update({ avaliacoes: revs }).eq('id', product.id);
 
-function showErr() {
-  document.getElementById('loader').style.display = 'none';
-  document.getElementById('error-view').style.display = 'flex';
-}
+      if (!error) {
+        alert('Obrigada! Sua avaliação foi enviada. ✨');
+        location.reload();
+      } else {
+        alert('Erro ao enviar: ' + error.message);
+        btn.disabled = false; btn.textContent = 'Enviar Avaliação';
+      }
+    }
 
-function formatBRL(v) { return (v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+    function showErr() {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('error-view').style.display = 'flex';
+    }
 
-onload = loadPage;
-</script>
+    function formatBRL(v) { return (v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+
+    onload = loadPage;
+  </script>
 </body>
+
 </html>
