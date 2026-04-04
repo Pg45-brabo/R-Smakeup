@@ -213,47 +213,72 @@ async function loadPage() {
 
 function renderVariations(vars) {
   const container = document.getElementById('pVariations');
-  if(!Array.isArray(vars) || !vars.length) { container.innerHTML=''; return; }
-  
-  container.innerHTML = vars.map((v, i) => `
+  if(!Array.isArray(vars) || !vars.length) { container.innerHTML = ''; return; }
+
+  container.innerHTML = vars.map(v => `
     <div class="var-group">
       <span class="var-label">${v.nome}</span>
-      <div class="var-chips" data-var="${v.nome}">
+      <div class="var-chips" data-attr="${v.nome}">
         ${v.opcoes.map(opt => `
           <div class="chip" onclick="selectVar('${v.nome}', '${opt}', this)">${opt}</div>
         `).join('')}
       </div>
     </div>
   `).join('');
+
+  // Auto-select if only one option per attribute
+  vars.forEach(v => {
+    if(v.opcoes.length === 1) {
+      selectedVars[v.nome] = v.opcoes[0];
+      const chip = document.querySelector(`.var-chips[data-attr="${v.nome}"] .chip`);
+      if(chip) chip.classList.add('active');
+    }
+  });
+
+  updateWppBtn();
 }
 
-function selectVar(name, val, el) {
-  selectedVars[name] = val;
-  const parent = el.parentElement;
-  parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+function selectVar(attrName, val, el) {
+  // Mark selection for this attribute group only
+  selectedVars[attrName] = val;
+
+  // Remove active only within the same attribute chips group
+  const group = el.closest('.var-chips');
+  group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
+
   updateWppBtn();
 }
 
 function updateWppBtn() {
   if(!product) return;
-  
-  const hasUnselected = (product.variacoes || []).some(v => !selectedVars[v.nome]);
+
+  const vars = product.variacoes;
   const btn = document.getElementById('wppBtn');
-  
+
+  // Check: every attribute has exactly one selection
+  const hasVars = Array.isArray(vars) && vars.length > 0;
+  const allSelected = !hasVars || vars.every(v => selectedVars[v.nome]);
+
+  // Build message text: "Atributo: Valor" for each selected var
   let varText = '';
-  if(Object.keys(selectedVars).length > 0) {
-    varText = ' - ' + Object.entries(selectedVars).map(([k,v]) => `${k}: ${v}`).join(', ');
+  if(hasVars && Object.keys(selectedVars).length > 0) {
+    varText = ' - ' + vars
+      .filter(v => selectedVars[v.nome])
+      .map(v => `${v.nome}: ${selectedVars[v.nome]}`)
+      .join(' - ');
   }
-  
-  const msg = encodeURIComponent(`Olá! Gostaria de fazer o pedido do produto: ${product.nome}${varText}`);
+
+  const msg = encodeURIComponent(`Olá! Gostaria do produto ${product.nome}${varText}`);
   btn.href = `https://wa.me/${storeWpp}?text=${msg}`;
-  
-  if(hasUnselected) {
-    btn.style.opacity = '0.7';
-    btn.onclick = (e) => {
+
+  if(!allSelected) {
+    btn.style.opacity = '0.65';
+    btn.style.cursor = 'not-allowed';
+    btn.onclick = e => {
       e.preventDefault();
-      alert('Por favor, escolha as opções (Cor, Tamanho, etc) antes de comprar! ✨');
+      const missing = vars.filter(v => !selectedVars[v.nome]).map(v => v.nome).join(', ');
+      alert(`Por favor, selecione: ${missing} ✨`);
     };
   } else {
     btn.style.opacity = '1';
