@@ -162,8 +162,8 @@ body{font-family:'Montserrat',sans-serif;background:#fff;color:var(--brown);line
 
 <script>
 const CAT_LABELS = { rosto:'Rosto', olhos:'Olhos', labios:'Lábios', skincare:'Skincare', kits:'Kits & Combos' };
-let product = null;
-let selectedOption = null;  // { attrName, value } or null
+let product  = null;
+let selectedVars = {};     // { "Cor": "Rosa", "Tamanho": "M" }
 let storeWpp = '5531999999999';
 
 async function loadPage() {
@@ -212,45 +212,48 @@ async function loadPage() {
 
 function renderVariations(vars) {
   const container = document.getElementById('pVariations');
+  selectedVars = {};  // reset on every render
+
   if (!Array.isArray(vars) || !vars.length) {
     container.innerHTML = '';
     updateWppBtn();
     return;
   }
 
-  // Only use the first attribute group (standard single-attribute model)
-  const attr = vars[0];
-
-  container.innerHTML = `
+  // Render ALL attribute groups
+  container.innerHTML = vars.map(attr => `
     <div class="var-group">
       <span class="var-label">${attr.nome}</span>
-      <div class="var-chips" id="varChips">
+      <div class="var-chips" data-attr="${attr.nome}">
         ${attr.opcoes.map(opt => `
-          <div class="chip" data-opt="${opt}" onclick="selectOption('${attr.nome}', '${opt}', this)">${opt}</div>
+          <div class="chip" onclick="selectVar('${attr.nome}', '${opt}', this)">${opt}</div>
         `).join('')}
       </div>
     </div>
-  `;
+  `).join('');
 
-  // Auto-select if only one option
-  if (attr.opcoes.length === 1) {
-    selectedOption = { attrName: attr.nome, value: attr.opcoes[0] };
-    document.querySelector('#varChips .chip').classList.add('active');
-  }
+  // Auto-select if an attribute has only one option
+  vars.forEach(attr => {
+    if (attr.opcoes.length === 1) {
+      selectedVars[attr.nome] = attr.opcoes[0];
+      const chip = container.querySelector(`.var-chips[data-attr="${attr.nome}"] .chip`);
+      if (chip) chip.classList.add('active');
+    }
+  });
 
   updateWppBtn();
 }
 
-function selectOption(attrName, val, el) {
-  const chips = document.querySelectorAll('#varChips .chip');
-
-  // Toggle: clicking the already-selected option deselects it
-  if (selectedOption && selectedOption.value === val) {
-    selectedOption = null;
-    chips.forEach(c => c.classList.remove('active'));
+function selectVar(attrName, val, el) {
+  // Toggle: clicking the already-selected chip deselects it
+  if (selectedVars[attrName] === val) {
+    delete selectedVars[attrName];
+    el.classList.remove('active');
   } else {
-    selectedOption = { attrName, value: val };
-    chips.forEach(c => c.classList.remove('active'));
+    selectedVars[attrName] = val;
+    // Deselect siblings within this group only
+    const group = document.querySelector(`.var-chips[data-attr="${attrName}"]`);
+    group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
   }
 
@@ -260,29 +263,34 @@ function selectOption(attrName, val, el) {
 function updateWppBtn() {
   if (!product) return;
 
-  const btn = document.getElementById('wppBtn');
-  const hasVars = Array.isArray(product.variacoes) && product.variacoes.length > 0;
-  const ready = !hasVars || selectedOption !== null;
+  const btn     = document.getElementById('wppBtn');
+  const vars    = Array.isArray(product.variacoes) ? product.variacoes : [];
+  const hasVars = vars.length > 0;
 
-  // Build WhatsApp message
-  let suffix = '';
-  if (selectedOption) {
-    suffix = ` - ${selectedOption.attrName}: ${selectedOption.value}`;
-  }
+  // Button is ready when every attribute group has a selection
+  const allSelected = !hasVars || vars.every(v => selectedVars[v.nome]);
+
+  // Build suffix: "Cor: Rosa - Tamanho: M"
+  const parts = vars
+    .filter(v => selectedVars[v.nome])
+    .map(v => `${v.nome}: ${selectedVars[v.nome]}`);
+  const suffix = parts.length ? ' - ' + parts.join(' - ') : '';
+
   const msg = encodeURIComponent(`Olá! Gostaria do produto ${product.nome}${suffix}`);
   btn.href = `https://wa.me/${storeWpp}?text=${msg}`;
 
-  // Gate the button only when variations exist and none is chosen
-  if (!ready) {
+  if (!allSelected) {
     btn.style.opacity = '0.55';
     btn.style.cursor  = 'not-allowed';
     btn.onclick = e => {
       e.preventDefault();
-      alert(`Escolha uma opção de ${product.variacoes[0].nome} antes de comprar ✨`);
+      const missing = vars.filter(v => !selectedVars[v.nome]).map(v => v.nome).join(', ');
+      alert(`Escolha uma opção de: ${missing} ✨`);
     };
   } else {
     btn.style.opacity = '1';
-    btn.onclick = null;
+    btn.style.cursor  = 'pointer';
+    btn.onclick       = null;
   }
 }
 
