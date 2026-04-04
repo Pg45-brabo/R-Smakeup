@@ -84,9 +84,14 @@ body{font-family:'Montserrat',sans-serif;background:#fff;color:var(--brown);line
   .rev-form-card{position:static;margin-top:2rem}
 }
 
-/* ── LOADER ── */
-.loader-wrap{min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem}
-.loader{width:40px;height:40px;border:3px solid #f3f3f3;border-top:3px solid var(--gold);border-radius:50%;animation:spin 1s linear infinite}
+/* ── VARIATIONS ── */
+.var-group{margin-bottom:1.5rem}
+.var-label{font-size:.7rem;font-weight:800;text-transform:uppercase;color:var(--text-muted);margin-bottom:.8rem;letter-spacing:1px;display:block}
+.var-chips{display:flex;flex-wrap:wrap;gap:.8rem}
+.chip{padding:.6rem 1.2rem;border-radius:50px;border:1.5px solid #eee;font-size: .85rem;font-weight:600;cursor:pointer;transition:all .3s;background:#fff;user-select:none}
+.chip:hover{border-color:var(--gold)}
+.chip.active{background:var(--brown);color:#fff;border-color:var(--brown);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+
 @keyframes spin{0%{transform:rotate(0deg)}100% {transform:rotate(360deg)}}
 </style>
 </head>
@@ -123,6 +128,9 @@ body{font-family:'Montserrat',sans-serif;background:#fff;color:var(--brown);line
         <span class="p-price" id="pPrice">R$ 0,00</span>
         <span class="p-price-old" id="pPriceOld">R$ 0,00</span>
       </div>
+
+      <div id="pVariations" style="margin: 1.5rem 0"></div>
+
       <p class="p-desc" id="pDesc">Descrição do produto...</p>
       
       <a href="#" id="wppBtn" target="_blank" class="btn-wpp">
@@ -155,6 +163,8 @@ body{font-family:'Montserrat',sans-serif;background:#fff;color:var(--brown);line
 <script>
 const CAT_LABELS = { rosto:'Rosto', olhos:'Olhos', labios:'Lábios', skincare:'Skincare', kits:'Kits & Combos' };
 let product = null;
+let selectedVars = {};
+let storeWpp = '5531999999999';
 
 async function loadPage() {
   const params = new URLSearchParams(location.search);
@@ -184,9 +194,11 @@ async function loadPage() {
 
   // Wpp Link
   const { data: cfg } = await sb.from('config').select('wpp').limit(1).maybeSingle();
-  const wppNum = cfg?.wpp || '5531999999999';
-  const msg = encodeURIComponent(`Olá! Gostaria de fazer o pedido do produto: ${p.nome}`);
-  document.getElementById('wppBtn').href = `https://wa.me/${wppNum}?text=${msg}`;
+  storeWpp = cfg?.wpp || '5531999999999';
+  
+  // Variations
+  renderVariations(p.variacoes);
+  updateWppBtn();
 
   // Gallery
   renderGallery(p.imagens);
@@ -197,6 +209,56 @@ async function loadPage() {
   // Show
   document.getElementById('loader').style.display = 'none';
   document.getElementById('p-content').style.display = 'block';
+}
+
+function renderVariations(vars) {
+  const container = document.getElementById('pVariations');
+  if(!Array.isArray(vars) || !vars.length) { container.innerHTML=''; return; }
+  
+  container.innerHTML = vars.map((v, i) => `
+    <div class="var-group">
+      <span class="var-label">${v.nome}</span>
+      <div class="var-chips" data-var="${v.nome}">
+        ${v.opcoes.map(opt => `
+          <div class="chip" onclick="selectVar('${v.nome}', '${opt}', this)">${opt}</div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectVar(name, val, el) {
+  selectedVars[name] = val;
+  const parent = el.parentElement;
+  parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  updateWppBtn();
+}
+
+function updateWppBtn() {
+  if(!product) return;
+  
+  const hasUnselected = (product.variacoes || []).some(v => !selectedVars[v.nome]);
+  const btn = document.getElementById('wppBtn');
+  
+  let varText = '';
+  if(Object.keys(selectedVars).length > 0) {
+    varText = ' - ' + Object.entries(selectedVars).map(([k,v]) => `${k}: ${v}`).join(', ');
+  }
+  
+  const msg = encodeURIComponent(`Olá! Gostaria de fazer o pedido do produto: ${product.nome}${varText}`);
+  btn.href = `https://wa.me/${storeWpp}?text=${msg}`;
+  
+  if(hasUnselected) {
+    btn.style.opacity = '0.7';
+    btn.onclick = (e) => {
+      e.preventDefault();
+      alert('Por favor, escolha as opções (Cor, Tamanho, etc) antes de comprar! ✨');
+    };
+  } else {
+    btn.style.opacity = '1';
+    btn.onclick = null;
+  }
 }
 
 function renderGallery(imgs) {
