@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +26,6 @@
       --text-muted: #6B6B6B;
       --ease: cubic-bezier(.165, .84, .44, 1);
     }
-
     *,
     *::before,
     *::after {
@@ -35,14 +33,12 @@
       padding: 0;
       box-sizing: border-box
     }
-
     body {
       font-family: 'Montserrat', sans-serif;
       background: #fff;
       color: var(--brown);
       line-height: 1.6
     }
-
     /* ── NAVBAR ── */
     .nav {
       padding: 1.4rem 5%;
@@ -55,11 +51,9 @@
       z-index: 100;
       box-shadow: 0 2px 15px rgba(0, 0, 0, .03)
     }
-
     .nav-logo img {
       height: 42px
     }
-
     .btn-back {
       font-size: .7rem;
       font-weight: 700;
@@ -74,33 +68,28 @@
       border-radius: 50px;
       transition: all .3s
     }
-
     .btn-back:hover {
       border-color: var(--gold);
       color: var(--gold)
     }
-
     /* ── CONTAINER ── */
     .container {
       max-width: 1100px;
       margin: 2.5rem auto;
       padding: 0 5%
     }
-
     .p-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       margin-bottom: 5rem
     }
-
     /* ── GALLERY ── */
     .gallery-wrap {
       display: flex;
       flex-direction: column;
       gap: 1.5rem
     }
-
     .main-img-box {
       position: relative;
       aspect-ratio: 1;
@@ -109,20 +98,17 @@
       background: #f9f9f9;
       border: 1px solid #f0f0f0
     }
-
     .main-img-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform .5s var(--ease)
     }
-
     .thumbs-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: .8rem
     }
-
     .thumb {
       aspect-ratio: 1;
       border-radius: 12px;
@@ -132,33 +118,27 @@
       transition: all .3s;
       background: #f9f9f9
     }
-
     .thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: .6
     }
-
     .thumb:hover img {
       opacity: 1
     }
-
     .thumb.active {
       border-color: var(--gold)
     }
-
     .thumb.active img {
       opacity: 1
     }
-
     /* ── INFO ── */
     .p-info {
       display: flex;
       flex-direction: column;
       gap: 1.5rem
     }
-
     .p-cat {
       font-size: .7rem;
       font-weight: 800;
@@ -166,14 +146,12 @@
       color: var(--gold);
       letter-spacing: 1.5px
     }
-
     .p-name {
       font-family: 'Playfair Display', serif;
       font-size: 2.4rem;
       line-height: 1.1;
       color: var(--brown)
     }
-
     .p-stars {
       font-size: 1.1rem;
       color: var(--gold);
@@ -181,39 +159,33 @@
       align-items: center;
       gap: .4rem
     }
-
     .p-stars span {
       font-size: .8rem;
       color: var(--text-muted);
       font-weight: 500
     }
-
     .p-price-box {
       display: flex;
       align-items: baseline;
       gap: 1rem
     }
-
     .p-price {
       font-size: 1.8rem;
       font-weight: 700;
       color: var(--brown)
     }
-
     .p-price-old {
       font-size: 1.1rem;
       color: var(--text-muted);
       text-decoration: line-through;
       opacity: .6
     }
-
     .p-desc {
       color: var(--text-muted);
       font-size: .95rem;
       line-height: 1.8;
       white-space: pre-line
     }
-
     .btn-wpp {
       display: flex;
       align-items: center;
@@ -229,30 +201,25 @@
       transition: all .3s;
       box-shadow: 0 8px 24px rgba(37, 211, 102, .25)
     }
-
     .btn-wpp:hover {
       transform: translateY(-3px);
       box-shadow: 0 12px 30px rgba(37, 211, 102, .35)
     }
-
     /* ── REVIEWS ── */
     .reviews-section {
       border-top: 1px solid #f0f0f0;
       padding-top: 4rem
     }
-
     .sec-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.8rem;
       margin-bottom: 2rem
     }
-
     .reviews-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem
     }
-
     .review-item {
       padding: 1.8rem;
       background: var(--beige);
@@ -261,30 +228,25 @@
       margin-bottom: 1.5rem;
       position: relative
     }
-
     .rev-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: .8rem
     }
-
     .rev-name {
       font-weight: 700;
       font-size: .95rem
     }
-
     .rev-stars {
       color: var(--gold);
       font-size: .8rem
     }
-
     .rev-text {
       font-size: .9rem;
       color: var(--text-muted);
       line-height: 1.6
     }
-
     /* ── REVIEW FORM ── */
     .rev-form-card {
       background: #fff;
@@ -294,11 +256,9 @@
       position: sticky;
       top: 6rem
     }
-
     .form-field {
       margin-bottom: 1.2rem
     }
-
     .form-field label {
       display: block;
       font-size: .7rem;
@@ -308,7 +268,6 @@
       margin-bottom: .5rem;
       letter-spacing: 1px
     }
-
     .form-field input,
     .form-field textarea,
     .form-field select {
@@ -320,14 +279,12 @@
       font-size: .9rem;
       transition: all .3s
     }
-
     .form-field input:focus,
     .form-field select:focus {
       outline: none;
       border-color: var(--gold);
       box-shadow: 0 0 0 4px rgba(212, 163, 115, .1)
     }
-
     .btn-submit {
       width: 100%;
       background: var(--brown);
@@ -341,42 +298,34 @@
       cursor: pointer;
       transition: all .3s
     }
-
     .btn-submit:hover {
       background: var(--gold);
       transform: translateY(-2px)
     }
-
     /* ── MOBILE ── */
     @media(max-width:850px) {
       .p-grid {
         grid-template-columns: 1fr;
         gap: 2rem
       }
-
       .reviews-grid {
         grid-template-columns: 1fr
       }
-
       .p-name {
         font-size: 1.8rem
       }
-
       .main-img-box {
         border-radius: 16px
       }
-
       .rev-form-card {
         position: static;
         margin-top: 2rem
       }
     }
-
     /* ── VARIATIONS ── */
     .var-group {
       margin-bottom: 1.5rem
     }
-
     .var-label {
       font-size: .7rem;
       font-weight: 800;
@@ -386,13 +335,11 @@
       letter-spacing: 1px;
       display: block
     }
-
     .var-chips {
       display: flex;
       flex-wrap: wrap;
       gap: .8rem
     }
-
     .chip {
       padding: .6rem 1.2rem;
       border-radius: 50px;
@@ -404,43 +351,35 @@
       background: #fff;
       user-select: none
     }
-
     .chip:hover {
       border-color: var(--gold)
     }
-
     .chip.active {
       background: var(--brown);
       color: #fff;
       border-color: var(--brown);
       box-shadow: 0 4px 12px rgba(0, 0, 0, .15)
     }
-
     @keyframes spin {
       0% {
         transform: rotate(0deg)
       }
-
       100% {
         transform: rotate(360deg)
       }
     }
   </style>
 </head>
-
 <body>
-
   <nav class="nav">
     <div class="nav-logo"><a href="index.html"><img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png"
           alt="R&S Makeup"></a></div>
     <a href="index.html" class="btn-back">← Voltar à Loja</a>
   </nav>
-
   <div id="loader" class="loader-wrap">
     <div class="loader"></div>
     <p style="font-size:.8rem;color:var(--text-muted)">Preparando sua beleza...</p>
   </div>
-
   <div id="error-view" style="display:none" class="loader-wrap">
     <div style="font-size:3rem">😔</div>
     <h2 style="font-family:'Playfair Display',serif">Oops! Produto não encontrado.</h2>
@@ -448,7 +387,6 @@
     </p>
     <a href="index.html" class="btn-back">Ver outros produtos</a>
   </div>
-
   <main id="p-content" class="container" style="display:none">
     <div class="p-grid">
       <!-- GALERIA -->
@@ -456,7 +394,6 @@
         <div class="main-img-box" id="mainImgBox"><img id="mainImg" src=""></div>
         <div class="thumbs-grid" id="thumbGrid"></div>
       </div>
-
       <!-- INFO -->
       <div class="p-info">
         <div class="p-cat" id="pCat">CATEGORIA</div>
@@ -466,11 +403,8 @@
           <span class="p-price" id="pPrice">R$ 0,00</span>
           <span class="p-price-old" id="pPriceOld">R$ 0,00</span>
         </div>
-
         <div id="pVariations" style="margin: 1.5rem 0"></div>
-
         <p class="p-desc" id="pDesc">Descrição do produto...</p>
-
         <a href="#" id="wppBtn" target="_blank" class="btn-wpp">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
             <path
@@ -480,13 +414,11 @@
         </a>
       </div>
     </div>
-
     <!-- AVALIACOES -->
     <section class="reviews-section">
       <h2 class="sec-title">O que dizem as nossas clientes</h2>
       <div class="reviews-grid">
         <div id="review-list"></div>
-
         <!-- FORM -->
         <div class="rev-form-card">
           <h3 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem">Escreva sua avaliação</h3>
@@ -508,27 +440,21 @@
       </div>
     </section>
   </main>
-
   <script>
     const CAT_LABELS = { rosto: 'Rosto', olhos: 'Olhos', labios: 'Lábios', skincare: 'Skincare', kits: 'Kits & Combos' };
     let product = null;
     let selectedVars = {};     // { "Cor": "Rosa", "Tamanho": "M" }
     let storeWpp = '5531999999999';
-
     async function loadPage() {
       const params = new URLSearchParams(location.search);
       const id = params.get('id');
       if (!id) { showErr(); return; }
-
       const sb = getSupabase();
       const { data: p, error } = await sb.from('produtos').select('*').eq('id', id).maybeSingle();
-
       if (error || !p) { showErr(); return; }
       product = p;
-
       // Header Title
       document.title = `${p.nome} · R&S Makeup`;
-
       // Info
       document.getElementById('pCat').textContent = CAT_LABELS[p.categoria] || p.categoria;
       document.getElementById('pNome').textContent = p.nome;
@@ -540,35 +466,27 @@
         document.getElementById('pPriceOld').style.display = 'none';
       }
       document.getElementById('pDesc').textContent = p.descricao || 'Sem descrição disponível.';
-
       // Wpp Link
       const { data: cfg } = await sb.from('config').select('wpp').limit(1).maybeSingle();
       storeWpp = cfg?.wpp || '5531999999999';
-
       // Variations
       renderVariations(p.variacoes);
-
       // Gallery
       renderGallery(p.imagens);
-
       // Reviews
       renderReviews(p.avaliacoes || []);
-
       // Show
       document.getElementById('loader').style.display = 'none';
       document.getElementById('p-content').style.display = 'block';
     }
-
     function renderVariations(vars) {
       const container = document.getElementById('pVariations');
       selectedVars = {};  // reset on every render
-
       if (!Array.isArray(vars) || !vars.length) {
         container.innerHTML = '';
         updateWppBtn();
         return;
       }
-
       // Render ALL attribute groups
       container.innerHTML = vars.map(attr => `
     <div class="var-group">
@@ -580,7 +498,6 @@
       </div>
     </div>
   `).join('');
-
       // Auto-select if an attribute has only one option
       vars.forEach(attr => {
         if (attr.opcoes.length === 1) {
@@ -589,10 +506,8 @@
           if (chip) chip.classList.add('active');
         }
       });
-
       updateWppBtn();
     }
-
     function selectVar(attrName, val, el) {
       // Toggle: clicking the already-selected chip deselects it
       if (selectedVars[attrName] === val) {
@@ -605,36 +520,34 @@
         group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
         el.classList.add('active');
       }
-
       updateWppBtn();
     }
-
     function updateWppBtn() {
       if (!product) return;
-
-      const btn  = document.getElementById('wppBtn');
-      const vars = Array.isArray(product.variacoes) ? product.variacoes : [];
-
-      // Build message from whatever was selected — no blocking
-      const parts = vars
-        .filter(v => selectedVars[v.nome])
-        .map(v => `${v.nome}: ${selectedVars[v.nome]}`);
-      const suffix = parts.length ? ' - ' + parts.join(' - ') : '';
-
-      const msg = encodeURIComponent(`Olá! Gostaria do produto ${product.nome}${suffix}`);
+      const btn = document.getElementById('wppBtn');
+      
+      // Coleta apenas os valores selecionados (sem repetir e sem o nome do atributo, estilo Shopify)
+      const selectedValues = [];
+      const seen = new Set();
+      for (const attrName in selectedVars) {
+        const val = selectedVars[attrName];
+        if (val && !seen.has(val)) {
+          selectedValues.push(val);
+          seen.add(val);
+        }
+      }
+      const suffix = selectedValues.length ? ' - ' + selectedValues.join(' - ') : '';
+      const msg = encodeURIComponent(`Olá! Gostaria de estar adquirindo o produto "${product.nome}"${suffix}`);
       btn.href          = `https://wa.me/${storeWpp}?text=${msg}`;
       btn.style.opacity = '1';
       btn.style.cursor  = 'pointer';
       btn.onclick       = null;
     }
-
     function renderGallery(imgs) {
       const images = Array.isArray(imgs) && imgs.length ? imgs : ['https://via.placeholder.com/600?text=Sem+Foto'];
       const mainImg = document.getElementById('mainImg');
       const thumbGrid = document.getElementById('thumbGrid');
-
       mainImg.src = images[0];
-
       if (images.length > 1) {
         thumbGrid.innerHTML = images.map((url, i) => `
       <div class="thumb ${i === 0 ? 'active' : ''}" onclick="setGallery(${i}, this, '${url}')">
@@ -643,27 +556,22 @@
     `).join('');
       }
     }
-
     function setGallery(idx, el, url) {
       document.getElementById('mainImg').src = url;
       document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
       el.classList.add('active');
     }
-
     function renderReviews(revs) {
       const list = document.getElementById('review-list');
       const count = document.getElementById('revCount');
       count.textContent = `(${revs.length} avaliações)`;
-
       if (!revs.length) {
         list.innerHTML = '<div style="padding:2rem;text-align:center;background:#f9f9f9;border-radius:24px;color:var(--text-muted)">Ainda não há avaliações para este produto. Seja a primeira a avaliar! ✨</div>';
         return;
       }
-
       // Média de estrelas simplificada
       const avg = revs.reduce((sum, r) => sum + r.nota, 0) / revs.length;
       document.getElementById('pStars').innerHTML = '⭐'.repeat(Math.round(avg)) + ` <span>(${revs.length} avaliações)</span>`;
-
       list.innerHTML = revs.map(r => `
     <div class="review-item">
       <div class="rev-meta">
@@ -674,23 +582,17 @@
     </div>
   `).join('');
     }
-
     async function submitReview() {
       const nome = document.getElementById('addName').value.trim();
       const nota = parseInt(document.getElementById('addNota').value);
       const com = document.getElementById('addCom').value.trim();
-
       if (!nome || !com) { alert('Por favor, preencha nome e comentário.'); return; }
-
       const btn = event.target;
       btn.disabled = true; btn.textContent = 'Enviando...';
-
       const newReview = { nome, nota, comentario: com, data: new Date().toISOString() };
       const revs = Array.isArray(product.avaliacoes) ? [...product.avaliacoes, newReview] : [newReview];
-
       const sb = getSupabase();
       const { error } = await sb.from('produtos').update({ avaliacoes: revs }).eq('id', product.id);
-
       if (!error) {
         alert('Obrigada! Sua avaliação foi enviada. ✨');
         location.reload();
@@ -699,16 +601,12 @@
         btn.disabled = false; btn.textContent = 'Enviar Avaliação';
       }
     }
-
     function showErr() {
       document.getElementById('loader').style.display = 'none';
       document.getElementById('error-view').style.display = 'flex';
     }
-
     function formatBRL(v) { return (v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-
     onload = loadPage;
   </script>
 </body>
-
 </html>
