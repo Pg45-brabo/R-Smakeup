@@ -1,559 +1,683 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R&S Makeup | Realce sua Beleza · Matozinhos, MG</title>
-<meta name="description" content="R&S Makeup · Maquiagem original com entrega rápida em Matozinhos e região. Peça pelo WhatsApp!">
-<link rel="icon" href="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="store.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produto | R&S Makeup</title>
+  <meta name="description" content="Detalhes do produto · R&S Makeup">
+  <link rel="icon" href="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <style>
+    /* ══════════════════════════════════════════
+   R&S MAKEUP · PRODUCT PAGE PREMIUM
+══════════════════════════════════════════ */
+    :root {
+      --gold: #D4A373;
+      --gold-l: #E9C09E;
+      --brown: #2B2B2B;
+      --beige: #F8F5F2;
+      --white: #fff;
+      --text-muted: #6B6B6B;
+      --ease: cubic-bezier(.165, .84, .44, 1);
+    }
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #fff;
+      color: var(--brown);
+      line-height: 1.6
+    }
+    /* ── NAVBAR ── */
+    .nav {
+      padding: 1.4rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, .03)
+    }
+    .nav-logo img {
+      height: 42px
+    }
+    .btn-back {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--brown);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1.5px solid #eee;
+      padding: .6rem 1.2rem;
+      border-radius: 50px;
+      transition: all .3s
+    }
+    .btn-back:hover {
+      border-color: var(--gold);
+      color: var(--gold)
+    }
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 1100px;
+      margin: 2.5rem auto;
+      padding: 0 5%
+    }
+    .p-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem
+    }
+    /* ── GALLERY ── */
+    .gallery-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem
+    }
+    .main-img-box {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #f9f9f9;
+      border: 1px solid #f0f0f0
+    }
+    .main-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s var(--ease)
+    }
+    .thumbs-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .8rem
+    }
+    .thumb {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all .3s;
+      background: #f9f9f9
+    }
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .6
+    }
+    .thumb:hover img {
+      opacity: 1
+    }
+    .thumb.active {
+      border-color: var(--gold)
+    }
+    .thumb.active img {
+      opacity: 1
+    }
+    /* ── INFO ── */
+    .p-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem
+    }
+    .p-cat {
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--gold);
+      letter-spacing: 1.5px
+    }
+    .p-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      line-height: 1.1;
+      color: var(--brown)
+    }
+    .p-stars {
+      font-size: 1.1rem;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: .4rem
+    }
+    .p-stars span {
+      font-size: .8rem;
+      color: var(--text-muted);
+      font-weight: 500
+    }
+    .p-price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem
+    }
+    .p-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--brown)
+    }
+    .p-price-old {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      opacity: .6
+    }
+    .p-desc {
+      color: var(--text-muted);
+      font-size: .95rem;
+      line-height: 1.8;
+      white-space: pre-line
+    }
+    .btn-wpp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .8rem;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      padding: 1.2rem;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all .3s;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, .25)
+    }
+    .btn-wpp:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, .35)
+    }
+    /* ── REVIEWS ── */
+    .reviews-section {
+      border-top: 1px solid #f0f0f0;
+      padding-top: 4rem
+    }
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 2rem
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem
+    }
+    .review-item {
+      padding: 1.8rem;
+      background: var(--beige);
+      border-radius: 24px;
+      border: 1px solid rgba(212, 163, 115, .1);
+      margin-bottom: 1.5rem;
+      position: relative
+    }
+    .rev-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .8rem
+    }
+    .rev-name {
+      font-weight: 700;
+      font-size: .95rem
+    }
+    .rev-stars {
+      color: var(--gold);
+      font-size: .8rem
+    }
+    .rev-text {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.6
+    }
+    /* ── REVIEW FORM ── */
+    .rev-form-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      padding: 2rem;
+      border-radius: 24px;
+      position: sticky;
+      top: 6rem
+    }
+    .form-field {
+      margin-bottom: 1.2rem
+    }
+    .form-field label {
+      display: block;
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: .5rem;
+      letter-spacing: 1px
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      padding: .9rem 1.2rem;
+      border: 1.5px solid #f0f0f0;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: .9rem;
+      transition: all .3s
+    }
+    .form-field input:focus,
+    .form-field select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(212, 163, 115, .1)
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--brown);
+      color: #fff;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all .3s
+    }
+    .btn-submit:hover {
+      background: var(--gold);
+      transform: translateY(-2px)
+    }
+    /* ── MOBILE ── */
+    @media(max-width:850px) {
+      .p-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem
+      }
+      .reviews-grid {
+        grid-template-columns: 1fr
+      }
+      .p-name {
+        font-size: 1.8rem
+      }
+      .main-img-box {
+        border-radius: 16px
+      }
+      .rev-form-card {
+        position: static;
+        margin-top: 2rem
+      }
+    }
+    /* ── VARIATIONS ── */
+    .var-group {
+      margin-bottom: 1.5rem
+    }
+    .var-label {
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: .8rem;
+      letter-spacing: 1px;
+      display: block
+    }
+    .var-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem
+    }
+    .chip {
+      padding: .6rem 1.2rem;
+      border-radius: 50px;
+      border: 1.5px solid #eee;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      background: #fff;
+      user-select: none
+    }
+    .chip:hover {
+      border-color: var(--gold)
+    }
+    .chip.active {
+      background: var(--brown);
+      color: #fff;
+      border-color: var(--brown);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .15)
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg)
+      }
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+  </style>
 </head>
 <body>
-<!-- TOP BAR -->
-<div class="top-bar">
-  <div class="top-bar-left">
-    <a href="#" id="link-wpp-top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> WhatsApp</a>
-    <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-top" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @rs_makeshop</a>
+  <nav class="nav">
+    <div class="nav-logo"><a href="index.html"><img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png"
+          alt="R&S Makeup"></a></div>
+    <div style="display:flex; align-items:center; gap:20px;">
+      <a href="carrinho.html" id="link-cart-nav" style="position:relative; color: var(--brown); text-decoration: none;">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        <span id="cart-count-badge" style="position:absolute; top:-6px; right:-8px; background:var(--gold); color:#fff; font-size:10px; font-weight:700; width:16px; height:16px; border-radius:50%; display:none; align-items:center; justify-content:center;">0</span>
+      </a>
+      <a href="index.html" class="btn-back">← Voltar à Loja</a>
+    </div>
+  </nav>
+  <div id="loader" class="loader-wrap">
+    <div class="loader"></div>
+    <p style="font-size:.8rem;color:var(--text-muted)">Preparando sua beleza...</p>
   </div>
-  <div class="top-bar-right">🚚 Entrega rápida · Matozinhos/MG</div>
-</div>
-<!-- PROMO BAR -->
-<div class="promo-bar" id="promo-bar" style="display:none">
-  <span id="promo-text"> PROMOÇÃO DA SEMANA · Até 40% OFF · Termina em:</span>
-  <div class="countdown">
-    <div class="cd-unit"><span id="cd-d">00</span><span class="cd-lbl">dias</span></div>
-    <span style="font-weight:700">:</span>
-    <div class="cd-unit"><span id="cd-h">00</span><span class="cd-lbl">h</span></div>
-    <span style="font-weight:700">:</span>
-    <div class="cd-unit"><span id="cd-m">00</span><span class="cd-lbl">min</span></div>
+  <div id="error-view" style="display:none" class="loader-wrap">
+    <div style="font-size:3rem">😔</div>
+    <h2 style="font-family:'Playfair Display',serif">Oops! Produto não encontrado.</h2>
+    <p style="color:var(--text-muted);margin-bottom:2rem">Esse produto pode ter sido removido ou o link está incorreto.
+    </p>
+    <a href="index.html" class="btn-back">Ver outros produtos</a>
   </div>
-</div>
-<!-- NAVBAR -->
-<div class="navbar-main" id="navbar">
-  <div class="nav-logo">
-    <a href="index.html"><img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" alt="R&S Makeup"></a>
-  </div>
-  <div class="nav-search">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" placeholder="Buscar produto..." id="search-input" oninput="searchProducts(this.value)">
-  </div>
-  <div class="nav-icons">
-    <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-nav" target="_blank">
-      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-    </a>
-    <a href="#" id="link-wpp-nav" class="nav-wpp-btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:2px;transform:translateY(2px)"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
-      WhatsApp
-    </a>
-  </div>
-</div>
-<!-- CATEGORY NAV -->
-<nav class="cat-navbar">
-  <div class="cat-navbar-inner">
-    <button class="cat-nav-item active" onclick="filterCat('todos',this)"><span class="cat-icon"></span> Todos</button>
-    <button class="cat-nav-item" onclick="filterCat('rosto',this)"><span class="cat-icon"></span> Rosto</button>
-    <button class="cat-nav-item" onclick="filterCat('olhos',this)"><span class="cat-icon"></span> Olhos</button>
-    <button class="cat-nav-item" onclick="filterCat('labios',this)"><span class="cat-icon"></span> Lábios</button>
-    <button class="cat-nav-item" onclick="filterCat('skincare',this)"><span class="cat-icon"></span> Skincare</button>
-    <button class="cat-nav-item" onclick="filterCat('kits',this)"><span class="cat-icon"></span> Kits & Combos</button>
-    <button class="cat-nav-item" style="color:#c0392b;font-weight:700" onclick="filterHighlight()"><span class="cat-icon"></span> Destaques</button>
-  </div>
-</nav>
-<!-- HERO SLIDER -->
-<section class="hero-slider" id="heroSlider">
-  <!-- ─── Progress bar ─── -->
-  <div class="slider-progress"><div class="slider-progress-bar" id="sliderProgress"></div></div>
-  <!-- ─── Slides ─── -->
-  <div class="slides-track" id="slidesTrack">
-    <!-- Slide 1 -->
-    <div class="slide active" data-slide="0">
-      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=85')"></div>
-      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.78) 0%,rgba(43,43,43,.18) 100%)"></div>
-      <div class="slide-content">
-        <p class="hero-label">R&S Makeup · Matozinhos, MG</p>
-        <h1>Sua Beleza,<br><em>Nossa Paixão.</em></h1>
-        <p>Do batom ao iluminador — produtos originais que realçam o que há de mais bonito em você.</p>
-        <div class="hero-btns">
-          <a href="#produtos" class="btn btn-gold"> Ver Produtos</a>
-          <a href="#" id="link-wpp-hero" class="btn btn-outline-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Comprar no WhatsApp</a>
+  <main id="p-content" class="container" style="display:none">
+    <div class="p-grid">
+      <!-- GALERIA -->
+      <div class="gallery-wrap">
+        <div class="main-img-box" id="mainImgBox"><img id="mainImg" src=""></div>
+        <div class="thumbs-grid" id="thumbGrid"></div>
+      </div>
+      <!-- INFO -->
+      <div class="p-info">
+        <div class="p-cat" id="pCat">CATEGORIA</div>
+        <h1 class="p-name" id="pNome">Nome do Produto</h1>
+        <div class="p-stars" id="pStars">⭐⭐⭐⭐⭐ <span id="revCount">(0 avaliações)</span></div>
+        <div class="p-price-box">
+          <span class="p-price" id="pPrice">R$ 0,00</span>
+          <span class="p-price-old" id="pPriceOld">R$ 0,00</span>
+        </div>
+        <div id="pVariations" style="margin: 1.5rem 0"></div>
+        <p class="p-desc" id="pDesc">Descrição do produto...</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="#" id="wppBtn" target="_blank" class="btn-wpp" style="flex:1;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+            </svg>
+            Comprar Agora
+          </a>
+          <button id="addCartBtn" class="btn-wpp" style="flex:1; background:var(--brown); cursor:pointer; font-size:1.1rem; border:none;" onclick="addToCart()">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> 
+            Adicionar ao Carrinho
+          </button>
         </div>
       </div>
     </div>
-    <!-- Slide 2 -->
-    <div class="slide" data-slide="1">
-      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1600&q=85')"></div>
-      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.78) 0%,rgba(43,43,43,.18) 100%)"></div>
-      <div class="slide-content">
-        <p class="hero-label"> Novidades da Semana</p>
-        <h1>Cores que<br><em>Encantam.</em></h1>
-        <p>Blushes, glosses e batom nas cores mais quentes da temporada. Peça e receba em Matozinhos!</p>
-        <div class="hero-btns">
-          <a href="#produtos" class="btn btn-gold"> Ver Lábios & Blush</a>
-          <a href="#" class="btn btn-outline-white slider-wpp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
+    <!-- AVALIACOES -->
+    <section class="reviews-section">
+      <h2 class="sec-title">O que dizem as nossas clientes</h2>
+      <div class="reviews-grid">
+        <div id="review-list"></div>
+        <!-- FORM -->
+        <div class="rev-form-card">
+          <h3 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem">Escreva sua avaliação</h3>
+          <div class="form-field"><label>Seu Nome</label><input type="text" id="addName"
+              placeholder="Como você quer ser chamada?"></div>
+          <div class="form-grid" style="display:grid;grid-template-columns:1fr;gap:0">
+            <div class="form-field"><label>Sua Nota</label><select id="addNota">
+                <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
+                <option value="4">⭐⭐⭐⭐ (Ótimo)</option>
+                <option value="3">⭐⭐⭐ (Gostei)</option>
+                <option value="2">⭐⭐ (Regular)</option>
+                <option value="1">⭐ (Poderia melhorar)</option>
+              </select></div>
+          </div>
+          <div class="form-field"><label>Seu Comentário</label><textarea id="addCom" rows="4"
+              placeholder="Conte um pouco sobre sua experiência com o produto..."></textarea></div>
+          <button class="btn-submit" onclick="submitReview()">Enviar Avaliação</button>
         </div>
       </div>
-    </div>
-    <!-- Slide 3 -->
-    <div class="slide" data-slide="2">
-      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1600&q=85')"></div>
-      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.8) 0%,rgba(43,43,43,.2) 100%)"></div>
-      <div class="slide-content">
-        <p class="hero-label"> Skincare & Cuidados</p>
-        <h1>Pele Perfeita,<br><em>Toda Semana.</em></h1>
-        <p>Hidratante, bruma, demaquilante e muito mais. Cuide da sua pele com quem entende!</p>
-        <div class="hero-btns">
-          <a href="#produtos" class="btn btn-gold"> Ver Skincare</a>
-          <a href="#" class="btn btn-outline-white slider-wpp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </div><!-- /slides-track -->
-  <!-- ─── Arrows ─── -->
-  <button class="slider-arrow prev" id="sliderPrev" aria-label="Slide anterior">‹</button>
-  <button class="slider-arrow next" id="sliderNext" aria-label="Próximo slide">›</button>
-  <!-- ─── Dots ─── -->
-  <div class="slider-dots" id="sliderDots">
-    <button class="sdot active" data-idx="0" aria-label="Slide 1"></button>
-    <button class="sdot" data-idx="1" aria-label="Slide 2"></button>
-    <button class="sdot" data-idx="2" aria-label="Slide 3"></button>
-  </div>
-</section>
-<!-- TRUST -->
-<div class="trust">
-  <div class="trust-item"><div class="trust-icon">🚚</div><div class="trust-text"><strong>Entrega Rápida</strong><span>Matozinhos e região</span></div></div>
-  <div class="trust-item"><div class="trust-icon">💎</div><div class="trust-text"><strong>Produtos Originais</strong><span>100% autênticos</span></div></div>
-  <div class="trust-item"><div class="trust-icon">💳</div><div class="trust-text"><strong>Pix & Cartão</strong><span>Parcele em até 6x</span></div></div>
-  <div class="trust-item"><div class="trust-icon">✨</div><div class="trust-text"><strong>+500 Clientes</strong><span>Satisfeitas</span></div></div>
-</div>
-<!-- BANNERS SECTION (carregado do Supabase) -->
-<div class="banners-section" id="banners-section" style="display:none"></div>
-<!-- PRODUCTS -->
-<section class="section products" id="produtos">
-  <div class="section-header fade-up">
-    <span class="section-tag" id="produtos-tag"> Todos os Produtos</span>
-    <h2 id="produtos-title">Encontre o seu favorito</h2>
-    <p>Clique para pedir direto pelo WhatsApp</p>
-  </div>
-  <div class="product-grid" id="product-grid">
-    <!-- Skeletons while loading -->
-    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
-    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
-    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
-  </div>
-  <div id="no-results" style="display:none;text-align:center;padding:3rem;color:var(--text-muted);font-size:.9rem;">
-     Nenhum produto encontrado. Tente outro termo.
-  </div>
-</section>
-<!-- PROMO BANNER -->
-<section class="promo-banner-section fade-up">
-  <span class="section-tag">Oferta Especial</span>
-  <h2>Até <em>40% OFF</em></h2>
-  <p>Em produtos selecionados · Só até domingo!</p>
-  <a href="#" id="link-wpp-promo" class="btn btn-gold"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Ver Ofertas no WhatsApp</a>
-</section>
-<!-- SOBRE NÓS -->
-<section class="section about-section" id="sobre">
-  <div class="about-container fade-up">
-    <div class="about-text">
-      <span class="section-tag">Muito Prazer</span>
-      <h2>Por trás da <em>R&S Makeup</em> </h2>
-      <p>A R&S Makeup nasceu de um sonho muito especial: ajudar cada mulher a abraçar sua própria beleza e se sentir confiante todos os dias.</p>
-      <p>Sou uma jovem sonhadora, e construí essa loja com muito esforço e carinho. Acredito que a maquiagem vai muito além das cores; é sobre autoestima, amor-próprio e empoderamento.</p>
-      <p>Por isso, faço curadoria apenas de produtos que eu mesma usaria, entregando qualidade, autenticidade e aquele atendimento próximo que você merece na nossa cidade de Matozinhos e região. Seja muito bem-vinda ao nosso universo rosa!</p>
-    </div>
-  </div>
-</section>
-<!-- CTA -->
-<section class="cta-section fade-up">
-  <h2>Pronta para se produzir? </h2>
-  <p>Fale com a gente e monte seu pedido pelo WhatsApp!</p>
-  <a href="#" id="link-wpp-cta" class="btn-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Abrir WhatsApp Agora</a>
-</section>
-<!-- FOOTER -->
-<footer>
-  
-  <div class="footer-grid">
-    <div class="footer-logo">
-      <img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" alt="R&S Makeup" loading="lazy">
-      <p>Realce sua beleza com quem entende. Produtos originais com entrega em Matozinhos e região.</p>
-    </div>
-    <!-- FAQ NO MEIO DO RODAPÉ -->
-    <div class="footer-faq-col">
-      <h3 style="font-family:'Playfair Display', serif; font-size:1.1rem; color:var(--bg-sec); margin-bottom:0.2rem;">Dúvidas Frequentes</h3>
-      <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom: 1.2rem;">Ficou com alguma dúvida? Veja abaixo</p>
-      
-      <div class="footer-faq-items">
-        <div class="faq-item">
-          <button class="faq-q">Os produtos são originais? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>Sim! Trabalhamos com produtos de qualidade e fornecedores confiáveis para garantir segurança, qualidade e um ótimo resultado.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Entregam para todo o Brasil? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>Sim! Enviamos para todo o Brasil. Também realizamos entregas locais em Matozinhos.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Como faço o pedido? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>É simples! Escolha seus produtos e clique em "Comprar no WhatsApp".</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Demora a entrega? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>Envios nacionais seguem o prazo padrão. Entregas em Matozinhos costumam ser rápidas.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Formas de pagamento? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>Aceitamos PIX, cartão de crédito/débito e, em alguns casos, pagamento na entrega.</p></div>
-        </div>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Links Úteis</h4>
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="#produtos">Produtos</a></li>
-        <li><a href="#" id="link-wpp-footer">Fale Conosco</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Siga a gente</h4>
-      <div class="social-icons">
-        <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-footer" class="social-icon" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-        <a href="https://www.tiktok.com/@rs_makeshop?_r=1&_t=ZS-95AFYdf9fSp" id="link-tiktok-footer" class="social-icon" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
-        <a href="#" id="link-wpp-footer2" class="social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg></a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2025 R&S Makeup · Matozinhos, MG · Todos os direitos reservados</div>
-</footer>
-<!-- FLOAT WPP -->
-<div class="wpp-float" id="wppFloat">
-  <a href="#" id="link-wpp-float" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg><span class="wpp-tip">Fale conosco!</span>
-  </a>
-</div>
-<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<script>
-// ════════════════════════════════════════════
-//  R&S MAKEUP · STORE SCRIPT
-// ════════════════════════════════════════════
-const CAT_LABELS = { rosto:'Rosto', olhos:'Olhos', labios:'Lábios', acessorios:'Acessórios', skincare:'Skincare', kits:'Kits & Combos' };
-const CAT_TAGS   = { todos:' Todos os Produtos', rosto:' Rosto', olhos:' Olhos', labios:' Lábios', skincare:' Skincare', acessorios:'Acessórios', kits:' Kits & Combos', destaques:' Destaques' };
-let allProducts = [];
-let currentCat  = 'todos';
-let highlightMode = false;
-let searchTerm  = '';
-let storeConfig = {
-  wpp:   localStorage.getItem('rs_wpp')   || '5531999999999',
-  insta: localStorage.getItem('rs_insta') || 'rs_makeshop',
-  tiktok:localStorage.getItem('rs_tiktok')|| 'https://www.tiktok.com/@rs_makeshop',
-  promo: localStorage.getItem('rs_promo') || '',
-};
-// ── WPP LINKS ──
-function buildWppLinks() {
-  const num = storeConfig.wpp;
-  const base = `https://wa.me/${num}`;
-  const pedido = `${base}?text=${encodeURIComponent('Olá! Quero fazer um pedido!')}`;
-  const qids = ['link-wpp-top','link-wpp-nav','link-wpp-hero','link-wpp-promo','link-wpp-cta','link-wpp-float','link-wpp-footer','link-wpp-footer2'];
-  qids.forEach(id => { const el = document.getElementById(id); if(el) el.href = pedido; });
-  // Instagram: links já estão fixados no HTML; atualiza apenas se vier do Supabase config
-  if(storeConfig.insta && storeConfig.insta !== 'rs_makeshop') {
-    const instaUrl = `https://www.instagram.com/${storeConfig.insta}`;
-    ['link-insta-top','link-insta-nav','link-insta-footer'].forEach(id => { const el=document.getElementById(id); if(el){ el.href=instaUrl; if(id==='link-insta-top') el.textContent = `<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @${storeConfig.insta}`; } });
-  }
-  const tikEl = document.getElementById('link-tiktok-footer');
-  if(tikEl && storeConfig.tiktok) tikEl.href = storeConfig.tiktok;
-  if(storeConfig.promo) document.getElementById('promo-text').textContent = storeConfig.promo;
-}
-// ── LOAD CONFIG FROM SUPABASE ──
-async function loadConfig() {
-  const sb = getSupabase();
-  if(!sb) { buildWppLinks(); return; }
-  try {
-    // Tenta primeiro 'config', se falhar tenta 'configuracoes_loja' (Resiliência)
-    let { data, error } = await sb.from('config').select('*').limit(1).maybeSingle();
-    
-    if(error || !data) {
-       const res = await sb.from('configuracoes_loja').select('*').limit(1).maybeSingle();
-       if(res.data) data = res.data;
-    }
-    if(data) {
-      storeConfig = { ...storeConfig, ...data };
-      const isAtivo = String(data.timer_ativo) === 'true';
-      
-      if(isAtivo && data.timer_data_final) {
-        initTimer(data);
+    </section>
+  </main>
+  <script>
+    const CAT_LABELS = { rosto: 'Rosto', olhos: 'Olhos', labios: 'Lábios', skincare: 'Skincare', kits: 'Kits & Combos' };
+    let product = null;
+    let selectedVars = {};     // { "Cor": "Rosa", "Tamanho": "M" }
+    let storeWpp = '5531999999999';
+    async function loadPage() {
+      const params = new URLSearchParams(location.search);
+      const id = params.get('id');
+      if (!id) { showErr(); return; }
+      const sb = getSupabase();
+      const { data: p, error } = await sb.from('produtos').select('*').eq('id', id).maybeSingle();
+      if (error || !p) { showErr(); return; }
+      product = p;
+      // Header Title
+      document.title = `${p.nome} · R&S Makeup`;
+      // Info
+      document.getElementById('pCat').textContent = CAT_LABELS[p.categoria] || p.categoria;
+      document.getElementById('pNome').textContent = p.nome;
+      document.getElementById('pPrice').textContent = formatBRL(p.preco);
+      if (p.preco_antigo) {
+        document.getElementById('pPriceOld').textContent = formatBRL(p.preco_antigo);
+        document.getElementById('pPriceOld').style.display = 'inline';
       } else {
-        const bar = document.getElementById('promo-bar');
-        if(bar) bar.style.display = 'none';
+        document.getElementById('pPriceOld').style.display = 'none';
       }
+      document.getElementById('pDesc').textContent = p.descricao || 'Sem descrição disponível.';
+      // Wpp Link
+      const { data: cfg } = await sb.from('config').select('wpp').limit(1).maybeSingle();
+      storeWpp = cfg?.wpp || '5531999999999';
+      // Variations
+      renderVariations(p.variacoes);
+      // Gallery
+      renderGallery(p.imagens);
+      // Reviews
+      renderReviews(p.avaliacoes || []);
+      // Show
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('p-content').style.display = 'block';
+    }
+    function renderVariations(vars) {
+      const container = document.getElementById('pVariations');
+      selectedVars = {};  // reset on every render
+      if (!Array.isArray(vars) || !vars.length) {
+        container.innerHTML = '';
+        updateWppBtn();
+        return;
+      }
+      // Render ALL attribute groups
+      container.innerHTML = vars.map(attr => `
+    <div class="var-group">
+      <span class="var-label">${attr.nome}</span>
+      <div class="var-chips" data-attr="${attr.nome}">
+        ${attr.opcoes.map(opt => `
+          <div class="chip" onclick="selectVar('${attr.nome}', '${opt}', this)">${opt}</div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+      // Auto-select if an attribute has only one option
+      vars.forEach(attr => {
+        if (attr.opcoes.length === 1) {
+          selectedVars[attr.nome] = attr.opcoes[0];
+          const chip = container.querySelector(`.var-chips[data-attr="${attr.nome}"] .chip`);
+          if (chip) chip.classList.add('active');
+        }
+      });
+      updateWppBtn();
+    }
+    function selectVar(attrName, val, el) {
+      // Toggle: clicking the already-selected chip deselects it
+      if (selectedVars[attrName] === val) {
+        delete selectedVars[attrName];
+        el.classList.remove('active');
+      } else {
+        selectedVars[attrName] = val;
+        // Deselect siblings within this group only
+        const group = document.querySelector(`.var-chips[data-attr="${attrName}"]`);
+        group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+      }
+      updateWppBtn();
+    }
+    function updateWppBtn() {
+      if (!product) return;
+      const btn = document.getElementById('wppBtn');
       
-      if(data.wpp) localStorage.setItem('rs_wpp', data.wpp);
-      if(data.insta) localStorage.setItem('rs_insta', data.insta);
-      if(data.tiktok) {
-        localStorage.setItem('rs_tiktok', data.tiktok);
-        const tikEl = document.getElementById('link-tiktok-footer');
-        if(tikEl) tikEl.href = data.tiktok;
+      // Coleta apenas os valores selecionados (sem repetir e sem o nome do atributo, estilo Shopify)
+      const selectedValues = [];
+      const seen = new Set();
+      for (const attrName in selectedVars) {
+        const val = selectedVars[attrName];
+        if (val && !seen.has(val)) {
+          selectedValues.push(val);
+          seen.add(val);
+        }
       }
-    } else {
-      // Se não houver config, esconde a barra
-      const bar = document.getElementById('promo-bar');
-      if(bar) bar.style.display = 'none';
+      const suffix = selectedValues.length ? ' - ' + selectedValues.join(' - ') : '';
+      const msg = encodeURIComponent(`Olá! Gostaria de estar adquirindo o produto "${product.nome}"${suffix}`);
+      btn.href          = `https://wa.me/${storeWpp}?text=${msg}`;
+      btn.style.opacity = '1';
+      btn.style.cursor  = 'pointer';
+      btn.onclick       = null;
     }
-  } catch(e) {
-    console.error('[RS] Erro fatal no loadConfig:', e);
-    const bar = document.getElementById('promo-bar');
-    if(bar) bar.style.display = 'none';
-  }
-  buildWppLinks();
-}
-let timerInterval;
-function initTimer(cfg) {
-  const bar = document.getElementById('promo-bar');
-  const txt = document.getElementById('promo-text');
-  
-  // Garantir que timer_ativo seja boolean (supabase pode retornar como string em alguns casos)
-  const isAtivo = String(cfg.timer_ativo) === 'true';
-  
-  if(!isAtivo || !cfg.timer_data_final) { 
-    if(bar) bar.style.display='none'; 
-    return; 
-  }
-  
-  // Normalizar data para garantir compatibilidade entre navegadores (Safari/iOS)
-  const dateStr = cfg.timer_data_final.replace(' ', 'T');
-  const end = new Date(dateStr).getTime();
-  
-  if(isNaN(end)) {
-    console.warn('Data do timer inválida:', cfg.timer_data_final);
-    if(bar) bar.style.display='none';
-    return;
-  }
-  
-  if(bar) bar.style.display = 'flex';
-  if(cfg.timer_texto && txt) txt.textContent = cfg.timer_texto;
-  
-  if(timerInterval) clearInterval(timerInterval);
-  const update = () => {
-    const now = new Date().getTime();
-    const diff = end - now;
-    
-    if(diff <= 0) {
-      clearInterval(timerInterval);
-      if(bar) bar.style.display = 'none';
-      return;
-    }
-    
-    // Cálculos (Dias, Horas, Minutos)
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    
-    const dEl = document.getElementById('cd-d');
-    const hEl = document.getElementById('cd-h');
-    const mEl = document.getElementById('cd-m');
-    
-    if(dEl) dEl.textContent = String(d).padStart(2,'0');
-    if(hEl) hEl.textContent = String(h).padStart(2,'0');
-    if(mEl) mEl.textContent = String(m).padStart(2,'0');
-  };
-  
-  update();
-  timerInterval = setInterval(update, 1000);
-}
-// ── LOAD BANNERS ──
-async function loadBanners() {
-  const sb = getSupabase();
-  if(!sb) return;
-  try {
-    const { data: banners } = await sb.from('banners').select('*').eq('ativo', true);
-    if(!banners || !banners.length) return;
-    const section = document.getElementById('banners-section');
-    section.style.display = 'block';
-    section.innerHTML = banners.map(b => `
-      <div class="banner-slide" style="margin-bottom:.8rem">
-        ${b.imagem_url ? `<img src="${b.imagem_url}" alt="${b.titulo}" loading="lazy">` : ''}
-        <div class="banner-content">
-          <h2><em>${b.titulo}</em></h2>
-        </div>
+    function renderGallery(imgs) {
+      const images = Array.isArray(imgs) && imgs.length ? imgs : ['https://via.placeholder.com/600?text=Sem+Foto'];
+      const mainImg = document.getElementById('mainImg');
+      const thumbGrid = document.getElementById('thumbGrid');
+      mainImg.src = images[0];
+      if (images.length > 1) {
+        thumbGrid.innerHTML = images.map((url, i) => `
+      <div class="thumb ${i === 0 ? 'active' : ''}" onclick="setGallery(${i}, this, '${url}')">
+        <img src="${url}">
       </div>
     `).join('');
-  } catch(e) {}
-}
-// ── LOAD PRODUCTS ──
-async function loadProducts() {
-  const sb = getSupabase();
-  if(sb) {
-    try {
-      const { data, error } = await sb.from('produtos').select('*').eq('ativo', true).order('created_at', { ascending: false });
-      if(!error && data) { allProducts = data; renderProducts(); return; }
-    } catch(e) {}
-  }
-  // Fallback: produtos de demonstração
-  allProducts = getDemoProducts();
-  renderProducts();
-}
-function getDemoProducts() {
-  return [
-    { id:1,  nome:'Gloss',               categoria:'labios',   badge:'Novo',  destaque:true  },
-    { id:2,  nome:'Contorno',            categoria:'rosto',    badge:'',      destaque:false },
-    { id:3,  nome:'Contorno Líquido',    categoria:'rosto',    badge:'',      destaque:false },
-    { id:4,  nome:'Blush',               categoria:'rosto',    badge:'Top',   destaque:true  },
-    { id:5,  nome:'Blush Líquido',       categoria:'rosto',    badge:'Novo',  destaque:true  },
-    { id:6,  nome:'Base',                categoria:'rosto',    badge:'Top',   destaque:true  },
-    { id:7,  nome:'Corretivo',           categoria:'rosto',    badge:'',      destaque:false },
-    { id:8,  nome:'Pó Compacto',         categoria:'rosto',    badge:'',      destaque:false },
-    { id:9,  nome:'Pó Translúcido',      categoria:'rosto',    badge:'',      destaque:false },
-    { id:10, nome:'Rímel',               categoria:'olhos',    badge:'',      destaque:false },
-    { id:11, nome:'Bruma',               categoria:'skincare', badge:'',      destaque:false },
-    { id:12, nome:'Demaquilante',        categoria:'skincare', badge:'',      destaque:false },
-    { id:13, nome:'Esponjinha',          categoria:'rosto',    badge:'',      destaque:false },
-    { id:14, nome:'Pincel',              categoria:'rosto',    badge:'',      destaque:false },
-    { id:15, nome:'Sabonete Facial',     categoria:'skincare', badge:'',      destaque:false },
-    { id:16, nome:'Hidratante',          categoria:'skincare', badge:'',      destaque:false },
-    { id:17, nome:'Blindagem',           categoria:'skincare', badge:'Novo',  destaque:false },
-    { id:18, nome:'Batom',               categoria:'labios',   badge:'',      destaque:false },
-    { id:19, nome:'Gel Sobrancelha',     categoria:'olhos',    badge:'',      destaque:false },
-    { id:20, nome:'Paleta',              categoria:'olhos',    badge:'Top',   destaque:false },
-    { id:21, nome:'Iluminador RubyRose', categoria:'rosto',    badge:'',      destaque:false },
-  ].map(p => ({ ...p, descricao: 'Produto premium R&S Makeup.', preco: null, imagem_url: '', avaliacao: 5, ativo: true }));
-}
-// ── RENDER PRODUCTS ──
-function renderProducts() {
-  const grid = document.getElementById('product-grid');
-  const noRes = document.getElementById('no-results');
-  let list = allProducts.filter(p => p.ativo !== false);
-  if(highlightMode) list = list.filter(p => p.destaque);
-  else if(currentCat !== 'todos') list = list.filter(p => p.categoria === currentCat);
-  if(searchTerm) list = list.filter(p => p.nome.toLowerCase().includes(searchTerm.toLowerCase()));
-  if(!list.length) { grid.innerHTML=''; noRes.style.display='block'; return; }
-  noRes.style.display='none';
-  grid.innerHTML = list.map(p => {
-    const wpp = `https://wa.me/${storeConfig.wpp}?text=${encodeURIComponent('Olá! Quero comprar o produto: '+p.nome)}`;
-    const priceHtml = p.preco
-      ? `${p.preco_antigo?`<span class="price-old">R$ ${parseFloat(p.preco_antigo).toFixed(2).replace('.',',')}</span>`:''}
-         <span class="price-new">R$ ${parseFloat(p.preco).toFixed(2).replace('.',',')}</span>`
-      : `<span class="price-tbd">Em breve</span>`;
-    const stars = ''.repeat(Math.min(5, Math.max(1, p.avaliacao||5)));
-    const badgeHtml = p.badge ? `<span class="product-badge ${p.badge==='sale'?'sale':''}">${p.badge==='sale'?'Promoção':p.badge}</span>` : (p.destaque ? `<span class="product-badge">Top</span>` : '');
-    return `
-    <div class="product-card fade-up" onclick="location.href='produto.html?id=${p.id}'" style="cursor:pointer" data-id="${p.id}">
-      <div class="product-img">
-        ${(p.imagens && p.imagens[0]) ? `<img src="${p.imagens[0]}" alt="${p.nome}" loading="lazy">` : `<div class="no-img-wrap"><span class="ni-icon"></span><span class="ni-label">Foto em breve</span></div>`}
-        ${badgeHtml}
-        <button class="wish-btn" onclick="event.stopPropagation();this.textContent=this.textContent==='🤍'?'❤️':'🤍'">🤍</button>
+      }
+    }
+    function setGallery(idx, el, url) {
+      document.getElementById('mainImg').src = url;
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+    function renderReviews(revs) {
+      const list = document.getElementById('review-list');
+      const count = document.getElementById('revCount');
+      count.textContent = `(${revs.length} avaliações)`;
+      if (!revs.length) {
+        list.innerHTML = '<div style="padding:2rem;text-align:center;background:#f9f9f9;border-radius:24px;color:var(--text-muted)">Ainda não há avaliações para este produto. Seja a primeira a avaliar! ✨</div>';
+        return;
+      }
+      // Média de estrelas simplificada
+      const avg = revs.reduce((sum, r) => sum + r.nota, 0) / revs.length;
+      document.getElementById('pStars').innerHTML = '⭐'.repeat(Math.round(avg)) + ` <span>(${revs.length} avaliações)</span>`;
+      list.innerHTML = revs.map(r => `
+    <div class="review-item">
+      <div class="rev-meta">
+        <span class="rev-name">${r.nome}</span>
+        <span class="rev-stars">${'⭐'.repeat(r.nota)}</span>
       </div>
-      <div class="product-body">
-        <div class="product-cat-lbl">${CAT_LABELS[p.categoria]||p.categoria||''}</div>
-        <h3>${p.nome}</h3>
-        <div class="stars">${stars}</div>
-        <div class="product-price">${priceHtml}</div>
-        <a class="btn-wpp" href="${wpp}" target="_blank" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
-      </div>
-    </div>`;
-  }).join('');
-  document.querySelectorAll('#product-grid .fade-up').forEach(el => fadeObs.observe(el));
-}
-function filterCat(cat, btn) {
-  currentCat = cat; highlightMode = false;
-  document.querySelectorAll('.cat-nav-item').forEach(b => b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  document.getElementById('produtos-tag').textContent = CAT_TAGS[cat]||' Produtos';
-  document.getElementById('produtos-title').textContent = cat==='todos'?'Encontre o seu favorito':(CAT_LABELS[cat]||cat);
-  renderProducts();
-  document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'});
-}
-function filterHighlight() {
-  highlightMode = true;
-  document.querySelectorAll('.cat-nav-item').forEach(b => b.classList.remove('active'));
-  document.getElementById('produtos-tag').textContent = ' Destaques';
-  document.getElementById('produtos-title').textContent  = 'Produtos em Destaque';
-  renderProducts();
-  document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'});
-}
-function searchProducts(val) { searchTerm = val; renderProducts(); if(val.length > 2) document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'}); }
-// O timer agora é iniciado dentro de loadConfig() dinamicamente
-// ── SCROLL ──
-const navbar   = document.getElementById('navbar');
-const wppFloat = document.getElementById('wppFloat');
-const scrollBtn= document.getElementById('scrollTop');
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  navbar.classList.toggle('scrolled', y>60);
-  wppFloat.classList.toggle('visible', y>400);
-  scrollBtn.classList.toggle('visible', y>400);
-});
-// ── FADE OBSERVER ──
-const fadeObs = new IntersectionObserver(entries => {
-  entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*55); });
-},{threshold:.07});
-document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
-// ── HERO SLIDER ──
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.sdot');
-const progBar = document.getElementById('sliderProgress');
-const sliderMain = document.getElementById('heroSlider');
-let currentSlide = 0;
-let slideInterval;
-let progressVal = 0;
-let progressInterval;
-const slideDuration = 4000;
-function updateSlider(idx) {
-  currentSlide = idx;
-  slides.forEach((s, i) => {
-    s.classList.toggle('active', i === currentSlide);
-    dots[i].classList.toggle('active', i === currentSlide);
-  });
-  resetProgress();
-}
-function nextSlide() { updateSlider((currentSlide + 1) % slides.length); }
-function prevSlide() { updateSlider((currentSlide - 1 + slides.length) % slides.length); }
-function resetProgress() {
-  progressVal = 0;
-  if(progBar) progBar.style.width = '0%';
-  progBar.style.transition = 'none';
-}
-function stepProgress() {
-  progressVal += 100 / (slideDuration / 50);
-  if(progBar) {
-    progBar.style.transition = 'width 50ms linear';
-    progBar.style.width = Math.min(progressVal, 100) + '%';
-  }
-}
-function startSlider() {
-  stopSlider();
-  slideInterval = setInterval(nextSlide, slideDuration);
-  progressInterval = setInterval(stepProgress, 50);
-}
-function stopSlider() {
-  clearInterval(slideInterval);
-  clearInterval(progressInterval);
-}
-document.getElementById('sliderNext').addEventListener('click', () => { nextSlide(); startSlider(); });
-document.getElementById('sliderPrev').addEventListener('click', () => { prevSlide(); startSlider(); });
-dots.forEach((dot, i) => {
-  dot.addEventListener('click', () => { updateSlider(i); startSlider(); });
-});
-sliderMain.addEventListener('mouseenter', stopSlider);
-sliderMain.addEventListener('mouseleave', startSlider);
-startSlider();
-// ── INIT ──
-(async () => {
-  await loadConfig();
-// ── FAQ ──
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const parent = btn.parentElement;
-    parent.classList.toggle('active');
-    const icon = btn.querySelector('.faq-icon');
-    icon.textContent = parent.classList.contains('active') ? '-' : '+';
-  });
-});
-  await loadBanners();
-  await loadProducts();
-})();
-</script>
+      <p class="rev-text">${r.comentario}</p>
+    </div>
+  `).join('');
+    }
+    async function submitReview() {
+      const nome = document.getElementById('addName').value.trim();
+      const nota = parseInt(document.getElementById('addNota').value);
+      const com = document.getElementById('addCom').value.trim();
+      if (!nome || !com) { alert('Por favor, preencha nome e comentário.'); return; }
+      const btn = event.target;
+      btn.disabled = true; btn.textContent = 'Enviando...';
+      const newReview = { nome, nota, comentario: com, data: new Date().toISOString() };
+      const revs = Array.isArray(product.avaliacoes) ? [...product.avaliacoes, newReview] : [newReview];
+      const sb = getSupabase();
+      const { error } = await sb.from('produtos').update({ avaliacoes: revs }).eq('id', product.id);
+      if (!error) {
+        alert('Obrigada! Sua avaliação foi enviada. ✨');
+        location.reload();
+      } else {
+        alert('Erro ao enviar: ' + error.message);
+        btn.disabled = false; btn.textContent = 'Enviar Avaliação';
+      }
+    }
+    function showErr() {
+      document.getElementById('loader').style.display = 'none';
+      document.getElementById('error-view').style.display = 'flex';
+    }
+    function formatBRL(v) { return (v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+    // --- CART LOGIC ---
+    function updateCartCount() {
+      try {
+        let cart = JSON.parse(localStorage.getItem('rs_cart')) || [];
+        let badge = document.getElementById('cart-count-badge');
+        if(badge) {
+          if(cart.length > 0) {
+            badge.style.display = 'flex';
+            badge.textContent = cart.length;
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+      } catch(e) {}
+    }
+    function addToCart() {
+      if(!product) return;
+      
+      const selectedValues = [];
+      const seen = new Set();
+      for (const attrName in selectedVars) {
+        const val = selectedVars[attrName];
+        if (val && !seen.has(val)) {
+          selectedValues.push(val);
+          seen.add(val);
+        }
+      }
+      // Se houver variações e alguma não foi selecionada
+      if (product.variacoes && product.variacoes.length > 0) {
+        if(Object.keys(selectedVars).length < product.variacoes.length) {
+          alert("Por favor, selecione as opções desejadas antes de adicionar ao carrinho!");
+          return;
+        }
+      }
+      const variationString = selectedValues.length ? selectedValues.join(' - ') : '';
+      
+      let cart = JSON.parse(localStorage.getItem('rs_cart')) || [];
+      
+      // Encontrar se já existe o mesmo produto com a MESMA variação
+      let existingItem = cart.find(item => item.id === product.id && item.variacao === variationString);
+      
+      if(existingItem) {
+        existingItem.quantidade += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          nome: product.nome,
+          variacao: variationString,
+          preco: product.preco,
+          imagem: product.imagens?.[0] || 'https://via.placeholder.com/100?text=Sem+Foto',
+          quantidade: 1
+        });
+      }
+      
+      localStorage.setItem('rs_cart', JSON.stringify(cart));
+      updateCartCount();
+      alert('Produto adicionado ao carrinho com sucesso! 🛒');
+    }
+    document.addEventListener('DOMContentLoaded', updateCartCount);
+    window.addEventListener('storage', updateCartCount);
+    onload = loadPage;
+  </script>
 </body>
 </html>
