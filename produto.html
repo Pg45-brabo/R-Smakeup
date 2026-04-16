@@ -580,24 +580,40 @@
         return;
       }
 
+      // Unifica grupos que foram criados com o mesmo nome por engano no admin
+      const mergedMap = {};
+      vars.forEach(attr => {
+        if (!attr.nome || !attr.opcoes || !attr.opcoes.length) return;
+        if (!mergedMap[attr.nome]) mergedMap[attr.nome] = new Set();
+        attr.opcoes.forEach(opt => mergedMap[attr.nome].add(opt));
+      });
+      const mergedVars = Object.keys(mergedMap).map(nome => ({ nome, opcoes: Array.from(mergedMap[nome]) }));
+
       // Render ALL attribute groups
-      container.innerHTML = vars.map(attr => `
-    <div class="var-group">
-      <span class="var-label">${attr.nome}</span>
-      <div class="var-chips" data-attr="${attr.nome}">
-        ${attr.opcoes.map(opt => `
-          <div class="chip" onclick="selectVar('${attr.nome}', '${opt}', this)">${opt}</div>
-        `).join('')}
-      </div>
-    </div>
-  `).join('');
+      container.innerHTML = mergedVars.map(attr => `
+        <div class="var-group">
+          <span class="var-label">${attr.nome}</span>
+          <div class="var-chips" data-attr="${attr.nome}">
+            ${attr.opcoes.map(opt => {
+              let label = opt;
+              if (opt.includes('=')) label = opt.split('=')[0].trim();
+              return `<div class="chip" onclick="selectVar('${attr.nome}', '${opt}', this)">${label}</div>`
+            }).join('')}
+          </div>
+        </div>
+      `).join('');
 
       // Auto-select if an attribute has only one option
-      vars.forEach(attr => {
+      mergedVars.forEach(attr => {
         if (attr.opcoes && attr.opcoes.length === 1) {
           selectedVars[attr.nome] = attr.opcoes[0];
-          const chip = container.querySelector(`.var-chips[data-attr="${attr.nome}"] .chip`);
-          if (chip) chip.classList.add('active');
+          const chips = container.querySelectorAll('.chip');
+          chips.forEach(c => {
+             // Matching by checking parent's data-attr because chip text might be transformed
+             if(c.parentElement.getAttribute('data-attr') === attr.nome) {
+                 c.classList.add('active');
+             }
+          });
         }
       });
 
@@ -775,10 +791,16 @@
         }
       }
 
-      // Validar variações obrigatórias
-      const validVariacoes = product.variacoes ? product.variacoes.filter(v => v.nome && v.opcoes && v.opcoes.length > 0) : [];
-      if (validVariacoes.length > 0) {
-        if(Object.keys(selectedVars).length < validVariacoes.length) {
+      // Validar variações obrigatórias baseando-se nos nomes ÚNICOS
+      const uniqueNames = new Set();
+      if (product.variacoes) {
+        product.variacoes.forEach(v => {
+          if (v.nome && v.opcoes && v.opcoes.length > 0) uniqueNames.add(v.nome);
+        });
+      }
+      
+      if (uniqueNames.size > 0) {
+        if(Object.keys(selectedVars).length < uniqueNames.size) {
           alert("Por favor, selecione as opções desejadas antes de adicionar ao carrinho!");
           return;
         }
