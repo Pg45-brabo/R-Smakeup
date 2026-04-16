@@ -745,7 +745,24 @@ function editProd(id) {
   document.getElementById('fAtivo').value = String(p.ativo);
   currentImages = Array.isArray(p.imagens) ? p.imagens : [];
   currentReviews = Array.isArray(p.avaliacoes) ? p.avaliacoes : [];
-  currentVars = Array.isArray(p.variacoes) ? p.variacoes : [];
+  
+  currentVars = (Array.isArray(p.variacoes) ? p.variacoes : []).map(v => {
+      let baseOpcoes = [];
+      let foundPrice = '';
+      if(v.opcoes) {
+          v.opcoes.forEach(op => {
+              if (op.includes('=')) {
+                  const parts = op.split('=');
+                  baseOpcoes.push(parts[0].trim());
+                  foundPrice = parseFloat(parts[1].trim()) || '';
+              } else {
+                  baseOpcoes.push(op.trim());
+              }
+          });
+      }
+      return { nome: v.nome, opcoes: baseOpcoes, preco_var: foundPrice };
+  });
+  
   renderImgGrid();
   renderReviews();
   renderVars();
@@ -871,16 +888,30 @@ function renderVars() {
   container.innerHTML = currentVars.map((v, i) => `
     <div style="background:#fcfcfc;border:1px solid #efefef;padding:1.2rem;border-radius:15px;display:flex;flex-direction:column;gap:.8rem;position:relative">
       <button onclick="removeVar(${i})" style="position:absolute;top:.8rem;right:.8rem;background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1.1rem">✕</button>
-      <div class="field"><label>Nome do Atributo</label><input type="text" value="${v.nome}" oninput="updateVarName(${i}, this.value)" placeholder="Ex: Cor ou Tamanho"></div>
-      <div class="field"><label>Opções (separadas por vírgula)</label><input type="text" value="${v.opcoes.join(', ')}" oninput="updateVarOpcoes(${i}, this.value)" placeholder="Ex: Rosa, Nude, Vermelho"></div>
+      <div class="field"><label>Nome do Atributo</label><input type="text" value="${v.nome}" oninput="updateVarName(${i}, this.value)" placeholder="Ex: Tamanho ou Tipo"></div>
+      <div class="field"><label>Opções (separadas por vírgula)</label><input type="text" value="${(v.opcoes || []).join(', ')}" oninput="updateVarOpcoes(${i}, this.value)" placeholder="Ex: Rosa, Vermelho"></div>
+      <div class="field"><label>Valor da Variação (R$ - opcional)</label><input type="number" step="0.01" value="${v.preco_var || ''}" oninput="updateVarPreco(${i}, this.value)" placeholder="Deixe em branco para manter o preço normal do produto"></div>
     </div>
   `).join('');
 }
 
 function updateVarName(i, val) { currentVars[i].nome = val; }
 function updateVarOpcoes(i, val) { currentVars[i].opcoes = val.split(',').map(o => o.trim()).filter(o => o); }
+function updateVarPreco(i, val) { currentVars[i].preco_var = val; }
 function removeVar(i) { currentVars.splice(i, 1); renderVars(); }
-function collectVars() { return currentVars.filter(v => v.nome && v.opcoes.length > 0); }
+
+function collectVars() { 
+  return currentVars.filter(v => v.nome && v.opcoes && v.opcoes.length > 0)
+    .map(v => {
+       if (v.preco_var && v.preco_var !== '') {
+           return {
+               nome: v.nome,
+               opcoes: v.opcoes.map(o => `${o} = ${v.preco_var}`)
+           };
+       }
+       return { nome: v.nome, opcoes: v.opcoes };
+    }); 
+}
 
 // ── REVIEWS LOGIC ──
 function addReviewManual() {
