@@ -24,6 +24,7 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Montserrat',sans-serif;background:#f8f9fa;color:#333;overflow-x:hidden}
+
 /* ── LOGIN ── */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#2B2B2B;padding:1.4rem}
 .login-card{background:#fff;border-radius:24px;padding:3rem;width:min(440px,100%);box-shadow:0 32px 80px rgba(0,0,0,.4)}
@@ -37,6 +38,7 @@ body{font-family:'Montserrat',sans-serif;background:#f8f9fa;color:#333;overflow-
 .login-err{display:none;font-size:.8rem;color:#e74c3c;margin-bottom:1rem;text-align:center;padding:.7rem;background:rgba(231,76,60,.1);border-radius:8px}
 .btn-login{width:100%;padding:1rem;background:var(--gold-g);color:#fff;border:none;border-radius:50px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s}
 .btn-login:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(212,163,115,.3)}
+
 /* ── LAYOUT ── */
 .admin-app{display:none;min-height:100vh}
 .admin-app.active{display:flex}
@@ -54,7 +56,9 @@ body{font-family:'Montserrat',sans-serif;background:#f8f9fa;color:#333;overflow-
 .user-av{width:34px;height:34px;background:var(--gold-g);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
 .logout-btn{background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:1.1rem;transition:color .3s}
 .logout-btn:hover{color:#e74c3c}
+
 .main{flex:1;margin-left:var(--sidebar);padding:2rem;min-height:100vh}
+
 /* ── COMPONENTS ── */
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem}
 .topbar h1{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--brown)}
@@ -63,17 +67,21 @@ body{font-family:'Montserrat',sans-serif;background:#f8f9fa;color:#333;overflow-
 .stat-card{background:#fff;padding:1.5rem;border-radius:18px;box-shadow:0 4px 15px rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.02)}
 .stat-val{font-size:1.8rem;font-weight:700;color:var(--brown);margin-bottom:.3rem;font-family:'Playfair Display',serif}
 .stat-label{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+
 /* ── PRODUCT FORM ── */
 .split-layout{display:flex;gap:2rem;align-items:start}
 .form-cols{flex:1;display:flex;flex-direction:column;gap:1.5rem;min-width:0}
 .form-sidebar{width:320px;flex-shrink:0;position:sticky;top:1.5rem}
+
 @media(max-width: 1100px) {
   .split-layout { flex-direction: column; }
   .form-sidebar { width: 100%; position: static; order: -1; margin-bottom: 2rem; }
   .sidebar{display:none} /* Sidebar handles its own burger menu */
 }
+
 .sec-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 1px solid #f2f2f2; color: var(--brown); display: flex; align-items: center; gap: .6rem; font-weight: 600; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
 .img-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 10px; margin-top: 1rem; min-height: 0; }
 .img-item { position: relative; width: 100%; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 2px solid #eee; cursor: pointer; background: #fff; }
 .img-item.main { border-color: var(--gold); }
@@ -82,12 +90,15 @@ body{font-family:'Montserrat',sans-serif;background:#f8f9fa;color:#333;overflow-
 .field label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
 .field input, .field select, .field textarea{padding:.85rem 1rem;border:1.5px solid #eee;border-radius:12px;font-family:inherit;font-size:.85rem;background:#fff;width:100%}
 .field input:focus, .field select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px rgba(212,163,115,.1)}
+
 .upload-box{display:block;border:2px dashed #ddd;border-radius:18px;padding:2rem;text-align:center;cursor:pointer;transition:all .3s;background:#fafafa}
 .upload-box:hover{border-color:var(--gold);background:#fefaf6}
 .upload-box p{font-size:.8rem;color:var(--muted);margin-top:.5rem;line-height:1.4}
+
 .img-del{position:absolute;top:4px;right:4px;width:22px;height:22px;background:#e74c3c;color:#fff;border:none;border-radius:50%;font-size:.7rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:2}
 .img-item:hover .img-del{opacity:1}
 .img-item.main::after{content:'Principal';position:absolute;bottom:0;left:0;right:0;background:var(--gold);color:#fff;font-size:.5rem;font-weight:700;text-align:center;padding:2px 0;z-index:1}
+
 @media(max-width:600px){
   .form-grid{grid-template-columns:1fr}
   .card{padding:1.2rem}
@@ -95,6 +106,7 @@ body{font-family:'Montserrat',sans-serif;background:#f8f9fa;color:#333;overflow-
   .stat-val{font-size:1.4rem}
   .topbar h1{font-size:1.4rem}
 }
+
 /* ── TABLES ── */
 .tbl-wrap{width:100%;overflow-x:auto}
 table{width:100%;border-collapse:collapse}
@@ -104,8 +116,10 @@ td{padding:1.2rem;font-size:.85rem;border-bottom:1px solid #f8f9fa}
 .badge{padding:4px 12px;border-radius:50px;font-size:.65rem;font-weight:700;text-transform:uppercase}
 .badge-on{background:#e6f4ea;color:#1e8e3e}
 .badge-off{background:#fce8e6;color:#d93025}
+
 /* ── MOBILE FIRST REFACTOR ── */
 .admin-app { display: flex; flex-direction: column; }
+
 /* Overlay: always behind sidebar (z:1500), never blocks menu clicks */
 .sidebar-overlay {
   display: none;
@@ -115,6 +129,7 @@ td{padding:1.2rem;font-size:.85rem;border-bottom:1px solid #f8f9fa}
   pointer-events: none;
 }
 .sidebar-overlay.open { display: block; pointer-events: auto; }
+
 /* Sidebar: always above overlay */
 .sidebar {
   width: 280px; position: fixed; top: 0; left: 0; height: 100vh;
@@ -126,6 +141,7 @@ td{padding:1.2rem;font-size:.85rem;border-bottom:1px solid #f8f9fa}
 }
 .sidebar.open { transform: translateX(0); }
 .main { flex: 1; margin-left: 0; padding: 1.2rem; width: 100%; }
+
 @media(min-width: 1025px) {
   .admin-app { flex-direction: row; }
   .sidebar { transform: translateX(0) !important; position: sticky; height: 100vh; flex-shrink: 0; }
@@ -133,37 +149,47 @@ td{padding:1.2rem;font-size:.85rem;border-bottom:1px solid #f8f9fa}
   .hamburger { display: none !important; }
   .sidebar-overlay { display: none !important; }
 }
+
 .hamburger { display: block; font-size: 1.8rem; background: none; border: none; cursor: pointer; color: var(--brown); padding: .5rem; z-index: 2100; margin-right: 1rem; position: relative; }
 .topbar { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; position: sticky; top: 0; background: #f8f9fa; z-index: 100; padding: .5rem 0; }
 .topbar h1 { font-size: 1.4rem; font-family: 'Playfair Display', serif; }
+
 .stats-grid { grid-template-columns: 1fr; }
 @media(min-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
 @media(min-width: 1200px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+
 .card { padding: 1.2rem; margin-bottom: 1.5rem; border-radius: 16px; width: 100%; overflow: hidden; }
 .tbl-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
 table { min-width: 600px; }
+
 /* ── TOUCH TARGETS ── */
 .btn { min-height: 44px; justify-content: center; width: auto; font-size: .8rem; }
 .field input, .field select, .field textarea { min-height: 48px; font-size: 16px !important; }
 .slink { min-height: 54px; font-size: .95rem; }
+
 /* ── FORM ── */
 .form-grid { grid-template-columns: 1fr; gap: 1.2rem; }
 @media(min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+
 .split-layout { display: flex; flex-direction: column; gap: 1.5rem; }
 .form-sidebar { width: 100%; position: static; order: -1; }
 @media(min-width: 1100px) {
   .split-layout { flex-direction: row; align-items: start; }
   .form-sidebar { width: 340px; position: sticky; top: 1.5rem; order: 1; }
 }
+
 .toast-container { right: 1rem; bottom: 1rem; left: 1rem; }
 .toast { width: 100%; text-align: center; }
+
 @media(max-width: 480px) {
   .topbar h1 { font-size: 1.1rem; }
   .stat-val { font-size: 1.5rem; }
   th, td { padding: 1rem .8rem; font-size: .8rem; }
 }
+
 .btn-sm { min-height: 40px; padding: 0 1rem; font-size: .7rem; }
 td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
 @media(max-width: 600px) {
   .topbar { padding: 1rem 0; width: 100%; justify-content: flex-start; }
   .topbar div { flex: 1; }
@@ -173,6 +199,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
 .panel { display: none; }
 .panel.active { display: block; animation: fadeIn .3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
 .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.4rem; border-radius: 50px; font-weight: 700; cursor: pointer; transition: all .3s; border: none; font-size: .75rem; text-transform: uppercase; letter-spacing: .5px; }
 .btn-primary { background: var(--gold-g); color: #fff; box-shadow: 0 6px 15px rgba(212,163,115,.25); }
 .btn-outline { background: none; border: 1.5px solid #ddd; color: var(--muted); }
@@ -183,6 +210,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
 </style>
 </head>
 <body>
+
 <!-- LOGIN -->
 <div class="login-wrap" id="loginWrap">
   <div class="login-card">
@@ -196,6 +224,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
     <button class="btn-login" id="loginBtn" onclick="doLogin()">Entrar</button>
   </div>
 </div>
+
 <!-- APP -->
 <div class="admin-app" id="adminApp">
   <nav class="sidebar" id="sidebar">
@@ -218,6 +247,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
     </div>
   </nav>
   <div class="sidebar-overlay" onclick="toggleSidebar(false)"></div>
+
   <main class="main">
     <header class="topbar">
       <div style="display:flex;align-items:center;gap:1rem">
@@ -228,6 +258,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
         <a href="index.html" target="_blank" class="btn btn-outline" style="text-decoration:none">🛒 Ver Loja</a>
       </div>
     </header>
+
     <!-- DASHBOARD -->
     <div class="panel active" id="panel-dashboard">
       <div class="stats-grid">
@@ -245,6 +276,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
         <div class="tbl-wrap"><table><thead><tr><th></th><th>Produto</th><th>Categoria</th><th>Preço</th><th>Status</th></tr></thead><tbody id="dashTbody"></tbody></table></div>
       </div>
     </div>
+
     <!-- LISTA PRODUTOS -->
     <div class="panel" id="panel-produtos">
       <div class="card">
@@ -255,6 +287,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
         <div class="tbl-wrap"><table><thead><tr><th></th><th>Produto</th><th>Estoque</th><th>Preço/Lucro</th><th>Status</th><th>Ações</th></tr></thead><tbody id="prodTbody"></tbody></table></div>
       </div>
     </div>
+
     <!-- FORM PRODUTO -->
     <div class="panel" id="panel-form-prod">
       <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem">
@@ -303,7 +336,10 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
           </div>
           <div class="card">
             <div class="sec-title">🎨 Variações (Estilo Shopify)</div>
-            <p style="font-size:.75rem;color:var(--muted);margin-bottom:1.2rem">Ex: Cor (Rosa, Vermelho), Tamanho (P, M, G). Separe opções por vírgula.</p>
+            <p style="font-size:.70rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.5;">
+              <strong>Dica de Preço:</strong> Para variações com preço diferente do principal, adicione " = preço". <br>
+              <em>Ex: Rosa, Kit 3 = 89.90, Kit 5 = 120.00</em>
+            </p>
             <div id="fVarsList" style="display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem"></div>
             <button class="btn btn-outline" style="width:100%" onclick="addVarRow()">➕ Adicionar Atributo</button>
           </div>
@@ -340,6 +376,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
         </div>
       </div>
     </div>
+
     <!-- BANNERS -->
     <div class="panel" id="panel-banners">
       <div class="card">
@@ -361,6 +398,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
         <div class="form-actions" style="margin-top:1.5rem"><button class="btn btn-primary" onclick="saveBanner()">Salvar Banner</button></div>
       </div>
     </div>
+
     <!-- CONFIG -->
     <div class="panel" id="panel-config">
        <div class="card">
@@ -392,6 +430,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
          </div>
        </div>
     </div>
+
     <!-- INTEGRACOES -->
     <div class="panel" id="panel-integracoes">
       <div class="card">
@@ -404,13 +443,17 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
         <button class="btn btn-primary" style="margin-top:1.5rem" onclick="savePixels()">Salvar Integrações</button>
       </div>
     </div>
+
   </main>
 </div>
+
 <div class="toast-container" id="toasts"></div>
+
 <script>
 // ════════════════════════════════════════════
 //  ADMIN LOGIC · PROFISSIONAL
 // ════════════════════════════════════════════
+
 const CATS = { rosto:'Rosto', olhos:'Olhos', labios:'Lábios', skincare:'Skincare', kits:'Kits & Combos' };
 let currentImages = [];
 let currentReviews = [];
@@ -418,12 +461,14 @@ let currentVars = [];
 let allProds = [];
 let allBans = [];
 let allowedEmails = [];
+
 // ── AUTH ──
 async function checkAuth() {
   const sb = getSupabase();
   if(!sb) return;
   const { data: { session } } = await sb.auth.getSession();
   if(!session) { showLogin(); return; }
+
   // Whitelist check
   const { data: allowed } = await sb.from('allowed_emails').select('email').eq('email', session.user.email).maybeSingle();
   if(!allowed && session.user.email !== 'rsmakeshopcontato@gmail.com') {
@@ -432,19 +477,23 @@ async function checkAuth() {
     showLogin();
     return;
   }
+
   document.getElementById('userName').textContent = session.user.email.split('@')[0];
   document.getElementById('userAv').textContent = session.user.email[0].toUpperCase();
   enterApp();
 }
+
 function showLogin() {
   document.getElementById('loginWrap').style.display='flex';
   document.getElementById('adminApp').classList.remove('active');
 }
+
 function enterApp() {
   document.getElementById('loginWrap').style.display='none';
   document.getElementById('adminApp').classList.add('active');
   initAdmin();
 }
+
 async function doLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const pwd = document.getElementById('loginPwd').value;
@@ -454,27 +503,33 @@ async function doLogin() {
   if(!email || !pwd) return;
   btn.textContent = 'Autenticando...';
   err.style.display = 'none';
+
   // 🛡️ BYPASS TEMPORÁRIO
   if(email === 'rsmakeshopcontato@gmail.com' && pwd === '25/09/0609/09/08') {
     document.getElementById('userName').textContent = 'Admin';
     enterApp();
     return;
   }
+
   const sb = getSupabase();
   const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
+
   if(error) {
     btn.textContent = 'Entrar';
     err.textContent = 'Credenciais incorretas.';
     err.style.display = 'block';
     return;
   }
+
   checkAuth();
 }
+
 async function doLogout() {
   const sb = getSupabase();
   await sb.auth.signOut();
   location.reload();
 }
+
 // ── INIT ──
 async function initAdmin() {
   await Promise.all([loadProds(), loadBanners(), loadConfig(), loadAllowed()]);
@@ -482,16 +537,19 @@ async function initAdmin() {
   renderTbody();
   renderBanners();
 }
+
 async function loadProds() {
   const sb = getSupabase();
   const { data } = await sb.from('produtos').select('*').order('created_at',{ascending:false});
   if(data) allProds = data;
 }
+
 async function loadBanners() {
   const sb = getSupabase();
   const { data } = await sb.from('banners').select('*').order('created_at',{ascending:false});
   if(data) allBans = data;
 }
+
 async function loadAllowed() {
   const sb = getSupabase();
   const { data } = await sb.from('allowed_emails').select('*');
@@ -505,6 +563,7 @@ async function loadAllowed() {
     `).join('');
   }
 }
+
 async function addAllowedEmail() {
   const email = document.getElementById('newAllowedEmail').value;
   if(!email) return;
@@ -513,11 +572,13 @@ async function addAllowedEmail() {
   loadAllowed();
   document.getElementById('newAllowedEmail').value='';
 }
+
 async function delAllowed(id) {
   const sb = getSupabase();
   await sb.from('allowed_emails').delete().eq('id', id);
   loadAllowed();
 }
+
 // ── RENDERING ──
 function renderDashboard() {
   document.getElementById('sTot').textContent = allProds.length;
@@ -536,6 +597,7 @@ function renderDashboard() {
   const percInv = fat > 0 ? Math.round((profitTotal / fat) * 100) : 0;
   const sLucroReal = document.getElementById('sLucroReal');
   if(sLucroReal) sLucroReal.textContent = `Lucro Médio: ${percInv}%`;
+
   document.getElementById('dashTbody').innerHTML = allProds.slice(0, 5).map(p => `
     <tr>
       <td><img src="${p.imagens?.[0]||''}" class="tbl-thumb" onerror="this.src='https://via.placeholder.com/100?text=💄'"></td>
@@ -546,6 +608,7 @@ function renderDashboard() {
     </tr>
   `).join('');
 }
+
 function renderTbody(q='') {
   const list = q ? allProds.filter(p => p.nome.toLowerCase().includes(q.toLowerCase())) : allProds;
   document.getElementById('prodTbody').innerHTML = list.map(p => {
@@ -565,6 +628,7 @@ function renderTbody(q='') {
     </tr>
   `}).join('');
 }
+
 function renderBanners() {
   document.getElementById('banTbody').innerHTML = allBans.map(b => `
     <tr>
@@ -575,6 +639,7 @@ function renderBanners() {
     </tr>
   `).join('');
 }
+
 // ── FORM LOGIC ──
 async function handleProdUpload(input) {
   const files = input.files;
@@ -591,6 +656,7 @@ async function handleProdUpload(input) {
   }
   renderImgGrid();
 }
+
 function renderImgGrid() {
   document.getElementById('fImgGrid').innerHTML = currentImages.map((url, i) => `
     <div class="img-item ${i===0?'main':''}" onclick="setMain(${i})">
@@ -600,8 +666,10 @@ function renderImgGrid() {
   `).join('');
   calcPreview();
 }
+
 function removeImg(e, i) { e.stopPropagation(); currentImages.splice(i,1); renderImgGrid(); }
 function setMain(i) { const item = currentImages.splice(i,1)[0]; currentImages.unshift(item); renderImgGrid(); }
+
 function calcPreview() {
   const nome = document.getElementById('fNome').value || 'Nome do Produto...';
   const preco = parseFloat(document.getElementById('fPreco').value) || 0;
@@ -619,6 +687,7 @@ function calcPreview() {
   if(currentImages.length) pImg.innerHTML = `<img src="${currentImages[0]}" style="width:100%;height:100%;object-fit:cover">`;
   else pImg.textContent = '💄';
 }
+
 async function saveProd() {
   const btn = event.target;
   const originalText = btn.textContent;
@@ -644,11 +713,13 @@ async function saveProd() {
   
   btn.disabled = true;
   btn.textContent = 'Salvando...';
+
   const sb = getSupabase();
   const { error } = id ? await sb.from('produtos').update(data).eq('id', id) : await sb.from('produtos').insert([data]);
   
   btn.disabled = false;
   btn.textContent = originalText;
+
   if(!error) { 
     toast('✅ Produto salvo!'); 
     nav('produtos'); 
@@ -657,6 +728,7 @@ async function saveProd() {
     toast('❌ Erro: ' + error.message, 'err'); 
   }
 }
+
 function editProd(id) {
   const p = allProds.find(x => x.id === id);
   if(!p) return;
@@ -680,6 +752,7 @@ function editProd(id) {
   document.getElementById('formProdTitle').textContent = 'Editar Produto';
   nav('form-prod');
 }
+
 // ── BANNER LOGIC ──
 async function uploadSingle(input, folder, targetId) {
   const f = input.files[0];
@@ -693,6 +766,7 @@ async function uploadSingle(input, folder, targetId) {
     document.getElementById(targetId + 'Preview').innerHTML = `<img src="${publicUrl}" style="height:100px;border-radius:10px">`;
   }
 }
+
 async function saveBanner() {
   const tit = document.getElementById('bTit').value;
   const img = document.getElementById('bImgUrl').value;
@@ -703,6 +777,7 @@ async function saveBanner() {
   initAdmin();
   document.getElementById('bTit').value='';
 }
+
 // ── CONFIG ──
 async function loadConfig() {
   const sb = getSupabase();
@@ -724,6 +799,7 @@ async function loadConfig() {
     document.getElementById('pxGo').value = data.px_go || '';
   }
 }
+
 async function saveConfig() {
   const sb = getSupabase();
   const data = { id:1, wpp:document.getElementById('cfgWpp').value, insta:document.getElementById('cfgInsta').value, tiktok:document.getElementById('cfgTiktok').value, promo:document.getElementById('cfgPromo').value };
@@ -731,6 +807,7 @@ async function saveConfig() {
   await sb.from('configuracoes_loja').upsert([data]);
   toast('Configurações Salvas!');
 }
+
 async function savePixels() {
   const sb = getSupabase();
   const data = { id:1, px_fb:document.getElementById('pxFb').value, px_tt:document.getElementById('pxTt').value, px_go:document.getElementById('pxGo').value };
@@ -738,6 +815,7 @@ async function savePixels() {
   await sb.from('configuracoes_loja').upsert([data]);
   toast('Pixels Salvos!');
 }
+
 async function saveTimerCfg() {
   const sb = getSupabase();
   const data = {
@@ -750,6 +828,7 @@ async function saveTimerCfg() {
   await sb.from('configuracoes_loja').upsert([data]);
   toast('Temporizador Salvo!');
 }
+
 // ── UTILS ──
 function nav(id, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -758,6 +837,7 @@ function nav(id, btn) {
   if(btn) btn.classList.add('active');
   toggleSidebar(false);
 }
+
 function navAddProd() {
   document.getElementById('fId').value = '';
   document.getElementById('formProdTitle').textContent = 'Novo Produto';
@@ -779,11 +859,13 @@ function navAddProd() {
   renderVars();
   nav('form-prod');
 }
+
 // ── VARIATIONS LOGIC ──
 function addVarRow() {
   currentVars.push({ nome: '', opcoes: [] });
   renderVars();
 }
+
 function renderVars() {
   const container = document.getElementById('fVarsList');
   container.innerHTML = currentVars.map((v, i) => `
@@ -794,10 +876,12 @@ function renderVars() {
     </div>
   `).join('');
 }
+
 function updateVarName(i, val) { currentVars[i].nome = val; }
 function updateVarOpcoes(i, val) { currentVars[i].opcoes = val.split(',').map(o => o.trim()).filter(o => o); }
 function removeVar(i) { currentVars.splice(i, 1); renderVars(); }
 function collectVars() { return currentVars.filter(v => v.nome && v.opcoes.length > 0); }
+
 // ── REVIEWS LOGIC ──
 function addReviewManual() {
   const nome = document.getElementById('rvNome').value.trim();
@@ -809,6 +893,7 @@ function addReviewManual() {
   document.getElementById('rvCom').value='';
   renderReviews();
 }
+
 function renderReviews() {
   const container = document.getElementById('fReviewList');
   if(!currentReviews.length) { container.innerHTML='<p style="font-size:.7rem;color:var(--muted)">Ainda não há avaliações neste produto.</p>'; return; }
@@ -821,6 +906,7 @@ function renderReviews() {
   `).join('');
 }
 function delReview(i) { currentReviews.splice(i,1); renderReviews(); }
+
 function toggleSidebar(val) {
   const s = document.getElementById('sidebar');
   const o = document.querySelector('.sidebar-overlay');
@@ -832,7 +918,9 @@ function toggleSidebar(val) {
     if(o) o.classList.toggle('open', s.classList.contains('open'));
   }
 }
+
 function formatBRL(v) { return (v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+
 function toast(msg, type='') {
   const c = document.getElementById('toasts');
   const t = document.createElement('div');
@@ -840,6 +928,7 @@ function toast(msg, type='') {
   c.appendChild(t);
   setTimeout(() => t.remove(), 3000);
 }
+
 async function delItem(id, table) {
   if(!confirm('Tem certeza?')) return;
   const sb = getSupabase();
@@ -847,6 +936,7 @@ async function delItem(id, table) {
   toast('Removido');
   initAdmin();
 }
+
 onload = checkAuth;
 </script>
 </body>
