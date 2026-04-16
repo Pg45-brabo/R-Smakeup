@@ -97,6 +97,7 @@ body{font-family:'Montserrat',sans-serif;background:#f8f9fa;color:#333;overflow-
 
 .img-del{position:absolute;top:4px;right:4px;width:22px;height:22px;background:#e74c3c;color:#fff;border:none;border-radius:50%;font-size:.7rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:2}
 .img-item:hover .img-del{opacity:1}
+.img-item img { width: 100%; height: 100%; object-fit: cover; }
 .img-item.main::after{content:'Principal';position:absolute;bottom:0;left:0;right:0;background:var(--gold);color:#fff;font-size:.5rem;font-weight:700;text-align:center;padding:2px 0;z-index:1}
 
 @media(max-width:600px){
@@ -310,7 +311,16 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
             <div class="sec-title">📝 Informações</div>
             <div class="form-grid">
               <div class="field full"><label>Nome</label><input type="text" id="fNome" placeholder="Ex: Batom Matte Nude"></div>
-              <div class="field"><label>Categoria</label><select id="fCat"><option value="rosto">Rosto</option><option value="olhos">Olhos</option><option value="labios">Lábios</option><option value="skincare">Skincare</option><option value="kits">Kits & Combos</option></select></div>
+              <div class="field full">
+                <label>Categorias (Selecione todas que desejar)</label>
+                <div id="fCatGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem; background: #fff; border: 1.5px solid #eee; padding: 1rem; border-radius: 12px;">
+                  <label style="display:flex; align-items:center; gap:8px; font-weight:normal; text-transform:none; cursor:pointer;"><input type="checkbox" name="fCat" value="rosto"> Rosto</label>
+                  <label style="display:flex; align-items:center; gap:8px; font-weight:normal; text-transform:none; cursor:pointer;"><input type="checkbox" name="fCat" value="olhos"> Olhos</label>
+                  <label style="display:flex; align-items:center; gap:8px; font-weight:normal; text-transform:none; cursor:pointer;"><input type="checkbox" name="fCat" value="labios"> Lábios</label>
+                  <label style="display:flex; align-items:center; gap:8px; font-weight:normal; text-transform:none; cursor:pointer;"><input type="checkbox" name="fCat" value="skincare"> Skincare</label>
+                  <label style="display:flex; align-items:center; gap:8px; font-weight:normal; text-transform:none; cursor:pointer;"><input type="checkbox" name="fCat" value="kits"> Kits & Combos</label>
+                </div>
+              </div>
               <div class="field"><label>Etiqueta (Badge)</label><select id="fBadge"><option value="">Nenhuma</option><option value="Novo">Novo</option><option value="Sale">Promoção</option><option value="Top">Top de Vendas</option></select></div>
               <div class="field full"><label>Descrição curta</label><textarea id="fDesc" rows="3" placeholder="Benefícios e diferenciais..."></textarea></div>
             </div>
@@ -643,7 +653,7 @@ function renderBanners() {
 // ── FORM LOGIC ──
 async function handleProdUpload(input) {
   const files = input.files;
-  if(files.length + currentImages.length > 5) { toast('Máximo 5 imagens!'); return; }
+  if(files.length + currentImages.length > 12) { toast('Máximo 12 imagens!'); return; }
   const sb = getSupabase();
   for(let f of files) {
     const ext = f.name.split('.').pop();
@@ -677,7 +687,9 @@ function calcPreview() {
   
   document.getElementById('prevNome').textContent = nome;
   document.getElementById('prevPrice').textContent = formatBRL(preco);
-  document.getElementById('prevCat').textContent = CATS[document.getElementById('fCat').value];
+  
+  const cats = Array.from(document.querySelectorAll('input[name="fCat"]:checked')).map(cb => CATS[cb.value] || cb.value);
+  document.getElementById('prevCat').textContent = cats.length ? cats.join(', ') : 'SEM CATEGORIA';
   
   const profit = preco - custo;
   const perc = preco > 0 ? Math.round((profit / preco) * 100) : 0;
@@ -695,7 +707,7 @@ async function saveProd() {
   
   const data = {
     nome: document.getElementById('fNome').value.trim(),
-    categoria: document.getElementById('fCat').value,
+    categoria: Array.from(document.querySelectorAll('input[name="fCat"]:checked')).map(cb => cb.value).join(','),
     badge: document.getElementById('fBadge').value,
     descricao: document.getElementById('fDesc').value.trim(),
     preco: parseFloat(document.getElementById('fPreco').value)||0,
@@ -734,7 +746,12 @@ function editProd(id) {
   if(!p) return;
   document.getElementById('fId').value = p.id;
   document.getElementById('fNome').value = p.nome;
-  document.getElementById('fCat').value = p.categoria;
+  
+  // Set categories
+  const cats = typeof p.categoria === 'string' ? p.categoria.split(',').map(c=>c.trim()) : (Array.isArray(p.categoria) ? p.categoria : [p.categoria]);
+  document.querySelectorAll('input[name="fCat"]').forEach(cb => {
+    cb.checked = cats.includes(cb.value);
+  });
   document.getElementById('fBadge').value = p.badge || '';
   document.getElementById('fDesc').value = p.descricao || '';
   document.getElementById('fPreco').value = p.preco || '';
@@ -863,7 +880,7 @@ function navAddProd() {
   fields.forEach(id => document.getElementById(id).value = '');
   
   document.getElementById('fEstoque').value = '0';
-  document.getElementById('fCat').value = 'rosto';
+  document.querySelectorAll('input[name="fCat"]').forEach(cb => cb.checked = false);
   document.getElementById('fBadge').value = '';
   document.getElementById('fDest').value = 'false';
   document.getElementById('fAtivo').value = 'true';
