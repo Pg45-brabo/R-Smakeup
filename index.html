@@ -471,7 +471,13 @@ function renderProducts() {
   const noRes = document.getElementById('no-results');
   let list = allProducts.filter(p => p.ativo !== false);
   if(highlightMode) list = list.filter(p => p.destaque);
-  else if(currentCat !== 'todos') list = list.filter(p => p.categoria === currentCat);
+  else if(currentCat !== 'todos') {
+    list = list.filter(p => {
+      if(Array.isArray(p.categoria)) return p.categoria.includes(currentCat);
+      if(typeof p.categoria === 'string') return p.categoria.split(',').map(c=>c.trim()).includes(currentCat);
+      return p.categoria === currentCat;
+    });
+  }
   if(searchTerm) list = list.filter(p => p.nome.toLowerCase().includes(searchTerm.toLowerCase()));
   if(!list.length) { grid.innerHTML=''; noRes.style.display='block'; return; }
   noRes.style.display='none';
