@@ -1,645 +1,775 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R&S Makeup | Realce sua Beleza · Matozinhos, MG</title>
-<meta name="description" content="R&S Makeup · Maquiagem original com entrega rápida em Matozinhos e região. Peça pelo WhatsApp!">
-<link rel="icon" href="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="store.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RendaShop: Descubra o que postar para vender no TikTok Shop todos os dias. Roteiros prontos, produtos em alta e ferramentas com IA.">
+    <meta property="og:title" content="RendaShop - Venda no TikTok Shop Todo Dia">
+    <meta property="og:description" content="Use roteiros prontos, produtos em alta e ferramentas para criar conteúdo mesmo sem aparecer.">
+    <meta property="og:image" content="https://i.postimg.cc/W4n6k4NZ/Banner-Renda-Shop.png">
+    <title>RendaShop — Venda no TikTok Shop Todo Dia</title>
+ 
+    <link rel="icon" href="https://i.postimg.cc/W4n6k4NZ/Banner-Renda-Shop.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/W4n6k4NZ/Banner-Renda-Shop.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+ 
+    <style>
+        :root {
+            --red:    #ff00b3; /* Rosa Neon Agressivo */
+            --orange: #9d00ff; /* Roxo Neon */
+            --black:  #050505;
+            --dark:   #0a0a0a;
+            --card:   #111111;
+            --border: #222222;
+            --text:   #f0f0f0;
+            --muted:  #888;
+        }
+ 
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+        body {
+            background:var(--black);
+            color:var(--text);
+            font-family:'Manrope',sans-serif;
+            overflow-x:hidden;
+            -webkit-font-smoothing:antialiased;
+            /* Anti-cópia: impede seleção de texto */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+ 
+        /* TICKER */
+        .ticker { background:var(--red); padding:10px 0; overflow:hidden; white-space:nowrap; }
+        .ticker-inner {
+            display:inline-block;
+            animation:ticker 22s linear infinite;
+            font-family:'Bebas Neue',sans-serif;
+            font-size:1rem; letter-spacing:2px; color:#fff;
+        }
+        .ticker-inner span { margin:0 40px; opacity:0.6; }
+        @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+ 
+        /* HERO */
+        .hero {
+            min-height:100vh;
+            display:flex; flex-direction:column;
+            justify-content:center; align-items:center;
+            text-align:center;
+            padding:80px 20px 60px;
+            position:relative; overflow:hidden;
+        }
+        .hero::before {
+            content:'';position:absolute;inset:0;
+            background:linear-gradient(135deg,rgba(255,45,45,0.07) 0%,transparent 60%),
+                        radial-gradient(ellipse at 80% 20%,rgba(255,106,0,0.05) 0%,transparent 60%);
+            pointer-events:none;
+        }
+        .hero::after {
+            content:'';position:absolute;inset:0;
+            background-image:linear-gradient(rgba(255,45,45,0.04) 1px,transparent 1px),
+                              linear-gradient(90deg,rgba(255,45,45,0.04) 1px,transparent 1px);
+            background-size:60px 60px;
+            pointer-events:none;
+            animation:gridShift 20s linear infinite;
+        }
+        @keyframes gridShift { from{background-position:0 0} to{background-position:60px 60px} }
+ 
+        .hero-logo {
+            width:90px; height:90px; margin-bottom:24px;
+            border-radius:20px; overflow:hidden;
+            border:2px solid var(--border);
+            position:relative; z-index:1;
+            animation:fadeDown .6s ease both;
+        }
+        .hero-logo img { width:100%; height:100%; object-fit:cover; display:block; }
+ 
+        .hero-badge {
+            display:inline-flex; align-items:center; gap:8px;
+            background:rgba(255,45,45,0.12); border:1px solid rgba(255,45,45,0.3);
+            color:var(--red); font-size:.8rem; font-weight:700;
+            letter-spacing:2px; text-transform:uppercase;
+            padding:6px 16px; border-radius:100px;
+            margin-bottom:28px; position:relative; z-index:1;
+            animation:fadeDown .6s .1s ease both;
+        }
+        .hero-badge::before {
+            content:''; width:8px; height:8px;
+            background:var(--red); border-radius:50%;
+            animation:blink 1s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+ 
+        .hero h1 {
+            font-family:'Bebas Neue',sans-serif;
+            font-size:clamp(2.8rem,8vw,6rem);
+            line-height:.95; letter-spacing:1px;
+            max-width:900px; position:relative; z-index:1;
+            animation:fadeDown .6s .2s ease both;
+        }
+        .hero h1 em {
+            font-style:normal; color:var(--red); position:relative;
+        }
+        .hero h1 em::after {
+            content:''; position:absolute;
+            bottom:4px; left:0; right:0; height:4px;
+            background:linear-gradient(90deg,var(--red),var(--orange));
+            border-radius:2px;
+        }
+        .hero-sub {
+            font-size:clamp(1rem,2.5vw,1.25rem);
+            color:#aaa; max-width:600px; line-height:1.6;
+            margin-top:24px; position:relative; z-index:1;
+            animation:fadeDown .6s .3s ease both;
+        }
+        .hero-sub strong { color:var(--text); }
+ 
+        @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+ 
+        /* BOTÃO */
+        .btn-wrap {
+            position:relative; display:inline-block;
+            animation:fadeDown .6s .4s ease both; margin-top:36px;
+        }
+        .btn-cta {
+            display:inline-flex; align-items:center; justify-content:center; gap:10px;
+            background:linear-gradient(135deg,var(--red) 0%,var(--orange) 100%);
+            color:#fff; font-family:'Manrope',sans-serif;
+            font-size:1.05rem; font-weight:800;
+            text-decoration:none; padding:18px 36px;
+            border-radius:8px; cursor:pointer;
+            position:relative; overflow:hidden;
+            transition:transform .2s,box-shadow .2s;
+            box-shadow:0 6px 30px rgba(255,45,45,0.4);
+            text-transform:uppercase; letter-spacing:.5px;
+        }
+        .btn-cta::before {
+            content:''; position:absolute; inset:0;
+            background:linear-gradient(135deg,rgba(255,255,255,0.15) 0%,transparent 60%);
+            opacity:0; transition:opacity .2s;
+        }
+        .btn-cta:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(255,45,45,0.55); }
+        .btn-cta:hover::before { opacity:1; }
+        .btn-cta:active { transform:translateY(0); }
+        .btn-pulse {
+            position:absolute; inset:-6px; border-radius:12px;
+            border:2px solid var(--red); opacity:0;
+            animation:pulseRing 2s ease-out infinite;
+        }
+        @keyframes pulseRing { 0%{opacity:.6;transform:scale(1)} 100%{opacity:0;transform:scale(1.12)} }
+ 
+        .hero-caption {
+            font-size:.8rem; color:var(--muted);
+            margin-top:14px; position:relative; z-index:1;
+            animation:fadeDown .6s .5s ease both;
+        }
+ 
+        /* NÚMEROS */
+        .numbers {
+            display:flex; justify-content:center; gap:48px;
+            flex-wrap:wrap; padding:60px 20px;
+            border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+        }
+        .num-item { text-align:center; }
+        .num-item .n { font-family:'Bebas Neue',sans-serif; font-size:3rem; color:var(--red); line-height:1; }
+        .num-item .l { font-size:.82rem; color:var(--muted); margin-top:4px; text-transform:uppercase; letter-spacing:1px; }
+ 
+        /* SEÇÕES */
+        .section { padding:90px 20px; }
+        .container { max-width:1100px; margin:0 auto; }
+        .section-tag { font-size:.75rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
+        .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2rem,5vw,3.5rem); line-height:1; margin-bottom:16px; }
+        .section-sub { color:var(--muted); font-size:1rem; line-height:1.6; max-width:520px; }
+ 
+        /* BENEFÍCIOS */
+        .benefits-grid {
+            display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+            gap:2px; margin-top:60px;
+            border:2px solid var(--border); border-radius:12px; overflow:hidden;
+        }
+        .benefit-card {
+            background:var(--card); padding:36px 28px;
+            position:relative; transition:background .25s;
+        }
+        .benefit-card:hover { background:#1c1c1c; }
+        .benefit-card::before {
+            content:''; position:absolute; top:0; left:0; right:0; height:3px;
+            background:linear-gradient(90deg,var(--red),var(--orange));
+            opacity:0; transition:opacity .25s;
+        }
+        .benefit-card:hover::before { opacity:1; }
+        .benefit-icon {
+            width:48px; height:48px; background:rgba(255,45,45,0.1);
+            border-radius:10px; display:flex; align-items:center; justify-content:center;
+            margin-bottom:20px; font-size:1.4rem;
+        }
+        .benefit-card h3 { font-size:1.1rem; font-weight:800; margin-bottom:10px; line-height:1.3; }
+        .benefit-card p { font-size:.9rem; color:var(--muted); line-height:1.6; }
+ 
+        /* COMO FUNCIONA */
+        .steps { margin-top:60px; display:flex; flex-direction:column; }
+        .step {
+            display:grid; grid-template-columns:64px 1fr;
+            gap:24px; padding:32px 0;
+            border-bottom:1px solid var(--border); align-items:start;
+        }
+        .step:last-child { border-bottom:none; }
+        .step-num { font-family:'Bebas Neue',sans-serif; font-size:3.5rem; color:var(--border); line-height:1; }
+        .step-content h3 { font-size:1.15rem; font-weight:800; margin-bottom:8px; }
+        .step-content p { font-size:.92rem; color:var(--muted); line-height:1.6; }
+        .step-tag {
+            display:inline-block; background:rgba(255,45,45,0.1); color:var(--red);
+            font-size:.72rem; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+            padding:3px 10px; border-radius:4px; margin-bottom:8px;
+        }
+ 
+        /* PROVA SOCIAL */
+        .proof-section { background:var(--dark); }
+        .proof-box {
+            border:1px solid var(--border); border-radius:12px;
+            padding:40px; margin-top:48px; position:relative; overflow:hidden;
+        }
+        .proof-box::before {
+            content:'"'; position:absolute; top:-20px; left:24px;
+            font-family:'Bebas Neue',sans-serif; font-size:10rem;
+            color:var(--red); opacity:.06; line-height:1;
+        }
+        .proof-text { font-size:clamp(1.1rem,2.5vw,1.4rem); line-height:1.6; font-weight:600; position:relative; z-index:1; }
+        .proof-text strong { color:var(--red); }
+        .proof-meta { margin-top:24px; display:flex; align-items:center; gap:14px; }
+        .proof-avatar {
+            width:44px; height:44px; flex-shrink:0;
+            background:linear-gradient(135deg,var(--red),var(--orange));
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            font-weight:800; font-size:1.1rem;
+        }
+        .proof-name { font-weight:700; font-size:.95rem; }
+        .proof-role { font-size:.8rem; color:var(--muted); }
+ 
+        .proof-stats {
+            display:grid; grid-template-columns:repeat(3,1fr);
+            gap:2px; margin-top:48px;
+            border:1px solid var(--border); border-radius:12px; overflow:hidden;
+        }
+        .proof-stat { background:var(--card); padding:28px 20px; text-align:center; }
+        .proof-stat .val { font-family:'Bebas Neue',sans-serif; font-size:2.4rem; color:var(--red); }
+        .proof-stat .desc { font-size:.82rem; color:var(--muted); margin-top:4px; }
+ 
+        /* GARANTIA */
+        .guarantee {
+            border:2px dashed rgba(255,45,45,0.3); border-radius:16px;
+            padding:48px 40px; text-align:center; margin-top:60px;
+            background:rgba(255,45,45,0.03);
+        }
+        .guarantee-icon { font-size:3rem; margin-bottom:16px; }
+        .guarantee h3 { font-family:'Bebas Neue',sans-serif; font-size:2rem; margin-bottom:12px; }
+        .guarantee p { color:var(--muted); max-width:480px; margin:0 auto; line-height:1.7; }
+        .guarantee strong { color:var(--text); }
+ 
+        /* CTA FINAL */
+        .cta-final {
+            text-align:center; padding:100px 20px;
+            position:relative; overflow:hidden;
+        }
+        .cta-final::after {
+            content:''; position:absolute; inset:0;
+            background:radial-gradient(ellipse at center bottom,rgba(255,45,45,0.07) 0%,transparent 70%);
+            pointer-events:none;
+        }
+        .urgency-label {
+            display:inline-flex; align-items:center; gap:8px;
+            background:rgba(255,45,45,0.1); border:1px solid rgba(255,45,45,0.25);
+            color:var(--red); font-size:.78rem; font-weight:700;
+            letter-spacing:2px; text-transform:uppercase;
+            padding:6px 16px; border-radius:100px; margin-bottom:28px;
+            animation:pulseUrgency 2s ease infinite;
+        }
+        @keyframes pulseUrgency {
+            0%,100%{box-shadow:0 0 0 0 rgba(255,45,45,0.3)}
+            50%{box-shadow:0 0 0 8px rgba(255,45,45,0)}
+        }
+        .cta-final h2 {
+            font-family:'Bebas Neue',sans-serif;
+            font-size:clamp(2.5rem,7vw,5rem); line-height:.95;
+            margin-bottom:20px; position:relative; z-index:1;
+        }
+        .cta-final > p {
+            color:var(--muted); max-width:460px; margin:0 auto 40px;
+            line-height:1.6; position:relative; z-index:1;
+        }
+        .cta-final .btn-wrap { position:relative; z-index:1; margin-top:0; }
+        .cta-security {
+            display:flex; align-items:center; justify-content:center;
+            gap:20px; margin-top:24px; flex-wrap:wrap;
+            position:relative; z-index:1;
+        }
+        .cta-security span { display:flex; align-items:center; gap:6px; font-size:.8rem; color:var(--muted); }
+ 
+        /* FOOTER */
+        footer { background:#000; border-top:1px solid var(--border); padding:32px 20px; text-align:center; }
+        footer img { width:60px; height:60px; border-radius:12px; margin-bottom:12px; opacity:.6; }
+        footer p { font-size:.82rem; color:#444; }
+ 
+        /* REVEAL ANIMATIONS */
+        .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        
+        .reveal-left { opacity:0; transform:translateX(-30px); transition:opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+        .reveal-left.visible { opacity:1; transform:translateX(0); }
+        
+        .reveal-right { opacity:0; transform:translateX(30px); transition:opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+        .reveal-right.visible { opacity:1; transform:translateX(0); }
+        
+        .reveal-scale { opacity:0; transform:scale(0.95); transition:opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
+        .reveal-scale.visible { opacity:1; transform:scale(1); }
+        
+        /* Delays stagger options */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+ 
+        /* GALERIA FATURAMENTO */
+        .faturamento-gallery {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:16px;
+            margin:40px auto;
+            padding:0 16px;
+        }
+        .fat-img {
+            width:100%;
+            max-width:280px;
+            border-radius:14px;
+            overflow:hidden;
+            border:2px solid var(--border);
+            box-shadow:0 8px 24px rgba(0,0,0,0.5);
+        }
+        .fat-img img {
+            width:100%;
+            display:block;
+        }
+        .fat-img-destaque {
+            border-color:var(--red);
+            box-shadow:0 12px 40px rgba(255,0,179,0.35);
+            transform:scale(1.03);
+            z-index:2;
+            position:relative;
+        }
+
+        /* Desktop: lado a lado */
+        @media(min-width:768px){
+            .faturamento-gallery {
+                flex-direction:row;
+                justify-content:center;
+                flex-wrap:wrap;
+                gap:24px;
+                padding:0 20px;
+            }
+            .fat-img {
+                max-width:260px;
+            }
+            .fat-img-destaque {
+                max-width:300px;
+                transform:scale(1.06);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:600px){
+            .numbers{gap:28px;}
+            .proof-stats{grid-template-columns:1fr;}
+            .proof-box{padding:28px 20px;}
+            .guarantee{padding:36px 20px;}
+            .step{grid-template-columns:48px 1fr;gap:16px;}
+            .step-num{font-size:2.5rem;}
+        }
+        @media(prefers-reduced-motion:reduce){
+            *,.ticker-inner,.btn-pulse,.hero::after{animation:none!important;transition:none!important;}
+        }
+    </style>
 </head>
 <body>
-
-<!-- TOP BAR -->
-<div class="top-bar">
-  <div class="top-bar-left">
-    <a href="#" id="link-wpp-top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> WhatsApp</a>
-    <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-top" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @rs_makeshop</a>
-  </div>
-  <div class="top-bar-right">🚚 Entrega rápida · Matozinhos/MG</div>
+ 
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+        🔥 PRODUTOS EM ALTA AGORA <span>|</span> ROTEIROS PRONTOS PARA GRAVAR <span>|</span> VENDA SEM APARECER <span>|</span> CONTEÚDO COM IA <span>|</span> TIKTOK SHOP <span>|</span>
+        🔥 PRODUTOS EM ALTA AGORA <span>|</span> ROTEIROS PRONTOS PARA GRAVAR <span>|</span> VENDA SEM APARECER <span>|</span> CONTEÚDO COM IA <span>|</span> TIKTOK SHOP <span>|</span>
+    </div>
 </div>
+ 
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-logo">
+        <img src="https://i.postimg.cc/W4n6k4NZ/Banner-Renda-Shop.png" alt="RendaShop" width="90" height="90" fetchpriority="high">
+    </div>
+    <div class="hero-badge">🔥 Acesso disponível agora</div>
+    <h1>Fature <em>R$2.000+ por dia</em> no TikTok<br>Shop sem adivinhar produtos!</h1>
+    <p class="hero-sub">Descubra os produtos que estão explodindo <strong>AGORA</strong> com ranking real-time + prompts IA prontos que convertem em vendas. Pare de perder tempo e comece a ganhar renda extra de verdade.</p>
+    
+    <!-- MOCKUP / DASHBOARD IMAGE -->
+    <div class="hero-image reveal" style="max-width:900px; margin:40px auto; padding:0 20px;">
+        <img src="https://i.postimg.cc/TYx3L4Fk/Captura-de-Tela-2026-04-27-a-s-20-27-21.png" alt="Plataforma RendaShop" style="width:100%; height:auto; display:block; filter: drop-shadow(0px 20px 50px rgba(255,0,179,0.15)); border-radius:12px;">
+    </div>
 
-<!-- PROMO BAR -->
-<div class="promo-bar" id="promo-bar" style="display:none">
-  <span id="promo-text"> PROMOÇÃO DA SEMANA · Até 40% OFF · Termina em:</span>
-  <div class="countdown">
-    <div class="cd-unit"><span id="cd-d">00</span><span class="cd-lbl">dias</span></div>
-    <span style="font-weight:700">:</span>
-    <div class="cd-unit"><span id="cd-h">00</span><span class="cd-lbl">h</span></div>
-    <span style="font-weight:700">:</span>
-    <div class="cd-unit"><span id="cd-m">00</span><span class="cd-lbl">min</span></div>
-  </div>
+    <div class="btn-wrap">
+        <div class="btn-pulse"></div>
+        <a href="https://go.perfectpay.com.br/PPU38CQB54C" class="btn-cta" target="_blank" rel="noopener noreferrer">
+            ▶ Quero acesso ao RendaShop
+        </a>
+    </div>
+    <p class="hero-caption">✓ Acesso imediato &nbsp;·&nbsp; ✓ Garantia de 7 dias &nbsp;·&nbsp; ✓ Cancele quando quiser</p>
+</section>
+ 
+<!-- NÚMEROS -->
+<div class="numbers reveal">
+    <div class="num-item">
+        <div class="n">+3.200</div>
+        <div class="l">Criadores ativos</div>
+    </div>
+    <div class="num-item">
+        <div class="n">Diário</div>
+        <div class="l">Atualização de produtos</div>
+    </div>
+    <div class="num-item">
+        <div class="n">+500</div>
+        <div class="l">Roteiros no acervo</div>
+    </div>
+    <div class="num-item">
+        <div class="n">7 dias</div>
+        <div class="l">Garantia total</div>
+    </div>
 </div>
-
-<!-- NAVBAR -->
-<div class="navbar-main" id="navbar">
-  <div class="nav-logo">
-    <a href="index.html"><img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" alt="R&S Makeup"></a>
-  </div>
-  <div class="nav-search">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" placeholder="Buscar produto..." id="search-input" oninput="searchProducts(this.value)">
-  </div>
-  <div class="nav-icons">
-    <a href="carrinho.html" id="link-cart-nav" style="position:relative; color: var(--brown); margin-right: 15px; display: inline-flex; align-items: center; text-decoration: none;">
-      <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-      <span id="cart-count-badge" style="position:absolute; top:-6px; right:-8px; background:var(--gold); color:#fff; font-size:10px; font-weight:700; width:16px; height:16px; border-radius:50%; display:none; align-items:center; justify-content:center;">0</span>
-    </a>
-    <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-nav" target="_blank">
-      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-    </a>
-    <a href="#" id="link-wpp-nav" class="nav-wpp-btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:2px;transform:translateY(2px)"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
-      WhatsApp
-    </a>
-  </div>
-</div>
-
-<!-- CATEGORY NAV -->
-<nav class="cat-navbar">
-  <div class="cat-navbar-inner">
-    <button class="cat-nav-item active" onclick="filterCat('todos',this)"><span class="cat-icon"></span> Todos</button>
-    <button class="cat-nav-item" onclick="filterCat('rosto',this)"><span class="cat-icon"></span> Rosto</button>
-    <button class="cat-nav-item" onclick="filterCat('olhos',this)"><span class="cat-icon"></span> Olhos</button>
-    <button class="cat-nav-item" onclick="filterCat('labios',this)"><span class="cat-icon"></span> Lábios</button>
-    <button class="cat-nav-item" onclick="filterCat('skincare',this)"><span class="cat-icon"></span> Skincare</button>
-    <button class="cat-nav-item" onclick="filterCat('kits',this)"><span class="cat-icon"></span> Kits & Combos</button>
-    <button class="cat-nav-item" style="color:#c0392b;font-weight:700" onclick="filterHighlight()"><span class="cat-icon"></span> Destaques</button>
-  </div>
-</nav>
-
-<!-- HERO SLIDER -->
-<section class="hero-slider" id="heroSlider">
-
-  <!-- ─── Progress bar ─── -->
-  <div class="slider-progress"><div class="slider-progress-bar" id="sliderProgress"></div></div>
-
-  <!-- ─── Slides ─── -->
-  <div class="slides-track" id="slidesTrack">
-
-    <!-- Slide 1 -->
-    <div class="slide active" data-slide="0">
-      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=85')"></div>
-      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.78) 0%,rgba(43,43,43,.18) 100%)"></div>
-      <div class="slide-content">
-        <p class="hero-label">R&S Makeup · Matozinhos, MG</p>
-        <h1>Sua Beleza,<br><em>Nossa Paixão.</em></h1>
-        <p>Do batom ao iluminador — produtos originais que realçam o que há de mais bonito em você.</p>
-        <div class="hero-btns">
-          <a href="#produtos" class="btn btn-gold"> Ver Produtos</a>
-          <a href="#" id="link-wpp-hero" class="btn btn-outline-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Comprar no WhatsApp</a>
+ 
+<!-- BENEFÍCIOS -->
+<section class="section">
+    <div class="container">
+        <div class="reveal">
+            <p class="section-tag">O que você recebe</p>
+            <h2 class="section-title">Tudo que você precisa<br>para vender todo dia</h2>
+            <p class="section-sub">Sem precisar inventar nada do zero. Sem precisar aparecer. Sem precisar saber editar.</p>
         </div>
-      </div>
-    </div>
-
-    <!-- Slide 2 -->
-    <div class="slide" data-slide="1">
-      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=1600&q=85')"></div>
-      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.78) 0%,rgba(43,43,43,.18) 100%)"></div>
-      <div class="slide-content">
-        <p class="hero-label"> Novidades da Semana</p>
-        <h1>Cores que<br><em>Encantam.</em></h1>
-        <p>Blushes, glosses e batom nas cores mais quentes da temporada. Peça e receba em Matozinhos!</p>
-        <div class="hero-btns">
-          <a href="#produtos" class="btn btn-gold"> Ver Lábios & Blush</a>
-          <a href="#" class="btn btn-outline-white slider-wpp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
+        <div class="benefits-grid">
+            <div class="benefit-card reveal-scale delay-100">
+                <div class="benefit-icon">📦</div>
+                <h3>Produtos que estão vendendo agora</h3>
+                <p>Ranking atualizado diariamente com os produtos mais comprados no TikTok Shop. Você sabe exatamente o que promover.</p>
+            </div>
+            <div class="benefit-card reveal-scale delay-200">
+                <div class="benefit-icon">🎬</div>
+                <h3>Roteiros prontos para gravar</h3>
+                <p>Scripts linha a linha para você gravar ou usar em vídeos sem câmera. Só seguir e postar.</p>
+            </div>
+            <div class="benefit-card reveal-scale delay-300">
+                <div class="benefit-icon">💡</div>
+                <h3>Ideias de vídeos virais</h3>
+                <p>Formatos de conteúdo que já performaram no TikTok Shop. Adapte para o seu produto em minutos.</p>
+            </div>
+            <div class="benefit-card reveal-scale delay-100">
+                <div class="benefit-icon">🤖</div>
+                <h3>Ferramentas de IA inclusas</h3>
+                <p>Prompts e ferramentas para gerar legendas, descrições e hooks que convertem — sem esforço criativo.</p>
+            </div>
+            <div class="benefit-card reveal-scale delay-200">
+                <div class="benefit-icon">🤝</div>
+                <h3>Acesso a fornecedores estratégicos (condições exclusivas)</h3>
+                <p>Tenha acesso a contatos e fornecedores com condições especiais para usuários do RendaShop, facilitando sua estrutura e escala no TikTok Shop.</p>
+            </div>
+            <div class="benefit-card reveal-scale delay-300">
+                <div class="benefit-icon">📊</div>
+                <h3>Validação de produtos antes de postar</h3>
+                <p>Veja rapidamente se um produto tem potencial antes de perder tempo criando conteúdo — baseado em dados e tendências reais.</p>
+            </div>
         </div>
-      </div>
     </div>
+</section>
 
-    <!-- Slide 3 -->
-    <div class="slide" data-slide="2">
-      <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1600&q=85')"></div>
-      <div class="slide-overlay" style="background:linear-gradient(125deg,rgba(43,43,43,.8) 0%,rgba(43,43,43,.2) 100%)"></div>
-      <div class="slide-content">
-        <p class="hero-label"> Skincare & Cuidados</p>
-        <h1>Pele Perfeita,<br><em>Toda Semana.</em></h1>
-        <p>Hidratante, bruma, demaquilante e muito mais. Cuide da sua pele com quem entende!</p>
-        <div class="hero-btns">
-          <a href="#produtos" class="btn btn-gold"> Ver Skincare</a>
-          <a href="#" class="btn btn-outline-white slider-wpp"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
+<!-- SEÇÃO SEM APARECER -->
+<section class="section" style="padding-top:0;">
+    <div class="container" style="text-align:center;">
+        <div class="reveal">
+            <h2 class="section-title">Crie conteúdos que <span style="color:var(--red)">vendem sem aparecer</span></h2>
+            <p class="section-sub" style="max-width:700px; margin-left:auto; margin-right:auto;">
+                Você pode criar vídeos com IA, personagens e conteúdos estilo UGC que parecem reais e vendem todos os dias no TikTok Shop — mesmo sem mostrar o rosto.
+            </p>
+            <div class="reveal-scale" style="margin-top:40px; max-width:800px; margin-left:auto; margin-right:auto; border-radius:24px; overflow:hidden; box-shadow: 0 0 50px rgba(255,0,179,0.2); border: 2px solid var(--border);">
+                <img src="https://i.postimg.cc/4JTNgYv8/Rendashop.png" alt="Conteúdo sem aparecer" loading="lazy" style="width:100%; display:block;">
+            </div>
         </div>
-      </div>
     </div>
-
-  </div><!-- /slides-track -->
-
-  <!-- ─── Arrows ─── -->
-  <button class="slider-arrow prev" id="sliderPrev" aria-label="Slide anterior">‹</button>
-  <button class="slider-arrow next" id="sliderNext" aria-label="Próximo slide">›</button>
-
-  <!-- ─── Dots ─── -->
-  <div class="slider-dots" id="sliderDots">
-    <button class="sdot active" data-idx="0" aria-label="Slide 1"></button>
-    <button class="sdot" data-idx="1" aria-label="Slide 2"></button>
-    <button class="sdot" data-idx="2" aria-label="Slide 3"></button>
-  </div>
-
 </section>
-
-<!-- TRUST -->
-<div class="trust">
-  <div class="trust-item"><div class="trust-icon">🚚</div><div class="trust-text"><strong>Entrega Rápida</strong><span>Matozinhos e região</span></div></div>
-  <div class="trust-item"><div class="trust-icon">💎</div><div class="trust-text"><strong>Produtos Originais</strong><span>100% autênticos</span></div></div>
-  <div class="trust-item"><div class="trust-icon">💳</div><div class="trust-text"><strong>Pix & Cartão</strong><span>Parcele em até 6x</span></div></div>
-  <div class="trust-item"><div class="trust-icon">✨</div><div class="trust-text"><strong>+500 Clientes</strong><span>Satisfeitas</span></div></div>
-</div>
-
-<!-- BANNERS SECTION (carregado do Supabase) -->
-<div class="banners-section" id="banners-section" style="display:none"></div>
-
-<!-- PRODUCTS -->
-<section class="section products" id="produtos">
-  <div class="section-header fade-up">
-    <span class="section-tag" id="produtos-tag"> Todos os Produtos</span>
-    <h2 id="produtos-title">Encontre o seu favorito</h2>
-    <p>Clique para pedir direto pelo WhatsApp</p>
-  </div>
-  <div class="product-grid" id="product-grid">
-    <!-- Skeletons while loading -->
-    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
-    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
-    <div class="product-skeleton"><div class="skeleton skel-img"></div><div class="skel-body"><div class="skeleton skel-line" style="margin-bottom:10px"></div><div class="skeleton skel-line short" style="margin-bottom:10px"></div><div class="skeleton skel-btn"></div></div></div>
-  </div>
-  <div id="no-results" style="display:none;text-align:center;padding:3rem;color:var(--text-muted);font-size:.9rem;">
-     Nenhum produto encontrado. Tente outro termo.
-  </div>
-</section>
-
-<!-- PROMO BANNER -->
-<section class="promo-banner-section fade-up">
-  <span class="section-tag">Oferta Especial</span>
-  <h2>Até <em>40% OFF</em></h2>
-  <p>Em produtos selecionados · Só até domingo!</p>
-  <a href="#" id="link-wpp-promo" class="btn btn-gold"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Ver Ofertas no WhatsApp</a>
-</section>
-
-
-
-<!-- SOBRE NÓS -->
-<section class="section about-section" id="sobre">
-  <div class="about-container fade-up">
-
-    <div class="about-text">
-      <span class="section-tag">Muito Prazer</span>
-      <h2>Por trás da <em>R&S Makeup</em> </h2>
-      <p>A R&S Makeup nasceu de um sonho muito especial: ajudar cada mulher a abraçar sua própria beleza e se sentir confiante todos os dias.</p>
-      <p>Sou uma jovem sonhadora, e construí essa loja com muito esforço e carinho. Acredito que a maquiagem vai muito além das cores; é sobre autoestima, amor-próprio e empoderamento.</p>
-      <p>Por isso, faço curadoria apenas de produtos que eu mesma usaria, entregando qualidade, autenticidade e aquele atendimento próximo que você merece na nossa cidade de Matozinhos e região. Seja muito bem-vinda ao nosso universo rosa!</p>
+ 
+<!-- COMO FUNCIONA -->
+<section class="section" style="background:var(--dark);">
+    <div class="container">
+        <div class="reveal">
+            <p class="section-tag">Como funciona</p>
+            <h2 class="section-title">3 passos para<br>começar a vender</h2>
+        </div>
+        <div class="steps">
+            <div class="step reveal-left">
+                <div class="step-num">01</div>
+                <div class="step-content">
+                    <span class="step-tag">Acesse agora</span>
+                    <h3>Entre na plataforma e veja o ranking do dia</h3>
+                    <p>Logo após o acesso, você vê quais produtos estão explodindo no TikTok Shop hoje. Escolha o que faz sentido para você promover.</p>
+                </div>
+            </div>
+            <div class="step reveal-scale">
+                <div class="step-num">02</div>
+                <div class="step-content">
+                    <span class="step-tag">Crie o conteúdo</span>
+                    <h3>Use o roteiro pronto e grave (ou não apareça)</h3>
+                    <p>Pegue o roteiro do produto, use as ferramentas de IA para adaptar e crie o vídeo. Pode aparecer ou não — tem formato para os dois casos.</p>
+                </div>
+            </div>
+            <div class="step reveal-right">
+                <div class="step-num">03</div>
+                <div class="step-content">
+                    <span class="step-tag">Publique e venda</span>
+                    <h3>Poste no TikTok e comece a gerar comissões</h3>
+                    <p>Cada venda gerada pelo seu link te paga comissão direto pelo TikTok Shop. Quanto mais você posta, mais você vende.</p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center;margin-top:56px;" class="reveal">
+            <div class="btn-wrap" style="margin-top:0;">
+                <div class="btn-pulse"></div>
+                <a href="https://go.perfectpay.com.br/PPU38CQB54C" class="btn-cta" target="_blank" rel="noopener noreferrer">
+                    ▶ Quero acesso ao RendaShop
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
-
-
-<!-- CTA -->
-<section class="cta-section fade-up">
-  <h2>Pronta para se produzir? </h2>
-  <p>Fale com a gente e monte seu pedido pelo WhatsApp!</p>
-  <a href="#" id="link-wpp-cta" class="btn-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Abrir WhatsApp Agora</a>
+<!-- SEÇÃO PRIMEIRA VENDA -->
+<section class="section">
+    <div class="container" style="text-align:center;">
+        <div class="reveal">
+            <h2 class="section-title">Sua primeira venda pode sair <br><span style="color:var(--red)">mais rápido do que você imagina</span></h2>
+            <p class="section-sub" style="max-width:700px; margin-left:auto; margin-right:auto;">
+                Seguindo o processo, você não fica perdido. Você executa — e os resultados começam a aparecer.
+            </p>
+            <div class="reveal-scale" style="margin-top:40px; max-width:500px; margin-left:auto; margin-right:auto; border-radius:20px; overflow:hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border: 1px solid var(--border);">
+                <img src="https://i.postimg.cc/RCqvRK9x/IMG-0655.jpg" alt="Resultados rápidos" loading="lazy" style="width:100%; display:block;">
+            </div>
+        </div>
+    </div>
 </section>
+ 
+<!-- RESULTADOS QUE FALAM POR SI -->
+<section class="section proof-section">
+    <div class="container">
+        <div class="reveal" style="text-align:center;">
+            <h2 class="section-title">Resultados que <span style="color:var(--red)">falam por si</span></h2>
+            <p class="proof-text" style="font-size:1.1rem; max-width:800px; margin: 20px auto; font-style:italic;">
+                "Eu faturo <strong style="color:#00ff88">R$2.500 limpo por dia</strong> com isso. Veja o que aconteceu ontem: <strong style="color:#00ff88">GMV R$35.714</strong> + 1.286 itens vendidos <strong style="color:#00ff88">+187%!</strong>"
+            </p>
+        </div>
+        
+        <!-- PRINTS DE RESULTADOS -->
+        <div class="faturamento-gallery reveal">
+            <!-- Imagem 2 -->
+            <div class="fat-img">
+                <img src="https://i.postimg.cc/px7pv0d3/img-3-fatura.png" alt="Print de Faturamento 1">
+            </div>
+            <!-- Imagem 1 (WhatsApp) - Ênfase Central -->
+            <div class="fat-img fat-img-destaque">
+                <img src="https://i.postimg.cc/bwqq6S9K/print-de-cliente-whatsapp.jpg" alt="Print de WhatsApp Cliente">
+            </div>
+            <!-- Imagem 3 -->
+            <div class="fat-img">
+                <img src="https://i.postimg.cc/Gr9HZ0bs/img-2-faturamento.png" alt="Print de Faturamento 2">
+            </div>
+        </div>
 
+        <!-- AVALIAÇÕES (DEPOIMENTOS) -->
+        <div class="reveal" style="margin-top:80px;">
+            <p class="section-tag" style="text-align:center;">Avaliações Reais</p>
+            <h3 style="text-align:center; font-family:'Bebas Neue',sans-serif; font-size:2.5rem; margin-bottom:40px;">O que estão dizendo</h3>
+            
+            <div class="benefits-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; border:none; background:transparent;">
+                <!-- Avaliação 1 -->
+                <div class="benefit-card" style="border:1px solid var(--border); border-radius:12px;">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                        <div style="width:40px; height:40px; border-radius:50%; background:var(--dark); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--red);">L</div>
+                        <div>
+                            <div style="font-weight:700; font-size:0.95rem;">Lucas Andrade</div>
+                            <div style="color:#ffd700; font-size:0.8rem; letter-spacing:2px;">★★★★★</div>
+                        </div>
+                    </div>
+                    <p style="font-size:0.95rem; font-style:italic;">“Eu já tinha tentado vender no TikTok Shop antes e não saía do zero. O que mudou pra mim com o Rendashop foi a clareza do que postar. Peguei um produto do ranking, segui o roteiro e no terceiro vídeo já saiu minha primeira venda. Hoje já consigo repetir o processo.”</p>
+                </div>
+                <!-- Avaliação 2 -->
+                <div class="benefit-card" style="border:1px solid var(--border); border-radius:12px;">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                        <div style="width:40px; height:40px; border-radius:50%; background:var(--dark); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--red);">M</div>
+                        <div>
+                            <div style="font-weight:700; font-size:0.95rem;">Mariana Souza</div>
+                            <div style="color:#ffd700; font-size:0.8rem; letter-spacing:2px;">★★★★★</div>
+                        </div>
+                    </div>
+                    <p style="font-size:0.95rem; font-style:italic;">“Pra mim o mais forte do Rendashop é a praticidade. Eu não apareço, uso os roteiros e adapto com IA. Antes eu travava muito sem saber o que gravar, agora só executo. Já tive dias simples batendo comissão que eu não fazia no mês.”</p>
+                </div>
+                <!-- Avaliação 3 -->
+                <div class="benefit-card" style="border:1px solid var(--border); border-radius:12px;">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                        <div style="width:40px; height:40px; border-radius:50%; background:var(--dark); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--red);">R</div>
+                        <div>
+                            <div style="font-weight:700; font-size:0.95rem;">Rafael Martins</div>
+                            <div style="color:#ffd700; font-size:0.8rem; letter-spacing:2px;">★★★★★</div>
+                        </div>
+                    </div>
+                    <p style="font-size:0.95rem; font-style:italic;">“Não é mágica, mas funciona pra quem faz. O que eu gostei foi que não precisei ficar testando mil coisas. Você entra, vê o que tá vendendo e replica com estratégia. Em poucos dias já comecei a ver resultado e agora tô escalando melhor.”</p>
+                </div>
+                <!-- Avaliação 4 -->
+                <div class="benefit-card" style="border:1px solid var(--border); border-radius:12px;">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                        <div style="width:40px; height:40px; border-radius:50%; background:var(--dark); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--red);">J</div>
+                        <div>
+                            <div style="font-weight:700; font-size:0.95rem;">Juliana Ferreira</div>
+                            <div style="color:#ffd700; font-size:0.8rem; letter-spacing:2px;">★★★★★</div>
+                        </div>
+                    </div>
+                    <p style="font-size:0.95rem; font-style:italic;">“Eu sempre achei que precisava aparecer ou entender muito de edição pra vender no TikTok Shop, e isso me travava demais. Com o Rendashop eu vi que dava pra começar simples. Usei os roteiros, adaptei do meu jeito e fui testando. Em poucos dias já saíram as primeiras comissões e isso me deu confiança pra continuar. Hoje já tenho uma rotina de postagem e tá fluindo muito melhor.”</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+<!-- GARANTIA -->
+<section class="section">
+    <div class="container">
+        <div class="guarantee reveal">
+            <div class="guarantee-icon">🛡️</div>
+            <h3>Garantia incondicional de 7 dias</h3>
+            <p>Acesse o RendaShop, use as ferramentas, veja os roteiros e os produtos em alta. Se em 7 dias você sentir que <strong>não é para você</strong>, devolvemos 100% do seu dinheiro. Sem perguntas, sem burocracia.</p>
+        </div>
+    </div>
+</section>
+ 
+<!-- CTA FINAL DE ALTO IMPACTO -->
+<section class="section cta-final-premium" style="background: linear-gradient(180deg, var(--black) 0%, var(--dark) 100%);">
+    <div class="container">
+        <div class="reveal" style="max-width:600px; margin: 0 auto; background: var(--card); border: 2px solid var(--red); border-radius: 32px; padding: 60px 40px; text-align: center; box-shadow: 0 20px 60px rgba(255,0,179,0.15);">
+            <div class="urgency-label" style="background: var(--red); color: #fff; padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 0.85rem; display: inline-block; margin-bottom: 24px;">🔥 OFERTA POR TEMPO LIMITADO</div>
+            
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1.1; margin-bottom: 12px;">Seu acesso ao RendaShop hoje por apenas</h2>
+            
+            <div class="price-box" style="margin: 30px 0;">
+                <div style="font-size: 1.5rem; color: var(--muted); text-decoration: line-through; font-weight: 600; margin-bottom: 5px;">R$ 97,90</div>
+                <div style="font-size: 5rem; font-family: 'Bebas Neue', sans-serif; color: var(--red); line-height: 1;">R$ 47,90</div>
+                <p style="color: var(--muted); margin-top: 10px; font-weight: 600;">Pagamento único • Acesso imediato</p>
+            </div>
+
+            <div class="cta-list" style="text-align: left; margin: 40px 0; display: flex; flex-direction: column; gap: 16px;">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #00ff88;">✔</span>
+                    <span style="font-size: 1.05rem; font-weight: 500;">Produtos que estão vendendo agora</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #00ff88;">✔</span>
+                    <span style="font-size: 1.05rem; font-weight: 500;">Roteiros prontos para copiar</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #00ff88;">✔</span>
+                    <span style="font-size: 1.05rem; font-weight: 500;">Ideias de vídeos virais</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #00ff88;">✔</span>
+                    <span style="font-size: 1.05rem; font-weight: 500;">Prompts e estrutura com IA</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #00ff88;">✔</span>
+                    <span style="font-size: 1.05rem; font-weight: 500;">Acesso a fornecedores estratégicos</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #00ff88;">✔</span>
+                    <span style="font-size: 1.05rem; font-weight: 500;">Atualizações constantes</span>
+                </div>
+            </div>
+
+            <div class="btn-wrap" style="width: 100%; margin-top: 20px;">
+                <div class="btn-pulse"></div>
+                <a href="https://go.perfectpay.com.br/PPU38CQB54C" class="btn-cta" style="width: 100%; justify-content: center; font-size: 1.3rem; padding: 24px;" target="_blank" rel="noopener noreferrer">
+                    QUERO ACESSO AO RENDASHOP AGORA
+                </a>
+            </div>
+
+            <div class="cta-security" style="margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; font-size: 0.85rem; color: var(--muted); font-weight: 600;">
+                <span>🔒 Pagamento seguro</span>
+                <span>•</span>
+                <span>Acesso imediato</span>
+                <span>•</span>
+                <span>Garantia de 7 dias</span>
+            </div>
+        </div>
+    </div>
+</section>
+ 
 <!-- FOOTER -->
 <footer>
-  
-  <div class="footer-grid">
-    <div class="footer-logo">
-      <img src="https://i.postimg.cc/rmd8bnBB/LOGO-RS-MAKEUP.png" alt="R&S Makeup" loading="lazy">
-      <p>Realce sua beleza com quem entende. Produtos originais com entrega em Matozinhos e região.</p>
-    </div>
-
-    <!-- FAQ NO MEIO DO RODAPÉ -->
-    <div class="footer-faq-col">
-      <h3 style="font-family:'Playfair Display', serif; font-size:1.1rem; color:var(--bg-sec); margin-bottom:0.2rem;">Dúvidas Frequentes</h3>
-      <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom: 1.2rem;">Ficou com alguma dúvida? Veja abaixo</p>
-      
-      <div class="footer-faq-items">
-        <div class="faq-item">
-          <button class="faq-q">Os produtos são originais? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>Sim! Trabalhamos com produtos de qualidade e fornecedores confiáveis para garantir segurança, qualidade e um ótimo resultado.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Entregam para todo o Brasil? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>Sim! Enviamos para todo o Brasil. Também realizamos entregas locais em Matozinhos.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Como faço o pedido? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>É simples! Escolha seus produtos e clique em "Comprar no WhatsApp".</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Demora a entrega? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>Envios nacionais seguem o prazo padrão. Entregas em Matozinhos costumam ser rápidas.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Formas de pagamento? <span class="faq-icon"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12h14"/></svg></span></button>
-          <div class="faq-a"><p>Aceitamos PIX, cartão de crédito/débito e, em alguns casos, pagamento na entrega.</p></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-col">
-      <h4>Links Úteis</h4>
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="#produtos">Produtos</a></li>
-        <li><a href="#" id="link-wpp-footer">Fale Conosco</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Siga a gente</h4>
-      <div class="social-icons">
-        <a href="https://www.instagram.com/rs_makeshop?igsh=cG5wMzRxcWtyMnly" id="link-insta-footer" class="social-icon" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-        <a href="https://www.tiktok.com/@rs_makeshop?_r=1&_t=ZS-95AFYdf9fSp" id="link-tiktok-footer" class="social-icon" target="_blank"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
-        <a href="#" id="link-wpp-footer2" class="social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg></a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2025 R&S Makeup · Matozinhos, MG · Todos os direitos reservados</div>
+    <img src="https://i.postimg.cc/W4n6k4NZ/Banner-Renda-Shop.png" alt="RendaShop" loading="lazy" width="60" height="60">
+    <p>RendaShop © 2026 · Todos os direitos reservados · rendashop.online</p>
 </footer>
+ 
 
-<!-- FLOAT WPP -->
-<div class="wpp-float" id="wppFloat">
-  <a href="#" id="link-wpp-float" target="_blank">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg><span class="wpp-tip">Fale conosco!</span>
-  </a>
-</div>
-<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
+ 
+<!-- SCROLL REVEAL E PERFORMANCE -->
 <script>
-// ════════════════════════════════════════════
-//  R&S MAKEUP · STORE SCRIPT
-// ════════════════════════════════════════════
-
-const CAT_LABELS = { rosto:'Rosto', olhos:'Olhos', labios:'Lábios', acessorios:'Acessórios', skincare:'Skincare', kits:'Kits & Combos' };
-const CAT_TAGS   = { todos:' Todos os Produtos', rosto:' Rosto', olhos:' Olhos', labios:' Lábios', skincare:' Skincare', acessorios:'Acessórios', kits:' Kits & Combos', destaques:' Destaques' };
-
-let allProducts = [];
-let currentCat  = 'todos';
-let highlightMode = false;
-let searchTerm  = '';
-let storeConfig = {
-  wpp:   localStorage.getItem('rs_wpp')   || '5531999999999',
-  insta: localStorage.getItem('rs_insta') || 'rs_makeshop',
-  tiktok:localStorage.getItem('rs_tiktok')|| 'https://www.tiktok.com/@rs_makeshop',
-  promo: localStorage.getItem('rs_promo') || '',
-};
-
-// ── WPP LINKS ──
-function buildWppLinks() {
-  const num = storeConfig.wpp;
-  const base = `https://wa.me/${num}`;
-  const pedido = `${base}?text=${encodeURIComponent('Olá! Quero fazer um pedido!')}`;
-  const qids = ['link-wpp-top','link-wpp-nav','link-wpp-hero','link-wpp-promo','link-wpp-cta','link-wpp-float','link-wpp-footer','link-wpp-footer2'];
-  qids.forEach(id => { const el = document.getElementById(id); if(el) el.href = pedido; });
-  // Instagram: links já estão fixados no HTML; atualiza apenas se vier do Supabase config
-  if(storeConfig.insta && storeConfig.insta !== 'rs_makeshop') {
-    const instaUrl = `https://www.instagram.com/${storeConfig.insta}`;
-    ['link-insta-top','link-insta-nav','link-insta-footer'].forEach(id => { const el=document.getElementById(id); if(el){ el.href=instaUrl; if(id==='link-insta-top') el.textContent = `<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @${storeConfig.insta}`; } });
-  }
-  const tikEl = document.getElementById('link-tiktok-footer');
-  if(tikEl && storeConfig.tiktok) tikEl.href = storeConfig.tiktok;
-  if(storeConfig.promo) document.getElementById('promo-text').textContent = storeConfig.promo;
-}
-
-// ── LOAD CONFIG FROM SUPABASE ──
-async function loadConfig() {
-  const sb = getSupabase();
-  if(!sb) { buildWppLinks(); return; }
-  try {
-    // Tenta primeiro 'config', se falhar tenta 'configuracoes_loja' (Resiliência)
-    let { data, error } = await sb.from('config').select('*').limit(1).maybeSingle();
-    
-    if(error || !data) {
-       const res = await sb.from('configuracoes_loja').select('*').limit(1).maybeSingle();
-       if(res.data) data = res.data;
-    }
-
-    if(data) {
-      storeConfig = { ...storeConfig, ...data };
-      const isAtivo = String(data.timer_ativo) === 'true';
-      
-      if(isAtivo && data.timer_data_final) {
-        initTimer(data);
-      } else {
-        const bar = document.getElementById('promo-bar');
-        if(bar) bar.style.display = 'none';
-      }
-      
-      if(data.wpp) localStorage.setItem('rs_wpp', data.wpp);
-      if(data.insta) localStorage.setItem('rs_insta', data.insta);
-      if(data.tiktok) {
-        localStorage.setItem('rs_tiktok', data.tiktok);
-        const tikEl = document.getElementById('link-tiktok-footer');
-        if(tikEl) tikEl.href = data.tiktok;
-      }
-    } else {
-      // Se não houver config, esconde a barra
-      const bar = document.getElementById('promo-bar');
-      if(bar) bar.style.display = 'none';
-    }
-  } catch(e) {
-    console.error('[RS] Erro fatal no loadConfig:', e);
-    const bar = document.getElementById('promo-bar');
-    if(bar) bar.style.display = 'none';
-  }
-  buildWppLinks();
-}
-
-let timerInterval;
-function initTimer(cfg) {
-  const bar = document.getElementById('promo-bar');
-  const txt = document.getElementById('promo-text');
-  
-  // Garantir que timer_ativo seja boolean (supabase pode retornar como string em alguns casos)
-  const isAtivo = String(cfg.timer_ativo) === 'true';
-  
-  if(!isAtivo || !cfg.timer_data_final) { 
-    if(bar) bar.style.display='none'; 
-    return; 
-  }
-  
-  // Normalizar data para garantir compatibilidade entre navegadores (Safari/iOS)
-  const dateStr = cfg.timer_data_final.replace(' ', 'T');
-  const end = new Date(dateStr).getTime();
-  
-  if(isNaN(end)) {
-    console.warn('Data do timer inválida:', cfg.timer_data_final);
-    if(bar) bar.style.display='none';
-    return;
-  }
-  
-  if(bar) bar.style.display = 'flex';
-  if(cfg.timer_texto && txt) txt.textContent = cfg.timer_texto;
-  
-  if(timerInterval) clearInterval(timerInterval);
-
-  const update = () => {
-    const now = new Date().getTime();
-    const diff = end - now;
-    
-    if(diff <= 0) {
-      clearInterval(timerInterval);
-      if(bar) bar.style.display = 'none';
-      return;
-    }
-    
-    // Cálculos (Dias, Horas, Minutos)
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    
-    const dEl = document.getElementById('cd-d');
-    const hEl = document.getElementById('cd-h');
-    const mEl = document.getElementById('cd-m');
-    
-    if(dEl) dEl.textContent = String(d).padStart(2,'0');
-    if(hEl) hEl.textContent = String(h).padStart(2,'0');
-    if(mEl) mEl.textContent = String(m).padStart(2,'0');
-  };
-  
-  update();
-  timerInterval = setInterval(update, 1000);
-}
-
-// ── LOAD BANNERS ──
-async function loadBanners() {
-  const sb = getSupabase();
-  if(!sb) return;
-  try {
-    const { data: banners } = await sb.from('banners').select('*').eq('ativo', true);
-    if(!banners || !banners.length) return;
-    const section = document.getElementById('banners-section');
-    section.style.display = 'block';
-    section.innerHTML = banners.map(b => `
-      <div class="banner-slide" style="margin-bottom:.8rem">
-        ${b.imagem_url ? `<img src="${b.imagem_url}" alt="${b.titulo}" loading="lazy">` : ''}
-        <div class="banner-content">
-          <h2><em>${b.titulo}</em></h2>
-        </div>
-      </div>
-    `).join('');
-  } catch(e) {}
-}
-
-// ── LOAD PRODUCTS ──
-async function loadProducts() {
-  const sb = getSupabase();
-  if(sb) {
-    try {
-      const { data, error } = await sb.from('produtos').select('*').eq('ativo', true).order('created_at', { ascending: false });
-      if(!error && data) { allProducts = data; renderProducts(); return; }
-    } catch(e) {}
-  }
-  // Fallback: produtos de demonstração
-  allProducts = getDemoProducts();
-  renderProducts();
-}
-
-function getDemoProducts() {
-  return [
-    { id:1,  nome:'Gloss',               categoria:'labios',   badge:'Novo',  destaque:true  },
-    { id:2,  nome:'Contorno',            categoria:'rosto',    badge:'',      destaque:false },
-    { id:3,  nome:'Contorno Líquido',    categoria:'rosto',    badge:'',      destaque:false },
-    { id:4,  nome:'Blush',               categoria:'rosto',    badge:'Top',   destaque:true  },
-    { id:5,  nome:'Blush Líquido',       categoria:'rosto',    badge:'Novo',  destaque:true  },
-    { id:6,  nome:'Base',                categoria:'rosto',    badge:'Top',   destaque:true  },
-    { id:7,  nome:'Corretivo',           categoria:'rosto',    badge:'',      destaque:false },
-    { id:8,  nome:'Pó Compacto',         categoria:'rosto',    badge:'',      destaque:false },
-    { id:9,  nome:'Pó Translúcido',      categoria:'rosto',    badge:'',      destaque:false },
-    { id:10, nome:'Rímel',               categoria:'olhos',    badge:'',      destaque:false },
-    { id:11, nome:'Bruma',               categoria:'skincare', badge:'',      destaque:false },
-    { id:12, nome:'Demaquilante',        categoria:'skincare', badge:'',      destaque:false },
-    { id:13, nome:'Esponjinha',          categoria:'rosto',    badge:'',      destaque:false },
-    { id:14, nome:'Pincel',              categoria:'rosto',    badge:'',      destaque:false },
-    { id:15, nome:'Sabonete Facial',     categoria:'skincare', badge:'',      destaque:false },
-    { id:16, nome:'Hidratante',          categoria:'skincare', badge:'',      destaque:false },
-    { id:17, nome:'Blindagem',           categoria:'skincare', badge:'Novo',  destaque:false },
-    { id:18, nome:'Batom',               categoria:'labios',   badge:'',      destaque:false },
-    { id:19, nome:'Gel Sobrancelha',     categoria:'olhos',    badge:'',      destaque:false },
-    { id:20, nome:'Paleta',              categoria:'olhos',    badge:'Top',   destaque:false },
-    { id:21, nome:'Iluminador RubyRose', categoria:'rosto',    badge:'',      destaque:false },
-  ].map(p => ({ ...p, descricao: 'Produto premium R&S Makeup.', preco: null, imagem_url: '', avaliacao: 5, ativo: true }));
-}
-
-// ── RENDER PRODUCTS ──
-function renderProducts() {
-  const grid = document.getElementById('product-grid');
-  const noRes = document.getElementById('no-results');
-  let list = allProducts.filter(p => p.ativo !== false);
-  if(highlightMode) list = list.filter(p => p.destaque);
-  else if(currentCat !== 'todos') {
-    list = list.filter(p => {
-      if(Array.isArray(p.categoria)) return p.categoria.includes(currentCat);
-      if(typeof p.categoria === 'string') return p.categoria.split(',').map(c=>c.trim()).includes(currentCat);
-      return p.categoria === currentCat;
+document.addEventListener('DOMContentLoaded',function(){
+    var els=document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+            if(en.isIntersecting){en.target.classList.add('visible');io.unobserve(en.target);}
+        });
+    },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){io.observe(el);});
+    requestAnimationFrame(function(){
+        var vh=window.innerHeight;
+        els.forEach(function(el){if(el.getBoundingClientRect().top<vh)el.classList.add('visible');});
     });
-  }
-  if(searchTerm) list = list.filter(p => p.nome.toLowerCase().includes(searchTerm.toLowerCase()));
-  if(!list.length) { grid.innerHTML=''; noRes.style.display='block'; return; }
-  noRes.style.display='none';
-
-  grid.innerHTML = list.map(p => {
-    const wpp = `https://wa.me/${storeConfig.wpp}?text=${encodeURIComponent('Olá! Quero comprar o produto: '+p.nome)}`;
-    const priceHtml = p.preco
-      ? `${p.preco_antigo?`<span class="price-old">R$ ${parseFloat(p.preco_antigo).toFixed(2).replace('.',',')}</span>`:''}
-         <span class="price-new">R$ ${parseFloat(p.preco).toFixed(2).replace('.',',')}</span>`
-      : `<span class="price-tbd">Em breve</span>`;
-    const stars = ''.repeat(Math.min(5, Math.max(1, p.avaliacao||5)));
-    const badgeHtml = p.badge ? `<span class="product-badge ${p.badge==='sale'?'sale':''}">${p.badge==='sale'?'Promoção':p.badge}</span>` : (p.destaque ? `<span class="product-badge">Top</span>` : '');
-    return `
-    <div class="product-card fade-up" onclick="location.href='produto.html?id=${p.id}'" style="cursor:pointer" data-id="${p.id}">
-      <div class="product-img">
-        ${(p.imagens && p.imagens[0]) ? `<img src="${p.imagens[0]}" alt="${p.nome}" loading="lazy">` : `<div class="no-img-wrap"><span class="ni-icon"></span><span class="ni-label">Foto em breve</span></div>`}
-        ${badgeHtml}
-        <button class="wish-btn" onclick="event.stopPropagation();this.textContent=this.textContent==='🤍'?'❤️':'🤍'">🤍</button>
-      </div>
-      <div class="product-body">
-        <div class="product-cat-lbl">${CAT_LABELS[p.categoria]||p.categoria||''}</div>
-        <h3>${p.nome}</h3>
-        <div class="stars">${stars}</div>
-        <div class="product-price">${priceHtml}</div>
-        <a class="btn-wpp" href="${wpp}" target="_blank" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="margin-right:5px;vertical-align:text-bottom"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg> Pedir pelo WhatsApp</a>
-      </div>
-    </div>`;
-  }).join('');
-  document.querySelectorAll('#product-grid .fade-up').forEach(el => fadeObs.observe(el));
-}
-
-function filterCat(cat, btn) {
-  currentCat = cat; highlightMode = false;
-  document.querySelectorAll('.cat-nav-item').forEach(b => b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  document.getElementById('produtos-tag').textContent = CAT_TAGS[cat]||' Produtos';
-  document.getElementById('produtos-title').textContent = cat==='todos'?'Encontre o seu favorito':(CAT_LABELS[cat]||cat);
-  renderProducts();
-  document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function filterHighlight() {
-  highlightMode = true;
-  document.querySelectorAll('.cat-nav-item').forEach(b => b.classList.remove('active'));
-  document.getElementById('produtos-tag').textContent = ' Destaques';
-  document.getElementById('produtos-title').textContent  = 'Produtos em Destaque';
-  renderProducts();
-  document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function searchProducts(val) { searchTerm = val; renderProducts(); if(val.length > 2) document.getElementById('produtos').scrollIntoView({behavior:'smooth',block:'start'}); }
-
-// O timer agora é iniciado dentro de loadConfig() dinamicamente
-
-// ── SCROLL ──
-const navbar   = document.getElementById('navbar');
-const wppFloat = document.getElementById('wppFloat');
-const scrollBtn= document.getElementById('scrollTop');
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  navbar.classList.toggle('scrolled', y>60);
-  wppFloat.classList.toggle('visible', y>400);
-  scrollBtn.classList.toggle('visible', y>400);
 });
-
-// ── FADE OBSERVER ──
-const fadeObs = new IntersectionObserver(entries => {
-  entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*55); });
-},{threshold:.07});
-document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
-
-// ── HERO SLIDER ──
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.sdot');
-const progBar = document.getElementById('sliderProgress');
-const sliderMain = document.getElementById('heroSlider');
-let currentSlide = 0;
-let slideInterval;
-let progressVal = 0;
-let progressInterval;
-const slideDuration = 4000;
-
-function updateSlider(idx) {
-  currentSlide = idx;
-  slides.forEach((s, i) => {
-    s.classList.toggle('active', i === currentSlide);
-    dots[i].classList.toggle('active', i === currentSlide);
-  });
-  resetProgress();
-}
-function nextSlide() { updateSlider((currentSlide + 1) % slides.length); }
-function prevSlide() { updateSlider((currentSlide - 1 + slides.length) % slides.length); }
-
-function resetProgress() {
-  progressVal = 0;
-  if(progBar) progBar.style.width = '0%';
-  progBar.style.transition = 'none';
-}
-function stepProgress() {
-  progressVal += 100 / (slideDuration / 50);
-  if(progBar) {
-    progBar.style.transition = 'width 50ms linear';
-    progBar.style.width = Math.min(progressVal, 100) + '%';
-  }
-}
-
-function startSlider() {
-  stopSlider();
-  slideInterval = setInterval(nextSlide, slideDuration);
-  progressInterval = setInterval(stepProgress, 50);
-}
-function stopSlider() {
-  clearInterval(slideInterval);
-  clearInterval(progressInterval);
-}
-
-document.getElementById('sliderNext').addEventListener('click', () => { nextSlide(); startSlider(); });
-document.getElementById('sliderPrev').addEventListener('click', () => { prevSlide(); startSlider(); });
-dots.forEach((dot, i) => {
-  dot.addEventListener('click', () => { updateSlider(i); startSlider(); });
-});
-
-sliderMain.addEventListener('mouseenter', stopSlider);
-sliderMain.addEventListener('mouseleave', startSlider);
-startSlider();
-
-// ── INIT ──
-(async () => {
-  await loadConfig();
-
-// ── FAQ ──
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const parent = btn.parentElement;
-    parent.classList.toggle('active');
-    const icon = btn.querySelector('.faq-icon');
-    icon.textContent = parent.classList.contains('active') ? '-' : '+';
-  });
-});
-
-  await loadBanners();
-  await loadProducts();
-})();
-
-function updateCartCount() {
-  try {
-    let cart = JSON.parse(localStorage.getItem('rs_cart')) || [];
-    let badge = document.getElementById('cart-count-badge');
-    if(badge) {
-      if(cart.length > 0) {
-        badge.style.display = 'flex';
-        badge.textContent = cart.length; // You could also sum up quantities: cart.reduce((sum, item) => sum + item.quantidade, 0)
-      } else {
-        badge.style.display = 'none';
-      }
-    }
-  } catch(e) {}
-}
-
-document.addEventListener('DOMContentLoaded', updateCartCount);
-window.addEventListener('storage', updateCartCount); // Update if changed from another tab
-
 </script>
+<!-- PROTEÇÃO DE DOMÍNIO E ANTI-INSPEÇÃO -->
+<script>
+(function() {
+    // Bloqueia botão direito
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // Bloqueia atalhos do teclado (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Cmd+Option+I, etc)
+    document.addEventListener('keydown', function(e) {
+        if (
+            e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && (e.key.toLowerCase() === 'i' || e.key.toLowerCase() === 'j' || e.key.toLowerCase() === 'c')) ||
+            (e.ctrlKey && e.key.toLowerCase() === 'u') ||
+            (e.metaKey && e.altKey && (e.key.toLowerCase() === 'i' || e.key.toLowerCase() === 'j' || e.key.toLowerCase() === 'u')) ||
+            (e.metaKey && e.key.toLowerCase() === 's') ||
+            (e.ctrlKey && e.key.toLowerCase() === 's')
+        ) {
+            e.preventDefault();
+        }
+    });
+
+    // Proteção de domínio
+    var domain = window.location.hostname;
+    // Permite local/file para você continuar visualizando no PC, mas bloqueia qualquer outro domínio na web
+    var isLocal = (domain === 'localhost' || domain === '127.0.0.1' || domain === ''); 
+    var isAllowed = (domain === 'www.rendashop.online' || domain === 'rendashop.online');
+
+    if (!isAllowed && !isLocal) {
+        document.body.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100vh; background:#000; color:#ff00b3; font-family:sans-serif; font-size:1.5rem; text-align:center; padding:20px;">Acesso Negado.<br>Site clonado ou acesso inválido.</div>';
+    }
+})();
+</script>
+
 </body>
 </html>
