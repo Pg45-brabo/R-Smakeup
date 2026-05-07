@@ -204,6 +204,7 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
       <div class="nav-group">Visão Geral</div>
       <button class="slink active" onclick="nav('dashboard', this)">📊 Dashboard</button>
       <div class="nav-group">Vendas e Produtos</div>
+      <button class="slink" onclick="nav('vendas', this)">📝 Registro de Vendas</button>
       <button class="slink" onclick="nav('produtos', this)">💄 Todos os Produtos</button>
       <button class="slink" onclick="navAddProd()">➕ Novo Produto</button>
       <div class="nav-group">Customização</div>
@@ -243,6 +244,32 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
       <div class="card">
         <div class="sec-title">Produtos Adicionados Recentemente</div>
         <div class="tbl-wrap"><table><thead><tr><th></th><th>Produto</th><th>Categoria</th><th>Preço</th><th>Status</th></tr></thead><tbody id="dashTbody"></tbody></table></div>
+      </div>
+    </div>
+    <!-- PAINEL VENDAS -->
+    <div class="panel" id="panel-vendas">
+      <div class="card" style="background:var(--gold-g);color:#fff;border:none">
+        <div style="font-size:.8rem;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:.5rem;opacity:.9">💰 Total Vendido</div>
+        <div id="vendasTotal" style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:600">R$ 0,00</div>
+      </div>
+      <div class="split-layout">
+        <div class="card form-cols" style="flex:1">
+          <div class="sec-title">📝 Registrar Nova Venda</div>
+          <div class="form-grid">
+            <div class="field full"><label>Produto / Descrição</label><input type="text" id="vProd" placeholder="Ex: Gel de sobrancelha"></div>
+            <div class="field"><label>Valor (R$)</label><input type="number" id="vValor" step="0.01" placeholder="0.00"></div>
+            <div class="field"><label>Data</label><input type="date" id="vData"></div>
+            <div class="field"><label>Pagamento</label><select id="vPag"><option value="Pix">Pix</option><option value="Dinheiro">Dinheiro</option><option value="Cartão">Cartão</option></select></div>
+            <div class="field"><label>Tipo de Venda</label><select id="vTipo"><option value="Física">Física</option><option value="WhatsApp">WhatsApp</option></select></div>
+            <div class="field full"><button class="btn btn-primary" onclick="addSale()" style="width:100%;justify-content:center;margin-top:1rem">Salvar Venda</button></div>
+          </div>
+        </div>
+        <div class="card" style="flex:1;display:flex;flex-direction:column;min-height:400px;max-height:600px">
+          <div class="sec-title">📋 Histórico de Vendas</div>
+          <div id="vendasList" style="flex:1;overflow-y:auto;padding-right:.5rem;display:flex;flex-direction:column;gap:.8rem">
+            <!-- vendas aqui -->
+          </div>
+        </div>
       </div>
     </div>
     <!-- LISTA PRODUTOS -->
@@ -945,6 +972,75 @@ async function delItem(id, table) {
   toast('Removido');
   initAdmin();
 }
+// ── SISTEMA DE VENDAS (LOCALSTORAGE) ──
+function initVendas() {
+  document.getElementById('vData').valueAsDate = new Date();
+  renderSales();
+}
+function addSale() {
+  const prod = document.getElementById('vProd').value.trim();
+  const valor = parseFloat(document.getElementById('vValor').value);
+  const data = document.getElementById('vData').value;
+  const pag = document.getElementById('vPag').value;
+  const tipo = document.getElementById('vTipo').value;
+
+  if(!prod || isNaN(valor)) { toast('Preencha produto e valor corretos!', 'err'); return; }
+
+  const newSale = { id: Date.now(), product: prod, price: valor, payment: pag, type: tipo, date: data };
+  let sales = JSON.parse(localStorage.getItem('rs_sales')) || [];
+  sales.push(newSale);
+  localStorage.setItem('rs_sales', JSON.stringify(sales));
+
+  document.getElementById('vProd').value = '';
+  document.getElementById('vValor').value = '';
+  toast('Venda registrada com sucesso!');
+  renderSales();
+}
+function delSale(id) {
+  if(!confirm('Tem certeza que deseja excluir esta venda?')) return;
+  let sales = JSON.parse(localStorage.getItem('rs_sales')) || [];
+  sales = sales.filter(s => s.id !== id);
+  localStorage.setItem('rs_sales', JSON.stringify(sales));
+  toast('Venda excluída!');
+  renderSales();
+}
+function renderSales() {
+  let sales = JSON.parse(localStorage.getItem('rs_sales')) || [];
+  sales.sort((a,b) => new Date(b.date) - new Date(a.date) || b.id - a.id); 
+  
+  const list = document.getElementById('vendasList');
+  if(!sales.length) {
+    list.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">Nenhuma venda registrada ainda.</div>';
+    document.getElementById('vendasTotal').textContent = 'R$ 0,00';
+    return;
+  }
+
+  let total = 0;
+  list.innerHTML = sales.map(s => {
+    total += s.price;
+    const dateObj = new Date(s.date + 'T00:00:00');
+    const dateStr = !isNaN(dateObj) ? dateObj.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'}) : s.date;
+    return `
+      <div style="background:#f9f9f9;border:1px solid #eee;border-radius:12px;padding:1rem;position:relative">
+        <button onclick="delSale(${s.id})" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#d93025;cursor:pointer;font-size:1.1rem;line-height:1">✕</button>
+        <div style="font-weight:700;color:var(--brown);margin-bottom:.3rem;padding-right:2rem">${s.product}</div>
+        <div style="font-size:.75rem;color:var(--muted);display:flex;gap:.6rem;align-items:center;flex-wrap:wrap">
+          <span style="color:#1e8e3e;font-weight:700;font-size:.85rem">${formatBRL(s.price)}</span>
+          <span>|</span> <span>${s.payment}</span> <span>|</span> <span>${s.type}</span> <span>|</span> <span>${dateStr}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('vendasTotal').textContent = formatBRL(total);
+}
+
+// Hook na inicialização do painel
+const originalInitAdmin = initAdmin;
+initAdmin = async function() {
+  await originalInitAdmin();
+  initVendas();
+};
+
 onload = checkAuth;
 </script>
 </body>
