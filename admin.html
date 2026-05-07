@@ -383,6 +383,34 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
            <div class="field"><label>TikTok Link</label><input type="text" id="cfgTiktok" placeholder="https://tiktok.com/@sua_loja"></div>
            <div class="field full"><label>Barra de Promoção (Topo)</label><input type="text" id="cfgPromo"></div>
          </div>
+       </div>
+
+      <!-- NOVO SISTEMA DE CUPOM LOCAL -->
+      <div class="card">
+          <div class="sec-title">🎫 Sistema de Cupons (Local)</div>
+          <p style="font-size:.75rem;color:var(--muted);margin-bottom:1.5rem;">Ative e configure o cupom que os clientes poderão usar no carrinho.</p>
+          
+          <div class="form-grid">
+              <div class="field full" style="display:flex; align-items:center; gap:10px; background:#fdfaf7; padding:1rem; border-radius:10px;">
+                  <input type="checkbox" id="coupon-active" style="width:auto; transform:scale(1.2);">
+                  <label style="margin:0; font-size:.9rem; color:var(--brown); font-weight:700;">Ativar Cupom na Loja</label>
+              </div>
+
+              <div class="field">
+                  <label>Código do Cupom</label>
+                  <input type="text" id="coupon-code" placeholder="Ex: Obrigada10">
+              </div>
+
+              <div class="field">
+                  <label>Desconto (%)</label>
+                  <input type="number" id="coupon-discount" placeholder="Ex: 10" min="1" max="100">
+              </div>
+          </div>
+          
+          <button class="btn btn-primary" style="margin-top:1.5rem; width:100%;" onclick="saveCouponLocal()">💾 Salvar Cupom</button>
+          <p id="coupon-success" style="display:none; color:#1e8e3e; text-align:center; font-size:.85rem; margin-top:1rem; font-weight:700;">✅ Cupom atualizado com sucesso!</p>
+      </div>
+
      <div class="card">
        <div class="sec-title">⏱️ Temporizador Promocional</div>
        <div class="form-grid">
@@ -392,9 +420,9 @@ td strong { display: block; max-width: 150px; white-space: nowrap; overflow: hid
        </div>
        <button class="btn btn-primary" style="margin-top:1.5rem" onclick="saveTimerCfg()">💾 Salvar Temporizador</button>
      </div>
-     <button class="btn btn-primary" style="margin-top:1.5rem" onclick="saveConfig()">Salvar Configurações Gerais</button>
-   </div>
-       <div class="card">
+     <button class="btn btn-primary" style="margin-top:1.5rem; width:100%" onclick="saveConfig()">Salvar Configurações Gerais</button>
+
+       <div class="card" style="margin-top: 2rem;">
          <div class="sec-title">🔐 Emails Autorizados (Whitelist)</div>
          <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem">Apenas estes emails poderão logar no painel.</p>
          <div id="allowedList"></div>
@@ -493,6 +521,14 @@ async function initAdmin() {
   renderDashboard();
   renderTbody();
   renderBanners();
+
+  // Carregar o cupom ao abrir o admin
+  const couponConfig = JSON.parse(localStorage.getItem('rs_coupon_cfg')) || { active: true, code: 'Obrigada10', discount: 10 };
+  if(document.getElementById('coupon-active')) {
+      document.getElementById('coupon-active').checked = couponConfig.active;
+      document.getElementById('coupon-code').value = couponConfig.code || '';
+      document.getElementById('coupon-discount').value = couponConfig.discount || '';
+  }
 }
 async function loadProds() {
   const sb = getSupabase();
@@ -786,6 +822,19 @@ async function saveTimerCfg() {
   await sb.from('configuracoes_loja').upsert([data]);
   toast('Temporizador Salvo!');
 }
+
+function saveCouponLocal() {
+    const active = document.getElementById('coupon-active').checked;
+    const code = document.getElementById('coupon-code').value.trim();
+    const discount = parseFloat(document.getElementById('coupon-discount').value) || 0;
+
+    const config = { active, code, discount };
+    localStorage.setItem('rs_coupon_cfg', JSON.stringify(config));
+
+    document.getElementById('coupon-success').style.display = 'block';
+    setTimeout(() => document.getElementById('coupon-success').style.display = 'none', 3000);
+}
+
 // ── UTILS ──
 function nav(id, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
